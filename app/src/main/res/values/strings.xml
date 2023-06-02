@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Market</string>
+    <string name="name">Арматура</string>
+    <string name="quantity">1,689.97 кг</string>
 </resources>
