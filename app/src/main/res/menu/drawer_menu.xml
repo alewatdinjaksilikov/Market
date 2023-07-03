@@ -11,28 +11,23 @@
                 <item
                     android:id="@+id/fragment_statistics"
                     android:icon="@drawable/ic_category"
-                    android:title="Statistika"/>
+                    android:title="@string/tv_statistic_ru"/>
+
+                <item
+                    android:id="@+id/fragment_monitoring"
+                    android:icon="@drawable/ic_category"
+                    android:title="@string/tv_monitoring_ru"/>
 
                 <item
                     android:id="@+id/fragment_stock"
                     android:icon="@drawable/ic_category"
-                    android:title="Sklad" />
+                    android:title="@string/tv_stock_ru" />
 
             </menu>
         </item>
 
     </group>
 
-
-
-    <item android:title="Qosimsha menyu">
-        <menu>
-            <item
-                android:title="Shigiw"
-                android:id="@+id/item_logOut"
-                android:icon="@drawable/ic_logout"/>
-        </menu>
-    </item>
 
 
 

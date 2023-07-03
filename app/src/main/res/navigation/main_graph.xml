@@ -9,5 +9,27 @@
         android:id="@+id/mainFragment"
         android:name="com.example.market.presentation.ui.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_addProductDialog2"
+            app:destination="@id/addProductDialog2" />
+    </fragment>
+    <dialog
+        android:id="@+id/addProductDialog2"
+        android:name="com.example.market.presentation.ui.dialogs.AddProductDialog"
+        android:label="AddProductDialog"
+        tools:layout="@layout/dialog_add_product">
+        <action
+            android:id="@+id/action_addProductDialog2_to_imagesFragment"
+            app:destination="@id/imagesFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/imagesFragment"
+        android:name="com.example.market.presentation.ui.ImagesScreen.ImagesFragment"
+        android:label="ImagesFragment"
+        tools:layout="@layout/fragment_images">
+        <action
+            android:id="@+id/action_imagesFragment_to_addProductDialog2"
+            app:destination="@id/addProductDialog2" />
+    </dialog>
 </navigation>

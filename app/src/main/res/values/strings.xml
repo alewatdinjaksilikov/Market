@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Market</string>
+    <string name="selected_item">Selected item</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="tv_statistica_ru">Статистика</string>
+    <string name="tv_product_add_ru">Добавить товар</string>
+    <string name="tv_name_product_ru">Название товара</string>
+    <string name="tv_category_ru">Категория</string>
+    <string name="tv_add_image_product_ru">Добавить изображение товара</string>
+    <string name="tv_edit_image_product_ru">Изменить изображение товара</string>
+    <string name="tv_cancel_ru">Отмена</string>
+    <string name="tv_add_ru">Добавить</string>
+    <string name="tv_edit_ru">Изменить</string>
+    <string name="tv_delete_ru">Удалить</string>
+    <string name="tv_statistic_ru">Статистика</string>
+    <string name="tv_monitoring_ru">Мониторинг</string>
+    <string name="tv_stock_ru">Склад</string>
+
+    <string-array name="type">
+        <item>KG</item>
+        <item>Litr</item>
+        <item>Metr</item>
+    </string-array>
 </resources>

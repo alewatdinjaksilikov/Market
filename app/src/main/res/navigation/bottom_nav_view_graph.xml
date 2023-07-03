@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_view_graph"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_statistics"
+        android:name="com.example.market.presentation.ui.StatisticsScreen.StatisticsFragment"
+        android:label="StatisticsFragment"
+        tools:layout="@layout/fragment_statistics"/>
+    <fragment
+        android:id="@+id/fragment_stock"
+        android:name="com.example.market.presentation.ui.StockScreen.StockFragment"
+        android:label="StockFragment"
+        tools:layout="@layout/fragment_stock">
+        <action
+            android:id="@+id/action_fragment_stock_to_editCategoryDialog"
+            app:destination="@id/editCategoryDialog" />
+        <action
+            android:id="@+id/action_fragment_stock_to_editProductDialog"
+            app:destination="@id/editProductDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.example.market.presentation.ui.HomeScreen.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_fragment_home_to_listProductsDialog"
+            app:destination="@id/listProductsDialog" />
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_statistics"
+            app:destination="@id/fragment_statistics" />
+    </fragment>
+    <dialog
+        android:id="@+id/editCategoryDialog"
+        android:name="com.example.market.presentation.ui.dialogs.EditCategoryDialog"
+        android:label="EditCategoryDialog"
+        tools:layout="@layout/dialog_edit_category"/>
+    <dialog
+        android:id="@+id/editProductDialog"
+        android:name="com.example.market.presentation.ui.dialogs.EditProductDialog"
+        android:label="EditProductDialog"
+        tools:layout="@layout/dialog_edit_product"/>
+    <dialog
+        android:id="@+id/listProductsDialog"
+        android:name="com.example.market.presentation.ui.dialogs.ListProductsDialog"
+        android:label="ListProductsDialog"
+        tools:layout="@layout/rc_item_list_products"/>
+
+</navigation>
