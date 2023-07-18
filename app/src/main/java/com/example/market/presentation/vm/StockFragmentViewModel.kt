@@ -1,66 +1,66 @@
 package com.example.market.presentation.vm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.market.data.models.AddCategoryRequestData
-import com.example.market.data.models.CategoryResponseData
-import com.example.market.data.models.EditProductRequestData
-import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.AddCategoryUseCase
-import com.example.market.domain.usecase.EditProductUseCase
+import com.example.market.data.models.*
+import com.example.market.domain.usecase.DeleteProductUseCase
 import com.example.market.domain.usecase.GetAllCategoriesUseCase
+import com.example.market.domain.usecase.GetAllProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class StockFragmentViewModel @Inject constructor(
-    private val editProductUseCase: EditProductUseCase,
+    private val deleteProductUseCase: DeleteProductUseCase,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
-    private val addCategoryUseCase: AddCategoryUseCase
+    private val getAllProductsByCategoryUseCase: GetAllProductsByCategoryUseCase
 ) : ViewModel() {
 
-    private val _addCategoryLiveData = MutableLiveData<Any?>()
-    val addCategoryLiveData:LiveData<Any?> get() = _addCategoryLiveData
+    private val _getAllProduct = MutableSharedFlow<List<ProductResponseData>>()
+    val getAllProduct : SharedFlow<List<ProductResponseData>> get() = _getAllProduct
 
-    private val _messageAddCategoryLiveData = MutableLiveData<String>()
-    val messageAddCategoryLiveData:LiveData<String> get() = _messageAddCategoryLiveData
+    private val _messageGetAllProduct = MutableSharedFlow<String>()
+    val messageGetAllProduct : SharedFlow<String> get() = _messageGetAllProduct
 
-    private val _errorAddCategoryLiveData = MutableLiveData<Throwable>()
-    val errorAddCategoryLiveData:LiveData<Throwable> get() = _errorAddCategoryLiveData
+    private val _errorGetAllProduct = MutableSharedFlow<Throwable>()
+    val errorGetAllProduct : SharedFlow<Throwable> get() = _errorGetAllProduct
 
-    private val _editProductLiveData = MutableLiveData<Any?>()
-    val editProductLiveData:LiveData<Any?> get() = _editProductLiveData
 
-    private val _messageEditProductLiveData = MutableLiveData<String>()
-    val messageEditProductLiveData:LiveData<String> get() = _messageEditProductLiveData
 
-    private val _errorEditProductLiveData = MutableLiveData<Throwable>()
-    val errorEditProductLiveData:LiveData<Throwable> get() = _errorEditProductLiveData
+    private val _getAllCategoriesFlow = MutableSharedFlow<List<CategoryResponseData>>()
+    val getAllCategoriesFlow:SharedFlow<List<CategoryResponseData>> get() = _getAllCategoriesFlow
 
-    private val _getAllCategoriesLiveData = MutableLiveData<List<CategoryResponseData>?>()
-    val getAllCategoriesLiveData:LiveData<List<CategoryResponseData>?> get() = _getAllCategoriesLiveData
+    private val _messageGetAllCategoriesFlow = MutableSharedFlow<String>()
+    val messageGetAllCategoriesFlow:SharedFlow<String> get() = _messageGetAllCategoriesFlow
 
-    private val _messageGetAllCategoriesLiveData = MutableLiveData<String>()
-    val messageGetAllCategoriesLiveData:LiveData<String> get() = _messageGetAllCategoriesLiveData
+    private val _errorGetAllCategoriesFlow = MutableSharedFlow<Throwable>()
+    val errorGetAllCategoriesFlow:SharedFlow<Throwable> get() = _errorGetAllCategoriesFlow
 
-    private val _errorGetAllCategoriesLiveData = MutableLiveData<Throwable>()
-    val errorGetAllCategoriesLiveData:LiveData<Throwable> get() = _errorGetAllCategoriesLiveData
 
-    fun addCategory(body: AddCategoryRequestData){
-        addCategoryUseCase.execute(body = body).onEach {
+    private val _deleteProductFlow = MutableSharedFlow<DeleteProductResponseData>()
+    val deleteProductFlow:SharedFlow<DeleteProductResponseData> get() = _deleteProductFlow
+
+    private val _messageDeleteProductFlow = MutableSharedFlow<String>()
+    val messageDeleteProductFlow : SharedFlow<String> get() = _messageDeleteProductFlow
+
+    private val _errorDeleteProductFlow = MutableSharedFlow<Throwable>()
+    val errorDeleteProductFlow : SharedFlow<Throwable> get() = _errorDeleteProductFlow
+
+    fun deleteProduct(id:Int){
+        deleteProductUseCase.execute(id = id).onEach {
             when(it){
                 is ResultData.Success ->{
-                    _addCategoryLiveData.value = it.data
+                    _deleteProductFlow.emit(it.data)
                 }
                 is ResultData.Message ->{
-                    _messageAddCategoryLiveData.value = it.message
+                    _messageDeleteProductFlow.emit(it.message)
                 }
                 is ResultData.Error ->{
-                    _errorAddCategoryLiveData.value = it.error
+                    _errorDeleteProductFlow.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)
@@ -70,29 +70,29 @@ class StockFragmentViewModel @Inject constructor(
         getAllCategoriesUseCase.execute().onEach {
             when(it){
                 is ResultData.Success ->{
-                    _getAllCategoriesLiveData.value = it.data
+                    _getAllCategoriesFlow.emit(it.data)
                 }
                 is ResultData.Message ->{
-                    _messageGetAllCategoriesLiveData.value = it.message
+                    _messageGetAllCategoriesFlow.emit(it.message)
                 }
                 is ResultData.Error ->{
-                    _errorGetAllCategoriesLiveData.value = it.error
+                    _errorGetAllCategoriesFlow.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun editProduct(body: EditProductRequestData,id:Int){
-        editProductUseCase.execute(body = body,id = id).onEach {
+    fun getAllProductByCategory(id:Int){
+        getAllProductsByCategoryUseCase.execute(id = id).onEach {
             when(it){
-                is ResultData.Success->{
-                    _editProductLiveData.value = it.data
+                is ResultData.Success ->{
+                    _getAllProduct.emit(it.data)
                 }
-                is ResultData.Message->{
-                    _messageEditProductLiveData.value = it.message
+                is ResultData.Message -> {
+                    _messageGetAllProduct.emit(it.message)
                 }
-                is ResultData.Error->{
-                    _errorEditProductLiveData.value = it.error
+                is ResultData.Error ->{
+                    _errorGetAllProduct.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)

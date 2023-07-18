@@ -27,8 +27,8 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
     }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 
     override fun editProductById(
-        body: EditProductRequestData,
-        id: Int
+        id: Int,
+        body: EditProductRequestData
     ) = flow {
         val response = apiService.editProductById(body = body, productId = id)
         if (response.isSuccessful){
@@ -85,6 +85,60 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
 
     override fun getAllImages() = flow {
         val response = apiService.getAllImages()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun getProductByName(name: String) = flow {
+        val response = apiService.getProductByName(name = name)
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun getAllProducts() = flow {
+        val response = apiService.getAllProducts()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun sellProduct(body: SellProductRequestData) = flow {
+        val response = apiService.sellProduct(body = body)
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun getAllBuy() = flow {
+        val response = apiService.getAllBuy()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun getAllSale() = flow {
+        val response = apiService.getAllSale()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun getStatistics() = flow {
+        val response = apiService.getStatistics()
         if (response.isSuccessful){
             emit(ResultData.Success(response.body()!!))
         }else{

@@ -31,8 +31,8 @@
             android:id="@+id/action_fragment_home_to_listProductsDialog"
             app:destination="@id/listProductsDialog" />
         <action
-            android:id="@+id/action_fragment_home_to_fragment_statistics"
-            app:destination="@id/fragment_statistics" />
+            android:id="@+id/action_fragment_home_to_monitoringFragment"
+            app:destination="@id/fragment_monitoring" />
     </fragment>
     <dialog
         android:id="@+id/editCategoryDialog"
@@ -43,11 +43,29 @@
         android:id="@+id/editProductDialog"
         android:name="com.example.market.presentation.ui.dialogs.EditProductDialog"
         android:label="EditProductDialog"
-        tools:layout="@layout/dialog_edit_product"/>
+        tools:layout="@layout/dialog_edit_product">
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </dialog>
     <dialog
         android:id="@+id/listProductsDialog"
-        android:name="com.example.market.presentation.ui.dialogs.ListProductsDialog"
+        android:name="com.example.market.presentation.ui.dialogs.listProducts.ListProductsDialog"
         android:label="ListProductsDialog"
-        tools:layout="@layout/rc_item_list_products"/>
+        tools:layout="@layout/rc_item_list_products">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </dialog>
+    <fragment
+        android:id="@+id/fragment_monitoring"
+        android:name="com.example.market.presentation.ui.monitoring.MonitoringFragment"
+        android:label="MonitoringFragment" />
 
 </navigation>

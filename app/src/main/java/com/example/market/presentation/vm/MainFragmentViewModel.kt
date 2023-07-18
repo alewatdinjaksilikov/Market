@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.AddProductRequestData
-import com.example.market.data.models.Product
 import com.example.market.data.models.ResultData
 import com.example.market.domain.usecase.AddProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

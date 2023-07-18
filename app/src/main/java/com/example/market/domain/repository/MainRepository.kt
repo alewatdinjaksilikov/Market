@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
-    fun addProduct(body:AddProductRequestData): Flow<ResultData<Any>>
+    fun addProduct(body:AddProductRequestData): Flow<ResultData<AddProductResponseData>>
 
-    fun editProductById(body:EditProductRequestData,id: Int):Flow<ResultData<Any>>
+    fun editProductById(id: Int,body:EditProductRequestData):Flow<ResultData<EditProductResponseData>>
 
-    fun deleteProduct(productId:Int):Flow<ResultData<Any>>
+    fun deleteProduct(productId:Int):Flow<ResultData<DeleteProductResponseData>>
 
     fun getAllCategories():Flow<ResultData<List<CategoryResponseData>>>
 
@@ -20,7 +20,19 @@ interface MainRepository {
 
     fun editCategory(body:AddCategoryRequestData,id: Int):Flow<ResultData<Any>>
 
-    fun getAllProductByCategory(id: Int):Flow<ResultData<List<Product>>>
+    fun getAllProductByCategory(id: Int):Flow<ResultData<List<ProductResponseData>>>
 
     fun getAllImages():Flow<ResultData<List<ImageResponseData>>>
+
+    fun getProductByName(name:String):Flow<ResultData<ProductResponseData>>
+
+    fun getAllProducts():Flow<ResultData<List<ProductResponseData>>>
+
+    fun sellProduct(body:SellProductRequestData):Flow<ResultData<EditProductResponseData>>
+
+    fun getAllBuy():Flow<ResultData<List<MonitoringResponseData>>>
+
+    fun getAllSale():Flow<ResultData<List<MonitoringResponseData>>>
+
+    fun getStatistics():Flow<ResultData<StatisticsResponseData>>
 }

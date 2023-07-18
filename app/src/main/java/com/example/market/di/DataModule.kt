@@ -21,7 +21,7 @@ class DataModule {
     @Singleton
     fun provideApi(client:OkHttpClient):ApiService{
         return Retrofit.Builder()
-            .baseUrl("https://api-warehousing.up.railway.app")
+            .baseUrl("http://stockcontrol.uz")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

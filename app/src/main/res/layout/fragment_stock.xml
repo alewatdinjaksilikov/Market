@@ -89,6 +89,28 @@
         app:layout_constraintEnd_toEndOf="@id/btn_search"
         app:layout_constraintTop_toTopOf="@id/tv_category"/>
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_stock_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="13dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_category"
+        app:layout_constraintStart_toStartOf="@id/guideline_ver1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include layout="@layout/rc_item_stock_category_shimmer"/>
+            <include layout="@layout/rc_item_stock_category_shimmer"/>
+            <include layout="@layout/rc_item_stock_category_shimmer"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_stock_category"
         android:layout_width="0dp"
@@ -101,13 +123,22 @@
         app:layout_constraintStart_toStartOf="@id/guideline_ver1"
         tools:listitem="@layout/rc_item_stock_category"/>
 
+    <View
+        android:id="@+id/rv_view"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_category"
+        app:layout_constraintStart_toStartOf="@id/guideline_ver1"
+        android:layout_marginTop="13dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="15dp"
-        app:layout_constraintTop_toBottomOf="@id/rv_stock_category"
+        app:layout_constraintTop_toBottomOf="@id/rv_view"
         app:layout_constraintStart_toStartOf="@id/rv_stock_category"
         app:layout_constraintEnd_toEndOf="@id/guideline_ver2"/>
     
@@ -122,6 +153,28 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/tv_category"
         app:layout_constraintTop_toBottomOf="@id/divider"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_stock_products"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_products"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/rc_item_stock_products_shimmer"/>
+            <include layout="@layout/rc_item_stock_products_shimmer"/>
+            <include layout="@layout/rc_item_stock_products_shimmer"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_stock_products"
@@ -129,6 +182,7 @@
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
+        android:layout_marginBottom="40dp"
         app:layout_constraintTop_toBottomOf="@id/tv_products"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

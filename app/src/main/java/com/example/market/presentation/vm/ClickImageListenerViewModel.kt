@@ -14,13 +14,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ClickImageListenerViewModel @Inject constructor():ViewModel() {
 
-    private val _imageClicked = MutableLiveData<String>()
-    val imageClicked: LiveData<String> get() = _imageClicked
+    private val _imageClicked = MutableSharedFlow<String>()
+    val imageClicked: SharedFlow<String> get() = _imageClicked
 
     fun onButtonClick(imageUrl: String) {
         Log.d("AAA","func onbuttonClick")
         viewModelScope.launch {
-            _imageClicked.value = imageUrl
+            _imageClicked.emit(imageUrl)
             Log.d("AAA","emit")
         }
     }

@@ -90,6 +90,7 @@
         android:background="@drawable/bg_edittext_add_product"
         android:gravity="center"
         android:hint="100"
+        android:inputType="number"
         android:padding="16dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/dropdown_type_product_layout"
@@ -100,7 +101,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dropdown_type_product_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="100dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:hint="Кг"
@@ -121,6 +122,20 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <EditText
+        android:id="@+id/et_product_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edittext_add_product"
+        android:hint="@string/tv_price_product"
+        android:padding="16dp"
+        android:inputType="number"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/guideline_ver2"
+        app:layout_constraintStart_toStartOf="@id/guideline_ver1"
+        app:layout_constraintTop_toBottomOf="@id/dropdown_type_product_layout" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_add_product_image"
@@ -135,7 +150,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/guideline_ver2"
         app:layout_constraintStart_toStartOf="@id/guideline_ver1"
-        app:layout_constraintTop_toBottomOf="@id/et_product_amount" />
+        app:layout_constraintTop_toBottomOf="@id/et_product_price" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_cancel"

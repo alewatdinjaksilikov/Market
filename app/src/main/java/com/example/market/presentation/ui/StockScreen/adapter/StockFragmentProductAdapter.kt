@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.market.data.models.Product
+import com.bumptech.glide.Glide
+import com.example.market.data.models.ProductResponseData
 import com.example.market.databinding.RcItemStockProductsBinding
 
-class StockFragmentProductAdapter:ListAdapter<Product,StockFragmentProductAdapter.StockFragmentProductViewHolder>(diffUtil) {
+class StockFragmentProductAdapter:ListAdapter<ProductResponseData,StockFragmentProductAdapter.StockFragmentProductViewHolder>(diffUtil) {
 
-    private var onPopUpMenuClickListener:((RcItemStockProductsBinding)->Unit)? = null
-    fun setOnClickPopUpMenu(block:(RcItemStockProductsBinding)->Unit){
+    private var onPopUpMenuClickListener:((RcItemStockProductsBinding,ProductResponseData)->Unit)? = null
+    fun setOnClickPopUpMenu(block:(RcItemStockProductsBinding,ProductResponseData)->Unit){
         onPopUpMenuClickListener = block
     }
 
@@ -19,10 +20,19 @@ class StockFragmentProductAdapter:ListAdapter<Product,StockFragmentProductAdapte
         fun setData(position:Int){
             val product = getItem(position)
 
-            binding.btnEdit.setOnClickListener {
-                onPopUpMenuClickListener?.invoke(binding)
+            Glide.with(binding.root)
+                .load(product.imageUrl)
+                .into(binding.ivProduct)
+
+            binding.apply {
+                tvProductName.text = product.name
+                tvAmount.text = product.amount.toString()
+                tvSizeProduct.text = 0.toString()
             }
 
+            binding.btnEdit.setOnClickListener {
+                onPopUpMenuClickListener?.invoke(binding,product)
+            }
         }
     }
 
@@ -44,12 +54,12 @@ class StockFragmentProductAdapter:ListAdapter<Product,StockFragmentProductAdapte
     }
 
 
-    private object diffUtil : DiffUtil.ItemCallback<Product>() {
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+    private object diffUtil : DiffUtil.ItemCallback<ProductResponseData>() {
+        override fun areItemsTheSame(oldItem: ProductResponseData, newItem: ProductResponseData): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+        override fun areContentsTheSame(oldItem: ProductResponseData, newItem: ProductResponseData): Boolean {
             return oldItem.id == newItem.id
         }
 

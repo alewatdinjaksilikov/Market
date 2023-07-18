@@ -3,20 +3,22 @@ package com.example.market.presentation.ui.HomeScreen
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.market.R
-import com.example.market.data.models.AddCategoryRequestData
+import com.example.market.data.models.SellProductRequestData
 import com.example.market.databinding.FragmentHomeBinding
 import com.example.market.presentation.ui.MainFragment
+import com.example.market.presentation.ui.MainFragmentDirections
 import com.example.market.presentation.vm.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -25,28 +27,44 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var binding: FragmentHomeBinding
     private var adapter = HomeScreenAdapter()
-//    private var shimmerAdapter = ShimmerLayoutAdapter(5)
     private val viewModel : HomeFragmentViewModel by viewModels()
+    private var pressedProduct = ""
+
+    val list = mutableListOf<String>()
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("LLL","Resume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("LLL","Start")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("LLL","Stop")
+        list.clear()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("LLL","Pause")
+        list.clear()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        viewModel.getAllCategories()
-//        binding.rvHome.adapter = shimmerAdapter
+        initVariables()
+        initObservables()
+        initListeners()
 
-//        lifecycleScope.launch {
-//            viewModel.addCategory(AddCategoryRequestData("Armatura","https://api-warehousing.up.railway.app/api/v1/images/1b8cc1a6-0828-4154-82ce-e6d5a111881b"))
-//            delay(2000)
-//            viewModel.addCategory(AddCategoryRequestData("Agash","https://api-warehousing.up.railway.app/api/v1/images/12d2521b-579f-4caa-831e-91c69a214c70"))
-//            delay(2000)
-//            viewModel.addCategory(AddCategoryRequestData("Truba","https://api-warehousing.up.railway.app/api/v1/images/92cb2a4b-1fd8-4702-bd53-0ac24598dfed"))
-//        }
+    }
 
-//        viewModel.addCategoryFlow.onEach {
-//            viewModel.getAllCategories()
-//        }.launchIn(lifecycleScope)
-
+    private fun initObservables() {
         viewModel.getAllCategoriesFlow.onEach {
             binding.rvHome.adapter = adapter
             adapter.submitList(it)
@@ -54,21 +72,52 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.shimmerHome.visibility = View.GONE
         }.launchIn(lifecycleScope)
 
-        viewModel.messageGetAllCategoriesFlow.onEach {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        viewModel.getAllProductsFlow.onEach {
+            it.forEach { data ->
+                list.add(data.name)
+            }
+            val adapterType = ArrayAdapter(requireContext(),R.layout.list_item_dropdown_menu,list)
+            binding.dropdownProducts.setAdapter(adapterType)
         }.launchIn(lifecycleScope)
 
-        viewModel.errorGetAllCategoriesFlow.onEach {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
+        viewModel.sellProductFlow.onEach {
+            Toast.makeText(requireContext(),it.message,Toast.LENGTH_SHORT).show()
         }.launchIn(lifecycleScope)
-
-        initVariables()
-        initListeners()
-
     }
 
     private fun initListeners() {
         drawerLayoutListener()
+
+        binding.tvCategory.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToMonitoringFragment() )
+        }
+
+        adapter.setOnItemClick {
+            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToListProductsDialog(it.id,it.name))
+        }
+
+        binding.btnSales.setOnClickListener {
+            val amount = binding.btnEditAmount.text.toString()
+            if (pressedProduct!="" && amount!=""){
+                lifecycleScope.launch{
+                    viewModel.sellProduct(
+                        SellProductRequestData(
+                            amount = amount.toInt(),
+                            name = pressedProduct
+                        )
+                    )
+                }
+            }else{
+                Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        binding.dropdownProducts.setOnItemClickListener { adapterView, view, i, l ->
+            val item = adapterView.getItemAtPosition(i).toString()
+            pressedProduct = list[i]
+            list.clear()
+        }
 
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.open()
@@ -78,6 +127,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initVariables() {
+        lifecycleScope.launch {
+            viewModel.getAllCategories()
+            viewModel.getAllProducts()
+        }
     }
 
     private fun drawerLayoutListener() {
@@ -102,18 +155,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.fragment_statistics -> {
-                    findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToFragmentStatistics())
+                R.id.fragment_monitoring -> {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
             }
             true
         }
     }
-
-
-    //        DropDown settings
-////        val items = listOf("Armatura", "Agash", "Shrup")
-////        val adapter = ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, items)
-////        binding.dropdownCategory.setAdapter(adapter)
 }

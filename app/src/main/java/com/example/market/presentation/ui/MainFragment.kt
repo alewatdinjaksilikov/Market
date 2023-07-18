@@ -33,6 +33,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding.btnAddProduct.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToAddProductDialog2())
         }
+
         initVariables()
         initListeners()
     }

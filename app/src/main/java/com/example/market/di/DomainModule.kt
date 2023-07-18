@@ -1,7 +1,5 @@
 package com.example.market.di
 
-import com.example.market.data.network.ApiService
-import com.example.market.data.repository.MainRepositoryImpl
 import com.example.market.domain.repository.MainRepository
 import com.example.market.domain.usecase.*
 import com.example.market.domain.usecase.impl.*
@@ -9,7 +7,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -58,6 +55,31 @@ class DomainModule {
     @Provides
     fun getAllProductByCategoryUseCase(mainRepository: MainRepository):GetAllProductsByCategoryUseCase{
         return GetAllProductsByCategoryUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun getProductByNameUseCase(mainRepository: MainRepository):GetProductByNameUseCase{
+        return GetProductByNameUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun getAllProductsUseCase(mainRepository: MainRepository):GetAllProductsUseCase{
+        return GetAllProductsUseCaseImpl(mainRepository= mainRepository)
+    }
+
+    @Provides
+    fun sellProductUseCase(mainRepository: MainRepository):SellProductUseCase{
+        return SellProductUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun getAllBuyUseCase(mainRepository: MainRepository):GetAllBuyUseCase{
+        return GetAllBuyUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun getAllSaleUseCase(mainRepository: MainRepository):GetAllSaleUseCase{
+        return GetAllSaleUseCaseImpl(mainRepository = mainRepository)
     }
 
 }

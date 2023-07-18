@@ -35,6 +35,21 @@
         app:layout_constraintGuide_end="16dp" />
 
     <TextView
+        android:id="@+id/tv_no_products"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Нет продуктов"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="@id/guideline_hor1"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_hor2"
+        app:layout_constraintStart_toStartOf="@id/guideline_ver1"
+        app:layout_constraintEnd_toEndOf="@id/guideline_ver2"/>
+
+    <TextView
         android:id="@+id/tv_name_category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,7 +59,6 @@
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/montserrat"
         android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -8,20 +8,21 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
     @POST("/api/v1/products")
-    suspend fun addProduct(@Body body: AddProductRequestData): Response<Any>
+    suspend fun addProduct(@Body body: AddProductRequestData): Response<AddProductResponseData>
 
-    @PUT("/api/v1/products/{productId}")
+    @PUT("/api/v1/products/{id}")
     suspend fun editProductById(
-        @Body body: EditProductRequestData,
-        @Path("productId") productId: Int
-    ): Response<Any>
+        @Path("id") productId: Int,
+        @Body body: EditProductRequestData
+    ): Response<EditProductResponseData>
 
     @DELETE("/api/v1/products/{productId}")
-    suspend fun deleteProduct(@Path("productId") productId: Int): Response<Any>
+    suspend fun deleteProduct(@Path("productId") productId: Int): Response<DeleteProductResponseData>
 
     @GET("/api/v1/categories")
     suspend fun getAllCategories(): Response<List<CategoryResponseData>>
@@ -38,9 +39,31 @@ interface ApiService {
         @Path("categoryId") id: Int
     ): Response<Any>
 
-    @GET("/api/v1/categories/{categoryId}/products")
-    suspend fun getAllProductByCategory(@Path("categoryId") id: Int): Response<List<Product>>
+    @GET("/api/v1/categories/{id}/products")
+    suspend fun getAllProductByCategory(@Path("id") id: Int): Response<List<ProductResponseData>>
 
     @GET("/api/v1/images")
     suspend fun getAllImages():Response<List<ImageResponseData>>
+
+    @GET("/api/v1/products/find")
+    suspend fun getProductByName(
+        @Query("search")name : String
+    ):Response<ProductResponseData>
+
+    @GET("/api/v1/products")
+    suspend fun getAllProducts():Response<List<ProductResponseData>>
+
+    @POST("/api/v1/products/sell")
+    suspend fun sellProduct(
+        @Body body : SellProductRequestData
+    ):Response<EditProductResponseData>
+
+    @GET("/api/v1/monitoring/buy")
+    suspend fun getAllBuy():Response<List<MonitoringResponseData>>
+
+    @GET("/api/v1/monitoring/sale")
+    suspend fun getAllSale():Response<List<MonitoringResponseData>>
+
+    @GET("/api/v1/statistics")
+    suspend fun getStatistics():Response<StatisticsResponseData>
 }

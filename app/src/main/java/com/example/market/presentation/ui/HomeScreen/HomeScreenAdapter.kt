@@ -10,7 +10,10 @@ import com.example.market.data.models.CategoryResponseData
 import com.example.market.databinding.RcItemHomeBinding
 
 class HomeScreenAdapter:ListAdapter<CategoryResponseData,HomeScreenAdapter.ProductViewHolder>(diffUtil) {
-
+    private var onItemClicked: ((CategoryResponseData) -> Unit)? = null
+    fun setOnItemClick(block: (CategoryResponseData) -> Unit) {
+        onItemClicked = block
+    }
 
     inner class ProductViewHolder(private val binding:RcItemHomeBinding):RecyclerView.ViewHolder(binding.root){
         fun setData(position: Int){
@@ -21,6 +24,10 @@ class HomeScreenAdapter:ListAdapter<CategoryResponseData,HomeScreenAdapter.Produ
                 .into(binding.ivProduct)
 
             binding.tvProductName.text = category.name
+
+            binding.root.setOnClickListener {
+                onItemClicked?.invoke(category)
+            }
         }
     }
 

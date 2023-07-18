@@ -16,10 +16,23 @@
     <string name="tv_statistic_ru">Статистика</string>
     <string name="tv_monitoring_ru">Мониторинг</string>
     <string name="tv_stock_ru">Склад</string>
+    <string name="tv_welcome">Добро пожаловать</string>
+    <string name="tv_registration">Регистрация</string>
+    <string name="tv_authorization">Авторизация</string>
+    <string name="tv_register_your_new_account">Зарегиструйте свой новый аккаунт</string>
+    <string name="tv_surname">Фамилия</string>
+    <string name="tv_name">Имя</string>
+    <string name="tv_998">+998</string>
+    <string name="tv_already_have_an_account">Уже есть учетная запись?</string>
+    <string name="tv_login">Login</string>
+    <string name="tv_price_product">Цена товара</string>
+    <string name="tv_monitoring">Мониторинг</string>
 
     <string-array name="type">
         <item>KG</item>
         <item>Litr</item>
         <item>Metr</item>
     </string-array>
+
+    <string name="tv_salary">+$%s\\</string>
 </resources>
