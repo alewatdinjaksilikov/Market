@@ -29,28 +29,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var adapter = HomeScreenAdapter()
     private val viewModel : HomeFragmentViewModel by viewModels()
     private var pressedProduct = ""
-
     val list = mutableListOf<String>()
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("LLL","Resume")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("LLL","Start")
-    }
 
     override fun onStop() {
         super.onStop()
-        Log.d("LLL","Stop")
+        list.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         list.clear()
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("LLL","Pause")
         list.clear()
     }
 
@@ -127,6 +119,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initVariables() {
+        list.clear()
         lifecycleScope.launch {
             viewModel.getAllCategories()
             viewModel.getAllProducts()
@@ -157,6 +150,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when(it.itemId){
                 R.id.fragment_monitoring -> {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    val navController = Navigation.findNavController(requireActivity(),R.id.fragmentContainerMain)
+                    navController.navigate(MainFragmentDirections.actionMainFragmentToFragmentMonitoring())
                 }
             }
             true

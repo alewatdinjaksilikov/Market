@@ -82,4 +82,9 @@ class DomainModule {
         return GetAllSaleUseCaseImpl(mainRepository = mainRepository)
     }
 
+    @Provides
+    fun getStatistics(mainRepository: MainRepository):GetStatisticsUseCase{
+        return GetStatisticsUseCaseImpl(mainRepository = mainRepository)
+    }
+
 }

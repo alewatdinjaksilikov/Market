@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addProductDialog2"
             app:destination="@id/addProductDialog2" />
+        <action
+            android:id="@+id/action_mainFragment_to_fragment_monitoring"
+            app:destination="@id/fragment_monitoring" />
     </fragment>
     <dialog
         android:id="@+id/addProductDialog2"
@@ -32,4 +35,9 @@
             android:id="@+id/action_imagesFragment_to_addProductDialog2"
             app:destination="@id/addProductDialog2" />
     </dialog>
+    <fragment
+        android:id="@+id/fragment_monitoring"
+        android:name="com.example.market.presentation.ui.monitoring.MonitoringFragment"
+        android:label="MonitoringFragment"
+        tools:layout="@layout/fragment_monitoring"/>
 </navigation>
