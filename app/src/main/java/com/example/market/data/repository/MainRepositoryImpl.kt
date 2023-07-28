@@ -71,6 +71,15 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
         else emit(ResultData.Message(response.message()))
     }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 
+    override fun getCategoryById(id: Int) = flow{
+        val response = apiService.getCategoryById(id = id)
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
     override fun editCategory(body: AddCategoryRequestData, id: Int) = flow {
         val response = apiService.editCategory(body = body, id = id)
         if (response.isSuccessful) emit(ResultData.Success(response.body()!!))

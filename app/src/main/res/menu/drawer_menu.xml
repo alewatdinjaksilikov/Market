@@ -3,20 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item
+        android:id="@+id/fragment_monitoring"
+        android:icon="@drawable/ic_category"
+        android:title="@string/tv_monitoring_ru"/>
 
-    <group android:checkableBehavior="single">
 
-        <item android:title="Bas menyu">
-            <menu>
-                <item
-                    android:id="@+id/fragment_monitoring"
-                    android:icon="@drawable/ic_category"
-                    android:title="@string/tv_monitoring_ru"/>
+<!--    <group android:checkableBehavior="single">-->
 
-            </menu>
-        </item>
+<!--        <item android:title="Bas menyu">-->
+<!--            <menu>-->
 
-    </group>
+
+<!--            </menu>-->
+<!--        </item>-->
+
+<!--    </group>-->
 
 
 

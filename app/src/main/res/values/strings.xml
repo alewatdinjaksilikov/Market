@@ -35,4 +35,6 @@
     </string-array>
 
     <string name="tv_salary">+$%s\\</string>
+    <string name="tv_add">Добавить</string>
+    <string name="tv_add_category">Добавить категорию</string>
 </resources>

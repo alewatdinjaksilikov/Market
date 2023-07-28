@@ -16,9 +16,11 @@ interface MainRepository {
 
     fun addCategory(body:AddCategoryRequestData):Flow<ResultData<AddCategoryResponseData>>
 
-    fun deleteCategory(id:Int):Flow<ResultData<Any>>
+    fun deleteCategory(id:Int):Flow<ResultData<EditProductResponseData>>
 
-    fun editCategory(body:AddCategoryRequestData,id: Int):Flow<ResultData<Any>>
+    fun getCategoryById(id: Int):Flow<ResultData<GetCategory>>
+
+    fun editCategory(body:AddCategoryRequestData,id: Int):Flow<ResultData<EditProductResponseData>>
 
     fun getAllProductByCategory(id: Int):Flow<ResultData<List<ProductResponseData>>>
 

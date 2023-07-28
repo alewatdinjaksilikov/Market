@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market.data.models.MonitoringResponseData
 import com.example.market.databinding.RvItemPurchaseBinding
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+import java.util.*
 
 class MonitoringRvPurchaseAdapter:
     ListAdapter<MonitoringResponseData, MonitoringRvPurchaseAdapter.MonitoringRvPurchaseVH>(diffUtil) {
@@ -20,7 +24,7 @@ class MonitoringRvPurchaseAdapter:
                 tvNameProduct.text = p.name
                 tvCountProduct.text = p.count.toString()
                 tvProductType.text = p.unit
-                tvSalaryProduct.text = p.price.toString()
+                tvSalaryProduct.text = formatNumberWithThousandsSeparator(p.price)
             }
         }
     }
@@ -44,5 +48,10 @@ class MonitoringRvPurchaseAdapter:
             return oldItem.name == newItem.name
         }
 
+    }
+
+    fun formatNumberWithThousandsSeparator(number: Int): String {
+        val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
+        return numberFormat.format(number)
     }
 }

@@ -9,5 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_btn_add">#51C1F5</color>
     <color name="color_btn_add_dark">#3C86A8</color>
-    <color name="color_ripple_btn_add">#7A7A7A</color>
+    <color name="color_ripple">#7A7A7A</color>
+    <color name="color_custom_green">#33EE46</color>
+    <color name="color_custom_red">#EC2E2E</color>
+    <color name="color_custom_white">#F7F7F7</color>
+    <color name="color_custom_blue">#33B6EE</color>
+    <color name="custom_color_grey">#848488</color>
+    <color name="custom_color_grey2">#EEEEEF</color>
+    <color name="tab_bg_color">#EEEEEF</color>
 </resources>

@@ -43,6 +43,11 @@ class DomainModule {
     }
 
     @Provides
+    fun getCategoryByIdUseCase(mainRepository: MainRepository):GetCategoryByIdUseCase{
+        return GetCategoryByIdUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
     fun editProductUseCase(mainRepository: MainRepository):EditProductUseCase{
         return EditProductUseCaseImpl(mainRepository = mainRepository)
     }

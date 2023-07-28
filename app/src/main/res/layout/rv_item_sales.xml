@@ -58,7 +58,7 @@
         tools:text="3000"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#33EE46"
+        android:textColor="@color/color_custom_green"
         app:layout_constraintTop_toTopOf="@id/tv_name_product"
         app:layout_constraintBottom_toBottomOf="@id/tv_count_product"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -7,37 +7,34 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.market.presentation.ui.MainFragment"
+        android:name="com.example.market.presentation.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addProductDialog2"
             app:destination="@id/addProductDialog2" />
-        <action
-            android:id="@+id/action_mainFragment_to_fragment_monitoring"
-            app:destination="@id/fragment_monitoring" />
     </fragment>
     <dialog
         android:id="@+id/addProductDialog2"
-        android:name="com.example.market.presentation.ui.dialogs.AddProductDialog"
+        android:name="com.example.market.presentation.ui.dialogs.add.screen.AddProductDialog"
         android:label="AddProductDialog"
         tools:layout="@layout/dialog_add_product">
         <action
             android:id="@+id/action_addProductDialog2_to_imagesFragment"
             app:destination="@id/imagesFragment" />
+        <action
+            android:id="@+id/action_addProductDialog2_to_categoryDialog"
+            app:destination="@id/categoryDialog" />
     </dialog>
     <dialog
         android:id="@+id/imagesFragment"
-        android:name="com.example.market.presentation.ui.ImagesScreen.ImagesFragment"
+        android:name="com.example.market.presentation.ui.image.ImagesFragment"
         android:label="ImagesFragment"
         tools:layout="@layout/fragment_images">
-        <action
-            android:id="@+id/action_imagesFragment_to_addProductDialog2"
-            app:destination="@id/addProductDialog2" />
     </dialog>
-    <fragment
-        android:id="@+id/fragment_monitoring"
-        android:name="com.example.market.presentation.ui.monitoring.MonitoringFragment"
-        android:label="MonitoringFragment"
-        tools:layout="@layout/fragment_monitoring"/>
+    <dialog
+        android:id="@+id/categoryDialog"
+        android:name="com.example.market.presentation.ui.dialogs.add.dialog.CategoryDialog"
+        android:label="CategoryDialog"
+        tools:layout="@layout/dialog_category"/>
 </navigation>

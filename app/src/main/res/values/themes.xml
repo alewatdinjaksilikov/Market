@@ -46,4 +46,8 @@
         <item name="cornerSizeBottomRight">35dp</item>
         <item name="cornerSizeBottomLeft">35dp</item>
     </style>
+
+    <style name="CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

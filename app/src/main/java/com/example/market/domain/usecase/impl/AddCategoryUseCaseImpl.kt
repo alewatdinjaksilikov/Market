@@ -12,7 +12,6 @@ import javax.inject.Inject
 import kotlin.math.floor
 
 class AddCategoryUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):AddCategoryUseCase{
-
     override fun execute(body: AddCategoryRequestData): Flow<ResultData<AddCategoryResponseData>>{
         return mainRepository.addCategory(body = body)
     }

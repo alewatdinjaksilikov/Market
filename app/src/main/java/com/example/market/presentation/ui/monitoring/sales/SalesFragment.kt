@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.market.R
 import com.example.market.databinding.FragmentSalesBinding
-import com.example.market.presentation.vm.MonitoringFragmentViewModel
+import com.example.market.presentation.ui.monitoring.vm.MonitoringFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -34,7 +34,14 @@ class SalesFragment : Fragment() {
 
         initVariables()
         initObservables()
+        initListeners()
+    }
 
+    private fun initListeners() {
+        binding.swipeRefreshSales.setOnRefreshListener {
+            initVariables()
+            binding.swipeRefreshSales.isRefreshing = false
+        }
     }
 
     private fun initObservables() {

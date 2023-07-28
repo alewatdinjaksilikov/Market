@@ -30,14 +30,19 @@ interface ApiService {
     @POST("/api/v1/categories")
     suspend fun addCategory(@Body body: AddCategoryRequestData): Response<AddCategoryResponseData>
 
-    @DELETE("/api/v1/categories/{categoryId}")
-    suspend fun deleteCategory(@Path("categoryId") id: Int): Response<Any>
+    @DELETE("/api/v1/categories/{id}")
+    suspend fun deleteCategory(@Path("id") id: Int): Response<EditProductResponseData>
 
     @PUT("/api/v1/categories/{categoryId}")
     suspend fun editCategory(
         @Body body: AddCategoryRequestData,
         @Path("categoryId") id: Int
-    ): Response<Any>
+    ): Response<EditProductResponseData>
+
+    @GET("/api/v1/categories/{id}")
+    suspend fun getCategoryById(
+        @Path("id") id: Int
+    ):Response<GetCategory>
 
     @GET("/api/v1/categories/{id}/products")
     suspend fun getAllProductByCategory(@Path("id") id: Int): Response<List<ProductResponseData>>
