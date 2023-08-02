@@ -6,8 +6,8 @@ import com.example.market.data.models.EditProductRequestData
 import com.example.market.data.models.EditProductResponseData
 import com.example.market.data.models.ProductResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.EditProductUseCase
-import com.example.market.domain.usecase.GetProductByNameUseCase
+import com.example.market.domain.usecase.editProduct.EditProductUseCase
+import com.example.market.domain.usecase.getProductByName.GetProductByNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

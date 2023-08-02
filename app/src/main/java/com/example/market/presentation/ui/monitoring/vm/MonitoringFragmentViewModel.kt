@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.MonitoringResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.GetAllBuyUseCase
-import com.example.market.domain.usecase.GetAllSaleUseCase
+import com.example.market.domain.usecase.getAllBuy.GetAllBuyUseCase
+import com.example.market.domain.usecase.getAllSale.GetAllSaleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

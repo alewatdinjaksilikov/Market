@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -37,4 +37,51 @@
         android:name="com.example.market.presentation.ui.dialogs.add.dialog.CategoryDialog"
         android:label="CategoryDialog"
         tools:layout="@layout/dialog_category"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.market.presentation.ui.auth.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_authorizationFragment2"
+            app:destination="@id/authorizationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.market.presentation.ui.auth.authorization.AuthorizationFragment"
+        android:label="AuthorizationFragment"
+        tools:layout="@layout/fragment_authorization">
+        <action
+            android:id="@+id/action_authorizationFragment2_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/authorizationFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_authorizationFragment2_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/authorizationFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.market.presentation.ui.auth.registration.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_registrationFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_registrationFragment_to_authorizationFragment2"
+            app:destination="@id/authorizationFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/registrationFragment"/>
+    </fragment>
 </navigation>

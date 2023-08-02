@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.ResultData
 import com.example.market.data.models.StatisticsResponseData
-import com.example.market.domain.usecase.GetStatisticsUseCase
+import com.example.market.domain.usecase.getStatistics.GetStatisticsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

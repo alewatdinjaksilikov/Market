@@ -1,21 +1,41 @@
 package com.example.market.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.market.data.network.ApiService
-import com.example.market.data.repository.MainRepositoryImpl
-import com.example.market.domain.repository.MainRepository
+import com.example.market.data.network.LoginApiService
+import com.example.market.data.repository.login.LoginRepositoryImpl
+import com.example.market.data.repository.main.MainRepositoryImpl
+import com.example.market.data.utils.CustomInterceptor
+import com.example.market.domain.repository.login.LoginRepository
+import com.example.market.domain.repository.main.MainRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
+import kotlin.math.log
 
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
+
+    @Provides
+    @Singleton
+    fun provideLoginApi(client: OkHttpClient):LoginApiService{
+        return Retrofit.Builder()
+            .baseUrl("http://stockcontrol.uz")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(LoginApiService::class.java)
+    }
 
     @Provides
     @Singleton
@@ -30,9 +50,11 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor):OkHttpClient{
+    fun provideOkHttpClient(@ApplicationContext context: Context,interceptor: HttpLoggingInterceptor):OkHttpClient{
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor).build()
+            .addInterceptor(interceptor)
+            .addInterceptor(ChuckerInterceptor(context))
+            .addInterceptor(CustomInterceptor()).build()
     }
 
     @Provides
@@ -47,6 +69,12 @@ class DataModule {
     @Singleton
     fun mainRepository(apiService:ApiService): MainRepository {
         return MainRepositoryImpl(apiService = apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun loginRepository(loginApiService: LoginApiService):LoginRepository{
+        return LoginRepositoryImpl(loginApiService = loginApiService)
     }
 
 }

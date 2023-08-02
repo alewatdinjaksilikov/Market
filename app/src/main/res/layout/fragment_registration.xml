@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_registration"
+        android:id="@+id/tv_authorization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tv_registration"
@@ -35,66 +35,106 @@
         android:textColor="@color/custom_color_grey"
         android:layout_marginTop="7dp"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_registration"
-        app:layout_constraintStart_toStartOf="@id/tv_registration"
-        app:layout_constraintEnd_toEndOf="@id/tv_registration"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_authorization"
+        app:layout_constraintStart_toStartOf="@id/tv_authorization"
+        app:layout_constraintEnd_toEndOf="@id/tv_authorization"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_surname"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/surname"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/tv_surname"
-        android:inputType="text"
-        android:textSize="18sp"
-        android:padding="13dp"
-        android:background="@drawable/bg_ets_registration"
+        android:textColorHint="@color/custom_color_grey"
+        style="@style/StyleCustomTextInputLayout"
         app:layout_constraintTop_toBottomOf="@id/tv_register_your_new_account"
         app:layout_constraintStart_toStartOf="@id/tv_register_your_new_account"
-        app:layout_constraintEnd_toEndOf="@id/tv_register_your_new_account"/>
+        app:layout_constraintEnd_toEndOf="@id/tv_register_your_new_account">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_surname"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:background="@drawable/bg_text_field"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/tv_name"
-        android:textSize="18sp"
-        android:inputType="text"
-        android:padding="13dp"
-        android:background="@drawable/bg_ets_registration"
-        app:layout_constraintTop_toBottomOf="@id/et_surname"
-        app:layout_constraintStart_toStartOf="@id/et_surname"
-        app:layout_constraintEnd_toEndOf="@id/et_surname"/>
+        android:textColorHint="@color/custom_color_grey"
+        style="@style/StyleCustomTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/surname"
+        app:layout_constraintStart_toStartOf="@id/surname"
+        app:layout_constraintEnd_toEndOf="@id/surname">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_phone"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:background="@drawable/bg_text_field"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/tv_998"
-        android:textSize="18sp"
-        android:inputType="phone"
-        android:padding="13dp"
-        android:background="@drawable/bg_ets_registration"
-        app:layout_constraintTop_toBottomOf="@id/et_name"
-        app:layout_constraintStart_toStartOf="@id/et_surname"
-        app:layout_constraintEnd_toEndOf="@id/et_surname"/>
+        android:textColorHint="@color/custom_color_grey"
+        style="@style/StyleCustomTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintEnd_toEndOf="@id/name">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="phone"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/black"
+            android:maxEms="13"
+            android:maxLength="13"
+            android:maxLines="1"
+            android:background="@drawable/bg_text_field"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:hint="Пароль"
-        android:textSize="18sp"
-        android:inputType="textPassword"
-        android:padding="13dp"
-        android:background="@drawable/bg_ets_registration"
-        app:layout_constraintTop_toBottomOf="@id/et_phone"
-        app:layout_constraintStart_toStartOf="@id/et_surname"
-        app:layout_constraintEnd_toEndOf="@id/et_surname"/>
+        app:passwordToggleEnabled="true"
+        android:textColorHint="@color/custom_color_grey"
+        style="@style/StyleCustomTextInputLayout"
+        app:layout_constraintEnd_toEndOf="@id/phone"
+        app:layout_constraintStart_toStartOf="@id/phone"
+        app:layout_constraintTop_toBottomOf="@+id/phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:background="@drawable/bg_text_field"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_registration"
@@ -106,9 +146,9 @@
         android:background="@drawable/bg_btn_registration"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/montserrat"
-        app:layout_constraintTop_toBottomOf="@id/et_password"
-        app:layout_constraintStart_toStartOf="@id/et_password"
-        app:layout_constraintEnd_toEndOf="@id/et_password"/>
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="@id/password"
+        app:layout_constraintEnd_toEndOf="@id/password"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -131,9 +171,11 @@
             android:textSize="16sp"/>
 
         <TextView
+            android:id="@+id/tv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_login"
+            android:padding="8dp"
             android:layout_marginStart="10dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"

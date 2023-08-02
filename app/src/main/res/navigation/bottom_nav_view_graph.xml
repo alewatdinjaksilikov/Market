@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_fragment_home_to_productsDialog"
             app:destination="@id/productsDialog" />
+        <action
+            android:id="@+id/action_fragment_home_to_authorizationFragment"
+            app:destination="@id/authorizationFragment" />
     </fragment>
     <dialog
         android:id="@+id/editCategoryDialog"
@@ -111,5 +114,9 @@
         android:name="com.example.market.presentation.ui.dialogs.add.dialog.CategoryDialog"
         android:label="CategoryDialog"
         tools:layout="@layout/dialog_category"/>
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.market.presentation.ui.auth.authorization.AuthorizationFragment"
+        android:label="AuthorizationFragment" />
 
 </navigation>

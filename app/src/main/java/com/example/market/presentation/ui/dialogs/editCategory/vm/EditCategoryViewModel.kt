@@ -6,9 +6,8 @@ import com.example.market.data.models.AddCategoryRequestData
 import com.example.market.data.models.EditProductResponseData
 import com.example.market.data.models.GetCategory
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.DeleteCategoryUseCase
-import com.example.market.domain.usecase.EditCategoryUseCase
-import com.example.market.domain.usecase.GetCategoryByIdUseCase
+import com.example.market.domain.usecase.editCategory.EditCategoryUseCase
+import com.example.market.domain.usecase.getCategoryById.GetCategoryByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

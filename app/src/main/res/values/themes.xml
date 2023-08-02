@@ -50,4 +50,13 @@
     <style name="CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
     </style>
+
+
+    <style name="StyleCustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/custom_color_grey</item>
+        <item name="hintTextColor">@color/custom_color_grey</item>
+        <item name="startIconTint">@color/black</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
 </resources>

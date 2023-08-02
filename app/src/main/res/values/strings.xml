@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Market</string>
+    <string name="app_name">Stock Control</string>
     <string name="selected_item">Selected item</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
@@ -37,4 +37,8 @@
     <string name="tv_salary">+$%s\\</string>
     <string name="tv_add">Добавить</string>
     <string name="tv_add_category">Добавить категорию</string>
+    <string name="tv_login_to_your_acc">войдите в свой аккаунт</string>
+    <string name="tv_forgot_password">Забылы пароль?</string>
+    <string name="tv_dont_have_an_account">У вас нет аккаунта?</string>
+    <string name="tv_sign_up">Sign up</string>
 </resources>

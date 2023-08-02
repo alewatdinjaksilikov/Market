@@ -3,10 +3,10 @@ package com.example.market.presentation.ui.stock.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.*
-import com.example.market.domain.usecase.DeleteCategoryUseCase
-import com.example.market.domain.usecase.DeleteProductUseCase
-import com.example.market.domain.usecase.GetAllCategoriesUseCase
-import com.example.market.domain.usecase.GetAllProductsByCategoryUseCase
+import com.example.market.domain.usecase.deleteCategory.DeleteCategoryUseCase
+import com.example.market.domain.usecase.deleteProduct.DeleteProductUseCase
+import com.example.market.domain.usecase.getAllCategorires.GetAllCategoriesUseCase
+import com.example.market.domain.usecase.getAllProductsByCategory.GetAllProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

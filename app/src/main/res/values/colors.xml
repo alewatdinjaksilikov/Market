@@ -17,4 +17,5 @@
     <color name="custom_color_grey">#848488</color>
     <color name="custom_color_grey2">#EEEEEF</color>
     <color name="tab_bg_color">#EEEEEF</color>
+    <color name="color_custom_orange">#FFCC00</color>
 </resources>

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.ProductResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.GetAllProductsByCategoryUseCase
+import com.example.market.domain.usecase.getAllProductsByCategory.GetAllProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
