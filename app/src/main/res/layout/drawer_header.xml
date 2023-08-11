@@ -22,10 +22,9 @@
         android:layout_marginStart="16dp"/>
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Имя"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="@id/logo_user"
@@ -33,14 +32,13 @@
         android:layout_marginStart="8dp"/>
 
     <TextView
-        android:id="@+id/tv_surname"
+        android:id="@+id/tv_header_surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Фамилия"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:layout_constraintStart_toStartOf="@id/tv_name"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_header_name"
+        app:layout_constraintStart_toStartOf="@id/tv_header_name"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +49,7 @@
         android:textColor="@color/custom_color_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_surname"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_header_surname"/>
 
     
 

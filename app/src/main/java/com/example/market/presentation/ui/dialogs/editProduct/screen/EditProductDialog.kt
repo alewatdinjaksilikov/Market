@@ -128,7 +128,6 @@ class EditProductDialog:BottomSheetDialogFragment() {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
             imageUrl = result
-            makeToast(result)
         }
 
         viewModelEdit.getProductFlow.onEach {

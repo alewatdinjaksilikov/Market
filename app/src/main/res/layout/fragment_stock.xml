@@ -148,6 +148,19 @@
                 android:layout_marginTop="13dp"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <TextView
+                android:id="@+id/tv_no_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:translationZ="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/rv_view"
+                app:layout_constraintBottom_toBottomOf="@id/rv_view"
+                app:layout_constraintStart_toStartOf="@id/guideline_ver1"
+                app:layout_constraintEnd_toEndOf="@id/guideline_ver2"/>
+
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
                 android:layout_width="0dp"

@@ -21,9 +21,9 @@ class AuthViewModel @Inject constructor(
     private val authorizationUseCase: AuthorizationUseCase
 ):ViewModel() {
 
-    private val _registrationFlow = MutableSharedFlow<LoginResponseData>()
-    val registrationFlow : SharedFlow<LoginResponseData> get() = _registrationFlow
-
+    private val _registrationFlow = MutableSharedFlow<LoginResponseData?>()
+    val registrationFlow : SharedFlow<LoginResponseData?> get() = _registrationFlow
+    
     private val _messageRegistration = MutableSharedFlow<String>()
     val messageRegistration : SharedFlow<String> get() = _messageRegistration
 
@@ -47,8 +47,8 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    private val _authorizationFlow= MutableSharedFlow<LoginResponseData>()
-    val authorizationFlow: SharedFlow<LoginResponseData> get() = _authorizationFlow
+    private val _authorizationFlow= MutableSharedFlow<LoginResponseData?>()
+    val authorizationFlow: SharedFlow<LoginResponseData?> get() = _authorizationFlow
 
     private val _messageAuthorization = MutableSharedFlow<String>()
     val messageAuthorization:SharedFlow<String> get() = _messageAuthorization

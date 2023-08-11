@@ -4,6 +4,8 @@ import com.example.market.domain.repository.login.LoginRepository
 import com.example.market.domain.repository.main.MainRepository
 import com.example.market.domain.usecase.addCategory.AddCategoryUseCase
 import com.example.market.domain.usecase.addCategory.impl.AddCategoryUseCaseImpl
+import com.example.market.domain.usecase.addImage.AddImageUseCase
+import com.example.market.domain.usecase.addImage.impl.AddImageUseCaseImpl
 import com.example.market.domain.usecase.addProduct.AddProductUseCase
 import com.example.market.domain.usecase.addProduct.impl.AddProductUseCaseImpl
 import com.example.market.domain.usecase.deleteCategory.DeleteCategoryUseCase
@@ -12,8 +14,12 @@ import com.example.market.domain.usecase.deleteProduct.DeleteProductUseCase
 import com.example.market.domain.usecase.deleteProduct.impl.DeleteProductUseCaseImpl
 import com.example.market.domain.usecase.editCategory.EditCategoryUseCase
 import com.example.market.domain.usecase.editCategory.impl.EditCategoryUseCaseImpl
+import com.example.market.domain.usecase.editPassword.EditPasswordUseCaseImpl
+import com.example.market.domain.usecase.editPassword.impl.EditPasswordUseCase
 import com.example.market.domain.usecase.editProduct.EditProductUseCase
 import com.example.market.domain.usecase.editProduct.impl.EditProductUseCaseImpl
+import com.example.market.domain.usecase.editProfile.EditProfileUseCase
+import com.example.market.domain.usecase.editProfile.impl.EditProfileUseCaseImpl
 import com.example.market.domain.usecase.getAllBuy.GetAllBuyUseCase
 import com.example.market.domain.usecase.getAllBuy.impl.GetAllBuyUseCaseImpl
 import com.example.market.domain.usecase.getAllCategorires.GetAllCategoriesUseCase
@@ -105,7 +111,7 @@ class DomainModule {
 
     @Provides
     fun getAllProductsUseCase(mainRepository: MainRepository): GetAllProductsUseCase {
-        return GetAllProductsUseCaseImpl(mainRepository= mainRepository)
+        return GetAllProductsUseCaseImpl(mainRepository = mainRepository)
     }
 
     @Provides
@@ -129,13 +135,28 @@ class DomainModule {
     }
 
     @Provides
-    fun authorizationUseCase(loginRepository: LoginRepository):AuthorizationUseCase{
+    fun authorizationUseCase(loginRepository: LoginRepository): AuthorizationUseCase {
         return AuthorizationUseCaseImpl(loginRepository = loginRepository)
     }
 
     @Provides
-    fun registrationUseCase(loginRepository: LoginRepository):RegistrationUseCase{
+    fun registrationUseCase(loginRepository: LoginRepository): RegistrationUseCase {
         return RegistrationUseCaseImpl(loginRepository = loginRepository)
+    }
+
+    @Provides
+    fun addImageUseCase(mainRepository: MainRepository): AddImageUseCase {
+        return AddImageUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun editPassword(mainRepository: MainRepository): EditPasswordUseCase {
+        return EditPasswordUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun editProfile(mainRepository: MainRepository): EditProfileUseCase {
+        return EditProfileUseCaseImpl(mainRepository = mainRepository)
     }
 
 }

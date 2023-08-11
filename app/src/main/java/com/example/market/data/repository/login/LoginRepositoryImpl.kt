@@ -16,7 +16,7 @@ class LoginRepositoryImpl @Inject constructor(private val loginApiService: Login
     override fun login(body: LoginRequestData) = flow {
         val response = loginApiService.login(body = body)
         if (response.isSuccessful){
-            emit(ResultData.Success(response.body()!!))
+            emit(ResultData.Success(response.body()))
         }else{
             emit(ResultData.Message(response.message()))
         }
@@ -25,7 +25,7 @@ class LoginRepositoryImpl @Inject constructor(private val loginApiService: Login
     override fun registration(body: RegistrationRequestData)= flow {
         val response = loginApiService.registration(body = body)
         if (response.isSuccessful){
-            emit(ResultData.Success(response.body()!!))
+            emit(ResultData.Success(response.body()))
         }else{
             emit(ResultData.Message(response.message()))
         }

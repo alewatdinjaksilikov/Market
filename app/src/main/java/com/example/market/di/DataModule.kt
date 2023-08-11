@@ -9,6 +9,7 @@ import com.example.market.data.repository.main.MainRepositoryImpl
 import com.example.market.data.utils.CustomInterceptor
 import com.example.market.domain.repository.login.LoginRepository
 import com.example.market.domain.repository.main.MainRepository
+import com.example.market.utils.retrofitBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,23 +30,13 @@ class DataModule {
     @Provides
     @Singleton
     fun provideLoginApi(client: OkHttpClient):LoginApiService{
-        return Retrofit.Builder()
-            .baseUrl("http://stockcontrol.uz")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(LoginApiService::class.java)
+       return retrofitBuilder("http://stockcontrol.uz",client).create(LoginApiService::class.java)
     }
 
     @Provides
     @Singleton
     fun provideApi(client:OkHttpClient):ApiService{
-        return Retrofit.Builder()
-            .baseUrl("http://stockcontrol.uz")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService::class.java)
+        return retrofitBuilder("http://stockcontrol.uz",client).create(ApiService::class.java)
     }
 
     @Provides
@@ -53,8 +44,8 @@ class DataModule {
     fun provideOkHttpClient(@ApplicationContext context: Context,interceptor: HttpLoggingInterceptor):OkHttpClient{
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(ChuckerInterceptor(context))
-            .addInterceptor(CustomInterceptor()).build()
+            .addInterceptor(CustomInterceptor())
+            .addInterceptor(ChuckerInterceptor(context)).build()
     }
 
     @Provides

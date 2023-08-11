@@ -65,7 +65,6 @@ class EditCategoryDialog:BottomSheetDialogFragment() {
             val item = adapterView.getItemAtPosition(i).toString()
             nameCategory = list[i]
             selectedCategoryId = i
-            Toast.makeText(requireContext(),"Item $item", Toast.LENGTH_SHORT).show()
         }
 
         viewModel2.getCategoriesFlow.onEach {
@@ -101,7 +100,6 @@ class EditCategoryDialog:BottomSheetDialogFragment() {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
             imageUrl = result
-            makeToast(result)
         }
     }
 

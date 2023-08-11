@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {
 
-    fun login(body:LoginRequestData): Flow<ResultData<LoginResponseData>>
+    fun login(body:LoginRequestData): Flow<ResultData<LoginResponseData?>>
 
-    fun registration(body:RegistrationRequestData):Flow<ResultData<LoginResponseData>>
+    fun registration(body:RegistrationRequestData):Flow<ResultData<LoginResponseData?>>
 }

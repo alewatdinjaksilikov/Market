@@ -14,9 +14,10 @@ import com.example.market.databinding.RcItemStockCategoryBinding
 class StockFragmentCategoryAdapter:
     ListAdapter<CategoryResponseData, StockFragmentCategoryAdapter.StockCategoryViewHolder>(diffUtil) {
 
-    private var isSelected = -1
-    private var selectedPosition = -1
-    private var lastSelectedPosition = -1
+//    private var isSelected = -1
+//    private var selectedPosition = -1
+//    private var lastSelectedPosition = -1
+    private var clickedCategory : Boolean = false
     private var onItemClicked: ((CategoryResponseData) -> Unit)? = null
     fun setOnItemClick(block: (CategoryResponseData) -> Unit) {
         onItemClicked = block
@@ -40,16 +41,24 @@ class StockFragmentCategoryAdapter:
 
             binding.root.setOnClickListener {
                 onItemClicked?.invoke(product)
-                lastSelectedPosition = selectedPosition
-                selectedPosition = adapterPosition
-                notifyItemChanged(lastSelectedPosition)
-                notifyItemChanged(selectedPosition)
-//               notifyDataSetChanged()
+//                lastSelectedPosition = selectedPosition
+//                selectedPosition = adapterPosition
+//                notifyItemChanged(lastSelectedPosition)
+//                notifyItemChanged(selectedPosition)
+////               notifyDataSetChanged()
+//
+//                if (selectedPosition == adapterPosition){
+//                    binding.root.setBackgroundResource(R.drawable.bg_pressed_category)
+//                }else{
+//                    binding.root.setBackgroundResource(R.drawable.bg_rv_stock_items)
+//                }
 
-                if (selectedPosition == adapterPosition){
-                    binding.root.setBackgroundResource(R.drawable.bg_pressed_category)
+                if (clickedCategory){
+                    binding.root.setBackgroundResource(R.drawable.bg_category_pressed)
+                    clickedCategory = true
                 }else{
-                    binding.root.setBackgroundResource(R.drawable.bg_rv_stock_items)
+                    binding.root.setBackgroundResource(R.drawable.bg_category_pressed)
+                    clickedCategory = false
                 }
             }
         }

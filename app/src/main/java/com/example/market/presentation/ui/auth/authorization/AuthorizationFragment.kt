@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AuthorizationFragment:Fragment(R.layout.fragment_authorization) {
-    private lateinit var binding : FragmentAuthorizationBinding
-    private val viewModel : AuthViewModel by viewModels()
+class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
+    private lateinit var binding: FragmentAuthorizationBinding
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,14 +38,16 @@ class AuthorizationFragment:Fragment(R.layout.fragment_authorization) {
             val phoneNumber = binding.etPhoneNumber.text.toString()
             val password = binding.etPassword.text.toString()
 
-            if (phoneNumber!="" && password!=""){
+            if (phoneNumber != "" && password != "") {
                 lifecycleScope.launch {
-                    viewModel.authorization(LoginRequestData(
-                        password = password,
-                        phoneNumber = phoneNumber
-                    ))
+                    viewModel.authorization(
+                        LoginRequestData(
+                            password = password,
+                            phoneNumber = phoneNumber
+                        )
+                    )
                 }
-            }else{
+            } else {
                 makeToast("Заполните все поля!!!")
             }
         }
@@ -58,24 +60,32 @@ class AuthorizationFragment:Fragment(R.layout.fragment_authorization) {
 
     private fun initObservables() {
         viewModel.authorizationFlow.onEach {
-            makeToast("Success")
-            SharedPref.pref.edit().putString("token",it.token).apply()
-            SharedPref.pref.edit().putInt("login",1).apply()
-            findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragment2ToMainFragment())
+            if (it!=null){
+                makeToast("Success")
+                SharedPref.pref.edit().putString("token", it.token).apply()
+                SharedPref.pref.edit().putString("name",it.name).apply()
+                SharedPref.pref.edit().putString("surname",it.surname).apply()
+                SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
+                SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+                findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragment2ToMainFragment())
+            }
         }.launchIn(lifecycleScope)
 
         viewModel.messageAuthorization.onEach {
             makeToast(it)
-            Log.d("LLL",it)
+            Log.d("LLL", it)
         }.launchIn(lifecycleScope)
 
         viewModel.errorAuthorization.onEach {
             makeToast(it.toString())
-            Log.d("LLL",it.toString())
+            Log.d("LLL", it.toString())
         }.launchIn(lifecycleScope)
     }
 
     private fun initVariables() {
+        
 
     }
+
+
 }

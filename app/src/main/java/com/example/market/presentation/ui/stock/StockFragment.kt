@@ -2,9 +2,11 @@ package com.example.market.presentation.ui.stock
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.text.bold
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +30,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
     private var clickedCategory = 0
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
@@ -46,6 +49,11 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
 
     private fun initObservables() {
         viewModel.getAllCategoriesFlow.onEach {
+            if (it.isEmpty()){
+                binding.tvNoCategory.visibility = View.VISIBLE
+            }else{
+                binding.tvNoCategory.visibility = View.GONE
+            }
             adapterCategory.submitList(it)
             binding.shimmerStockCategory.stopShimmer()
             binding.shimmerStockCategory.visibility = View.GONE
@@ -150,5 +158,10 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
     private fun initVariables() {
         binding.rvStockCategory.adapter = adapterCategory
         binding.rvStockProducts.adapter = adapterProducts
+
+        val textNoCategory = SpannableStringBuilder()
+            .append("У вас нет категориев \nКатегорию можно добавить при нажатий\n")
+            .bold { append("Троеточие") }
+        binding.tvNoCategory.text = textNoCategory
     }
 }

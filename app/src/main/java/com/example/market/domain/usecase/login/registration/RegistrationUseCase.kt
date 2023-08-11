@@ -6,5 +6,5 @@ import com.example.market.data.models.ResultData
 import kotlinx.coroutines.flow.Flow
 
 interface RegistrationUseCase {
-    fun execute(body: RegistrationRequestData):Flow<ResultData<LoginResponseData>>
+    fun execute(body: RegistrationRequestData):Flow<ResultData<LoginResponseData?>>
 }

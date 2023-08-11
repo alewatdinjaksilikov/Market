@@ -41,4 +41,7 @@
     <string name="tv_forgot_password">Забылы пароль?</string>
     <string name="tv_dont_have_an_account">У вас нет аккаунта?</string>
     <string name="tv_sign_up">Sign up</string>
+    <string name="tv_sign_out">Выйти из аккаунта</string>
+    <string name="tv_save">Сохранить</string>
+    <string name="stock_control">Stock Control</string>
 </resources>

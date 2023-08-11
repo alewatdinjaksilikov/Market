@@ -35,16 +35,18 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
         binding.apply {
             btnRegistration.setOnClickListener {
                 val name = binding.etName.text.toString()
+                val surname = binding.etSurname.text.toString()
                 val phone = binding.etPhone.text.toString()
                 val password = binding.etPassword.text.toString()
 
-                if (name.isNotEmpty() && phone.isNotEmpty() && password.isNotEmpty()){
+                if (surname.isNotEmpty() && name.isNotEmpty() && phone.isNotEmpty() && password.isNotEmpty()){
                     lifecycleScope.launch {
                         viewModel.registration(
                             RegistrationRequestData(
                                 name = name,
                                 password = password,
-                                phoneNumber = phone
+                                phoneNumber = phone,
+                                surname = surname
                             )
                         )
                     }
@@ -62,8 +64,13 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
     private fun initObservables() {
         viewModel.registrationFlow.onEach {
             makeToast("Success")
-            SharedPref.pref.edit().putString("token",it.token).apply()
-            SharedPref.pref.edit().putInt("login",1).apply()
+            it?.let {
+                SharedPref.pref.edit().putString("token",it.token).apply()
+                SharedPref.pref.edit().putString("name",it.name).apply()
+                SharedPref.pref.edit().putString("surname",it.surname).apply()
+                SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
+                SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+            }
             findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment())
         }.launchIn(lifecycleScope)
     }

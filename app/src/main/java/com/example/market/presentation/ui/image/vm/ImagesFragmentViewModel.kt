@@ -2,19 +2,23 @@ package com.example.market.presentation.ui.image.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.market.data.models.EditProductResponseData
 import com.example.market.data.models.ImageResponseData
 import com.example.market.data.models.ResultData
+import com.example.market.domain.usecase.addImage.AddImageUseCase
 import com.example.market.domain.usecase.getAllImages.GetAllImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
 class ImagesFragmentViewModel @Inject constructor(
-    private val getAllImagesUseCase: GetAllImagesUseCase
+    private val getAllImagesUseCase: GetAllImagesUseCase,
+    private val addImageUseCase: AddImageUseCase
 ):ViewModel() {
 
     private val _getAllImagesFlow = MutableSharedFlow<List<ImageResponseData>>()
@@ -38,6 +42,31 @@ class ImagesFragmentViewModel @Inject constructor(
                 }
                 is ResultData.Message->{
                     _messageGetAllImagesFlow.emit(it.message)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private val _addImage = MutableSharedFlow<EditProductResponseData>()
+    val addImage: SharedFlow<EditProductResponseData> get() = _addImage
+
+    private val _messageAddImage = MutableSharedFlow<String>()
+    val messageAddImage: SharedFlow<String> get() = _messageAddImage
+
+    private val _errorAddImage = MutableSharedFlow<Throwable>()
+    val errorAddImage: SharedFlow<Throwable> get() = _errorAddImage
+
+    fun addImage(body: MultipartBody.Part){
+        addImageUseCase.execute(body).onEach {
+            when(it){
+                is ResultData.Success->{
+                    _addImage.emit(it.data)
+                }
+                is ResultData.Message->{
+                    _messageAddImage.emit(it.message)
+                }
+                is ResultData.Error->{
+                    _errorAddImage.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)

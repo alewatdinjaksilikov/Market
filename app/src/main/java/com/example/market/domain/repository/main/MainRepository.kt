@@ -3,8 +3,15 @@ package com.example.market.domain.repository.main
 import com.example.market.data.models.*
 import com.example.market.data.models.ResultData
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
 
 interface MainRepository {
+
+    fun addImage(body: MultipartBody.Part):Flow<ResultData<EditProductResponseData>>
+
+    fun editPassword(body:EditPasswordRequestData):Flow<ResultData<EditProductResponseData>>
+
+    fun editProfile(body:EditProfileRequestData):Flow<ResultData<LoginResponseData>>
 
     fun addProduct(body:AddProductRequestData): Flow<ResultData<AddProductResponseData>>
 

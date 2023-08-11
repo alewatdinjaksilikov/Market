@@ -5,13 +5,41 @@ import com.example.market.data.network.ApiService
 import com.example.market.domain.repository.main.MainRepository
 import com.example.market.data.models.ResultData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(private val apiService: ApiService) : MainRepository {
 
+    override fun addImage(body: MultipartBody.Part)= flow {
+        val response = apiService.addImage(body)
+        if (response.isSuccessful) {
+            emit(ResultData.Success(response.body()!!))
+        } else {
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun editPassword(body: EditPasswordRequestData)= flow {
+        val response = apiService.editPassword(body = body)
+        if (response.isSuccessful) {
+            emit(ResultData.Success(response.body()!!))
+        } else {
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun editProfile(body: EditProfileRequestData)= flow {
+        val response = apiService.editProfile(body = body)
+        if (response.isSuccessful) {
+            emit(ResultData.Success(response.body()!!))
+        } else {
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 
     override fun addProduct(body: AddProductRequestData) = flow {
         val response = apiService.addProduct(body = body)

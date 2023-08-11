@@ -1,14 +1,20 @@
 package com.example.market.presentation.ui.home.screen
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.bold
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.market.R
 import com.example.market.data.models.SellProductRequestData
 import com.example.market.databinding.FragmentHomeBinding
@@ -16,6 +22,7 @@ import com.example.market.presentation.ui.main.MainFragment
 import com.example.market.presentation.ui.home.screen.adapter.HomeScreenAdapter
 import com.example.market.utils.makeToast
 import com.example.market.presentation.ui.home.screen.vm.HomeFragmentViewModel
+import com.example.market.utils.SharedPref
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -32,6 +39,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
+        val login = SharedPref.pref.getBoolean("isLogin",false)
+        Log.d("LOGINCOUNT","$login Home")
+
         initVariables()
         initObservables()
         initListeners()
@@ -40,11 +50,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initObservables() {
         viewModel.getAllCategoriesFlow.onEach {
+
+            if (it.isEmpty()){
+                binding.tvNoCategory.visibility = View.VISIBLE
+            }else{
+                binding.tvNoCategory.visibility = View.GONE
+            }
             binding.rvHome.adapter = adapter
             adapter.submitList(it)
             binding.shimmerHome.stopShimmer()
             binding.shimmerHome.visibility = View.GONE
         }.launchIn(lifecycleScope)
+
+        viewModel.messageGetAllCategoriesFlow.onEach {
+            Log.d("UUU",it)
+        }
+
+        viewModel.errorGetAllCategoriesFlow.onEach {
+            Log.d("UUU",it.toString())
+        }
 
 
         viewModel.sellProductFlow.onEach {
@@ -61,6 +85,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initListeners() {
         drawerLayoutListener()
+
+        binding.swipeRefreshHome.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.getAllCategories()
+            }
+            binding.swipeRefreshHome.isRefreshing = false
+        }
 
         binding.btnReset.setOnClickListener {
             binding.apply {
@@ -106,9 +137,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         lifecycleScope.launch {
             viewModel.getAllCategories()
         }
+
+        val textNoCategory = SpannableStringBuilder()
+            .append("У вас нет категориев \n Категорию можно добавить в разделе\n ")
+            .bold { append("Склад") }
+        binding.tvNoCategory.text = textNoCategory
     }
 
     private fun drawerLayoutListener() {
+        val header = binding.navView.getHeaderView(0)
+        val name = header.findViewById<TextView>(R.id.tv_header_name)
+        val surname = header.findViewById<TextView>(R.id.tv_header_surname)
+
+        name.text = SharedPref.pref.getString("name","Name")
+        surname.text = SharedPref.pref.getString("surname","Surname")
+        
+
         binding.drawerLayout.addDrawerListener(object :DrawerListener{
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.GONE)
@@ -134,6 +178,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 R.id.fragment_monitoring -> {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToMonitoringFragment())
+                }
+                R.id.fragment_settings ->{
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToSettingFragment())
                 }
             }
             true

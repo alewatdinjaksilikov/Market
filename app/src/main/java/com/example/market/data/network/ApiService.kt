@@ -1,12 +1,15 @@
 package com.example.market.data.network
 
 import com.example.market.data.models.*
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -14,6 +17,10 @@ interface ApiService {
 
     @POST("/api/v1/products")
     suspend fun addProduct(@Body body: AddProductRequestData): Response<AddProductResponseData>
+
+    @Multipart
+    @POST("/api/v1/images")
+    suspend fun addImage(@Part file: MultipartBody.Part):Response<EditProductResponseData>
 
     @PUT("/api/v1/products/{id}")
     suspend fun editProductById(
@@ -71,4 +78,10 @@ interface ApiService {
 
     @GET("/api/v1/statistics")
     suspend fun getStatistics():Response<StatisticsResponseData>
+
+    @PUT("/api/v1/users/change/password")
+    suspend fun editPassword(@Body body:EditPasswordRequestData):Response<EditProductResponseData>
+
+    @PUT("/api/v1/users/change/profile")
+    suspend fun editProfile(@Body body:EditProfileRequestData):Response<LoginResponseData>
 }
