@@ -44,8 +44,7 @@ class DataModule {
     fun provideOkHttpClient(@ApplicationContext context: Context,interceptor: HttpLoggingInterceptor):OkHttpClient{
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(CustomInterceptor())
-            .addInterceptor(ChuckerInterceptor(context)).build()
+            .addInterceptor(CustomInterceptor()).build()
     }
 
     @Provides

@@ -39,6 +39,7 @@ class EditProfileFragment:Fragment(R.layout.fragment_edit_profile) {
             SharedPref.pref.edit().putString("surname",it.surname).apply()
             SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
             makeToast("Сохранено")
+            findNavController().popBackStack()
         }.launchIn(lifecycleScope)
     }
 

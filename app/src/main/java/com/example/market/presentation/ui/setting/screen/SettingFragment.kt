@@ -38,11 +38,14 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
             }
             btnLogout.setOnClickListener {
 
-                requireContext().deleteSharedPreferences("isLogin")
-                requireContext().deleteSharedPreferences("token")
-                requireContext().deleteSharedPreferences("name")
-                requireContext().deleteSharedPreferences("surname")
-                requireContext().deleteSharedPreferences("phoneNumber")
+//                requireContext().deleteSharedPreferences("isLogin")
+//                requireContext().deleteSharedPreferences("token")
+//                requireContext().deleteSharedPreferences("name")
+//                requireContext().deleteSharedPreferences("surname")
+//                requireContext().deleteSharedPreferences("phoneNumber")
+
+
+                SharedPref.pref.edit().putString("token", ".").apply()
 
                 val login = SharedPref.pref.getBoolean("isLogin",false)
                 Log.d("LOGINCOUNT","$login Setting")

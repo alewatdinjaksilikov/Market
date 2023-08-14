@@ -32,7 +32,12 @@ class EditPasswordFragment:Fragment(R.layout.fragment_edit_password) {
 
     private fun initObservables() {
         viewModel.editPassword.onEach {
-            makeToast(it.message)
+            if (it.statusCode == 200){
+                makeToast(it.message)
+                findNavController().popBackStack()
+            }else{
+                makeToast(it.message)
+            }
         }.launchIn(lifecycleScope)
     }
 

@@ -25,7 +25,7 @@ class SplashScreen:Fragment(R.layout.fragment_splash) {
 
         lifecycleScope.launchWhenCreated {
             delay(2300)
-            if (SharedPref.pref.getBoolean("isLogin",false)){
+            if (SharedPref.pref.getString("token","")=="."){
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainFragment())
             }else{
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToLoginFragment())
