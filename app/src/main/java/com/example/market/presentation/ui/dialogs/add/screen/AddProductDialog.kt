@@ -32,7 +32,7 @@ class AddProductDialog:BottomSheetDialogFragment() {
 
     private var isListAdded = false
     val list = mutableListOf<String>()
-    val listType = listOf("KG","M","L")
+    private val listType = listOf("KG","M","L")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
