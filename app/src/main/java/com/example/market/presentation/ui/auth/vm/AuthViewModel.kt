@@ -21,6 +21,8 @@ class AuthViewModel @Inject constructor(
     private val authorizationUseCase: AuthorizationUseCase
 ):ViewModel() {
 
+    //Registration
+
     private val _registrationFlow = MutableSharedFlow<LoginResponseData?>()
     val registrationFlow : SharedFlow<LoginResponseData?> get() = _registrationFlow
     
@@ -47,14 +49,16 @@ class AuthViewModel @Inject constructor(
     }
 
 
+    //Authorization
+
     private val _authorizationFlow= MutableSharedFlow<LoginResponseData?>()
     val authorizationFlow: SharedFlow<LoginResponseData?> get() = _authorizationFlow
 
-    private val _messageAuthorization = MutableSharedFlow<String>()
-    val messageAuthorization:SharedFlow<String> get() = _messageAuthorization
+    private val _messageAuthorizationFlow = MutableSharedFlow<String>()
+    val messageAuthorizationFlow:SharedFlow<String> get() = _messageAuthorizationFlow
 
-    private val _errorAuthorization = MutableSharedFlow<Throwable>()
-    val errorAuthorization : SharedFlow<Throwable> get() = _errorAuthorization
+    private val _errorAuthorizationFlow = MutableSharedFlow<Throwable>()
+    val errorAuthorizationFlow : SharedFlow<Throwable> get() = _errorAuthorizationFlow
 
     fun authorization(body : LoginRequestData){
         authorizationUseCase.execute(body = body).onEach {
@@ -63,10 +67,10 @@ class AuthViewModel @Inject constructor(
                     _authorizationFlow.emit(it.data)
                 }
                 is ResultData.Message->{
-                    _messageAuthorization.emit(it.message)
+                    _messageAuthorizationFlow.emit(it.message)
                 }
                 is ResultData.Error->{
-                    _errorAuthorization.emit(it.error)
+                    _errorAuthorizationFlow.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)

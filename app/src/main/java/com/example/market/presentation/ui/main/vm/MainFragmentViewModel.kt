@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.AddProductRequestData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.addProduct.AddProductUseCase
+import com.example.market.domain.usecase.product.addProduct.AddProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -6,8 +6,8 @@ import com.example.market.data.models.AddCategoryRequestData
 import com.example.market.data.models.EditProductResponseData
 import com.example.market.data.models.GetCategory
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.editCategory.EditCategoryUseCase
-import com.example.market.domain.usecase.getCategoryById.GetCategoryByIdUseCase
+import com.example.market.domain.usecase.category.editCategory.EditCategoryUseCase
+import com.example.market.domain.usecase.category.getCategoryById.GetCategoryByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,6 +21,8 @@ class EditCategoryViewModel @Inject constructor(
     private val getCategoryByIdUseCase: GetCategoryByIdUseCase
 ):ViewModel() {
 
+    //Edit Category
+
     private val _editCategoryFlow = MutableSharedFlow<EditProductResponseData>()
     val editCategoryFlow : SharedFlow<EditProductResponseData> get() = _editCategoryFlow
 
@@ -29,17 +31,6 @@ class EditCategoryViewModel @Inject constructor(
 
     private val _errorEditCategoryFlow = MutableSharedFlow<Throwable>()
     val errorEditCategoryFlow : SharedFlow<Throwable> get() = _errorEditCategoryFlow
-
-
-
-    private val _getCategoryFLow = MutableSharedFlow<GetCategory>()
-    val getCategoryFLow : SharedFlow<GetCategory> get() = _getCategoryFLow
-
-    private val _messageGetCategoryFlow = MutableSharedFlow<String>()
-    val messageGetCategoryFlow : SharedFlow<String> get() = _messageGetCategoryFlow
-
-    private val _errorGetCategoryFlow = MutableSharedFlow<Throwable>()
-    val errorGetCategoryFlow : SharedFlow<Throwable> get() = _errorGetCategoryFlow
 
     fun editCategory(body: AddCategoryRequestData,id:Int){
         editCategoryUseCase.execute(body, id).onEach {
@@ -56,6 +47,17 @@ class EditCategoryViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    //Get Category by Id
+
+    private val _getCategoryFLow = MutableSharedFlow<GetCategory>()
+    val getCategoryFLow : SharedFlow<GetCategory> get() = _getCategoryFLow
+
+    private val _messageGetCategoryFlow = MutableSharedFlow<String>()
+    val messageGetCategoryFlow : SharedFlow<String> get() = _messageGetCategoryFlow
+
+    private val _errorGetCategoryFlow = MutableSharedFlow<Throwable>()
+    val errorGetCategoryFlow : SharedFlow<Throwable> get() = _errorGetCategoryFlow
 
     fun getCategoryById(id:Int){
         getCategoryByIdUseCase.execute(id).onEach {

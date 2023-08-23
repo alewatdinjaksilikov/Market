@@ -6,8 +6,8 @@ import com.example.market.data.models.AddProductRequestData
 import com.example.market.data.models.AddProductResponseData
 import com.example.market.data.models.CategoryResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.addProduct.AddProductUseCase
-import com.example.market.domain.usecase.getAllCategorires.GetAllCategoriesUseCase
+import com.example.market.domain.usecase.product.addProduct.AddProductUseCase
+import com.example.market.domain.usecase.category.getAllCategorires.GetAllCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,6 +21,8 @@ class AddProductDialogViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase
 ):ViewModel() {
 
+    //Add product
+
     private var _addProductFlow = MutableSharedFlow<AddProductResponseData>()
     val addProductFlow:SharedFlow<AddProductResponseData> get() = _addProductFlow
 
@@ -30,15 +32,6 @@ class AddProductDialogViewModel @Inject constructor(
     private var _errorAddProductFlow = MutableSharedFlow<Throwable>()
     val errorAddProductFlow:SharedFlow<Throwable> get() = _errorAddProductFlow
 
-
-    private var _getCategoriesFlow = MutableSharedFlow<List<CategoryResponseData>>()
-    val getCategoriesFlow:SharedFlow<List<CategoryResponseData>> get() = _getCategoriesFlow
-
-    private var _messageGetCategoriesFlow = MutableSharedFlow<String>()
-    val messageGetCategoriesFlow:SharedFlow<String> get() = _messageGetCategoriesFlow
-
-    private var _errorGetCategoriesFlow = MutableSharedFlow<Throwable>()
-    val errorGetCategoriesFlow:SharedFlow<Throwable> get() = _errorGetCategoriesFlow
 
     fun addProduct(body:AddProductRequestData){
         addProductUseCase.execute(body = body).onEach {
@@ -55,6 +48,19 @@ class AddProductDialogViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+
+    //GetAllCategories
+
+    private var _getCategoriesFlow = MutableSharedFlow<List<CategoryResponseData>>()
+    val getCategoriesFlow:SharedFlow<List<CategoryResponseData>> get() = _getCategoriesFlow
+
+    private var _messageGetCategoriesFlow = MutableSharedFlow<String>()
+    val messageGetCategoriesFlow:SharedFlow<String> get() = _messageGetCategoriesFlow
+
+    private var _errorGetCategoriesFlow = MutableSharedFlow<Throwable>()
+    val errorGetCategoriesFlow:SharedFlow<Throwable> get() = _errorGetCategoriesFlow
+
 
     fun getAllCategories(){
         getAllCategoriesUseCase.execute().onEach {

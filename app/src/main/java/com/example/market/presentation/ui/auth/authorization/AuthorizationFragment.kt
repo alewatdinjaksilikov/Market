@@ -11,7 +11,6 @@ import com.example.market.R
 import com.example.market.data.models.LoginRequestData
 import com.example.market.databinding.FragmentAuthorizationBinding
 import com.example.market.presentation.ui.auth.vm.AuthViewModel
-import com.example.market.presentation.ui.dialogs.add.vm.AddProductDialogViewModel
 import com.example.market.utils.SharedPref
 import com.example.market.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +20,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
+
     private lateinit var binding: FragmentAuthorizationBinding
     private val viewModel: AuthViewModel by viewModels()
 
@@ -28,7 +28,6 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAuthorizationBinding.bind(view)
 
-        initVariables()
         initObservables()
         initListeners()
     }
@@ -67,25 +66,22 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
                 SharedPref.pref.edit().putString("surname",it.surname).apply()
                 SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
                 SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+
+                //Проверка
+                Log.d("JJJ", "Auth token ${SharedPref.pref.getString("token","").toString()}")
+                Log.d("JJJ", "Auth login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
+
                 findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragment2ToMainFragment())
             }
         }.launchIn(lifecycleScope)
 
-        viewModel.messageAuthorization.onEach {
+        viewModel.messageAuthorizationFlow.onEach {
             makeToast(it)
-            Log.d("LLL", it)
         }.launchIn(lifecycleScope)
 
-        viewModel.errorAuthorization.onEach {
+        viewModel.errorAuthorizationFlow.onEach {
             makeToast(it.toString())
-            Log.d("LLL", it.toString())
         }.launchIn(lifecycleScope)
     }
-
-    private fun initVariables() {
-        
-
-    }
-
 
 }

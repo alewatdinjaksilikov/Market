@@ -14,6 +14,7 @@ import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(private val apiService: ApiService) : MainRepository {
 
+    // !! - eki undew isletiw kate oni bilemen. Basinda jazilip ketilgen oni ozgertip shgaman
     override fun addImage(body: MultipartBody.Part)= flow {
         val response = apiService.addImage(body)
         if (response.isSuccessful) {

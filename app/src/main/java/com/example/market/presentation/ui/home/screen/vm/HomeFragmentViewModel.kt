@@ -3,9 +3,9 @@ package com.example.market.presentation.ui.home.screen.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.*
-import com.example.market.domain.usecase.getAllCategorires.GetAllCategoriesUseCase
-import com.example.market.domain.usecase.getAllProducts.GetAllProductsUseCase
-import com.example.market.domain.usecase.sellProduct.SellProductUseCase
+import com.example.market.domain.usecase.category.getAllCategorires.GetAllCategoriesUseCase
+import com.example.market.domain.usecase.product.getAllProducts.GetAllProductsUseCase
+import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

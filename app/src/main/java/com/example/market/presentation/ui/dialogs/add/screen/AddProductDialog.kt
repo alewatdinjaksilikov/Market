@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 class AddProductDialog:BottomSheetDialogFragment() {
     private lateinit var binding: DialogAddProductBinding
     private val viewModel : AddProductDialogViewModel by viewModels()
-    private var selectedCategoryId = 1
+//    private var selectedCategoryId = 1
     private var imageUrl = ""
     private var type = ""
     private var category = ""
@@ -54,8 +54,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
         initVariables()
         initObservables()
         initListeners()
-
-//        getAllCategories(0)
 
     }
 
@@ -118,12 +116,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
                 }
             }else{
                 makeToast("Заполните все поля!")
-                Log.d("DSA",name)
-                Log.d("DSA",amount)
-                Log.d("DSA",price)
-                Log.d("DSA",type)
-                Log.d("DSA",category)
-                Log.d("DSA",imageUrl)
             }
         }
 
@@ -138,7 +130,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
         binding.dropdownCategory.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
             category = list[i]
-//            getAllCategories(i)
             Toast.makeText(requireContext(),"Item $item",Toast.LENGTH_SHORT).show()
         }
 
@@ -150,12 +141,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
             Log.d("III",type)
             Toast.makeText(requireContext(),"Item $item",Toast.LENGTH_SHORT).show()
         }
-
-    }
-
-    private fun getAllCategories(int:Int) {
-
-
 
     }
 }

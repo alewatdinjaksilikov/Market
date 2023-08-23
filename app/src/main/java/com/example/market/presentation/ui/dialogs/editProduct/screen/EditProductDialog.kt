@@ -62,7 +62,6 @@ class EditProductDialog:BottomSheetDialogFragment() {
             viewModel.getAllCategories()
         }
 
-//        getAllCategories(0)
 
         initObservables()
         initListeners()
@@ -110,12 +109,6 @@ class EditProductDialog:BottomSheetDialogFragment() {
                 }
             }else{
                 makeToast("Заполните все поля!!!")
-                Log.d("ASD",name)
-                Log.d("ASD",amount)
-                Log.d("ASD",price)
-                Log.d("ASD",type)
-                Log.d("ASD",category)
-                Log.d("ASD",imageUrl)
             }
         }
 
@@ -158,12 +151,4 @@ class EditProductDialog:BottomSheetDialogFragment() {
             ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list)
         binding.dropdownCategory.setAdapter(adapterCategory)
     }
-
-//    private fun getAllCategories(int:Int) {
-//        lifecycleScope.launch {
-//            viewModel.getAllCategories()
-//        }
-//
-//
-//    }
 }

@@ -2,13 +2,14 @@ package com.example.market.presentation.ui.dialogs.add.dialog.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.market.data.models.CategoryResponseData
 import com.example.market.databinding.RvItemDialogCategoryBinding
 
-class AdapterCategoryDialog:ListAdapter<CategoryResponseData,AdapterCategoryDialog.AdapterCategoryDialogVH>(diffUtil){
+class AdapterCategoryDialog:ListAdapter<CategoryResponseData,AdapterCategoryDialog.AdapterCategoryDialogVH>(
+    DiffUtil
+){
     private var onItemClicked: ((CategoryResponseData) -> Unit)? = null
     fun setOnItemClick(block: (CategoryResponseData) -> Unit) {
         onItemClicked = block
@@ -39,7 +40,7 @@ class AdapterCategoryDialog:ListAdapter<CategoryResponseData,AdapterCategoryDial
         holder.setData(position)
     }
 
-    private object diffUtil : DiffUtil.ItemCallback<CategoryResponseData>() {
+    private object DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<CategoryResponseData>() {
         override fun areItemsTheSame(oldItem: CategoryResponseData, newItem: CategoryResponseData): Boolean {
             return oldItem == newItem
         }

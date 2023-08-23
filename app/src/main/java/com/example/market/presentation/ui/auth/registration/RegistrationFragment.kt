@@ -1,6 +1,7 @@
 package com.example.market.presentation.ui.auth.registration
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,7 +27,6 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegistrationBinding.bind(view)
 
-        initVariables()
         initObservables()
         initListeners()
     }
@@ -70,12 +70,12 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                 SharedPref.pref.edit().putString("surname",it.surname).apply()
                 SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
                 SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+
+                //Проверка
+                Log.d("JJJ", "Regis token ${SharedPref.pref.getString("token","").toString()}")
+                Log.d("JJJ", "Regis login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
             }
             findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment())
         }.launchIn(lifecycleScope)
-    }
-
-    private fun initVariables() {
-
     }
 }

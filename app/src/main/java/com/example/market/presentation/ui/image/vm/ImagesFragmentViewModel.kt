@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.EditProductResponseData
 import com.example.market.data.models.ImageResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.addImage.AddImageUseCase
-import com.example.market.domain.usecase.getAllImages.GetAllImagesUseCase
+import com.example.market.domain.usecase.image.addImage.AddImageUseCase
+import com.example.market.domain.usecase.image.getAllImages.GetAllImagesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

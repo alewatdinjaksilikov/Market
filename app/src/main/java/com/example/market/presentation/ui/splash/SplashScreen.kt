@@ -20,12 +20,17 @@ class SplashScreen:Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSplashBinding.bind(view)
 
-        val login = SharedPref.pref.getBoolean("isLogin",false)
-        Log.d("LOGINCOUNT","$login Splash")
+
 
         lifecycleScope.launchWhenCreated {
             delay(2300)
-            if (SharedPref.pref.getString("token","")=="."){
+            val token = SharedPref.pref.getString("token","")
+            val isLogin = SharedPref.pref.getBoolean("isLogin",false)
+
+            Log.d("JJJ", "Splash token $token")
+            Log.d("JJJ", "Splash login $isLogin")
+
+            if (token!="." && isLogin){
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainFragment())
             }else{
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToLoginFragment())

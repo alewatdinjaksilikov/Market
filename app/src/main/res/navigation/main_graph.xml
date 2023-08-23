@@ -44,10 +44,14 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_authorizationFragment2"
-            app:destination="@id/authorizationFragment" />
+            app:destination="@id/authorizationFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/loginFragment"/>
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/loginFragment"/>
     </fragment>
     <fragment
         android:id="@+id/authorizationFragment"

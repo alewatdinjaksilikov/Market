@@ -3,7 +3,7 @@ package com.example.market.presentation.ui.setting.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.*
-import com.example.market.domain.usecase.editPassword.impl.EditPasswordUseCase
+import com.example.market.domain.usecase.editPassword.EditPasswordUseCase
 import com.example.market.domain.usecase.editProfile.EditProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

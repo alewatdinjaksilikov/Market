@@ -46,11 +46,6 @@ class ListProductsDialog:DialogFragment() {
 
         initVariables()
         initObservables()
-        initListeners()
-    }
-
-    private fun initListeners() {
-
     }
 
     private fun initObservables() {

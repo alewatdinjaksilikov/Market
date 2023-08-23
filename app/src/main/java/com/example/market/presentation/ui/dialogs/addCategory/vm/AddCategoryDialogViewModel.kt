@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.AddCategoryRequestData
 import com.example.market.data.models.AddCategoryResponseData
 import com.example.market.data.models.ResultData
-import com.example.market.domain.usecase.addCategory.AddCategoryUseCase
+import com.example.market.domain.usecase.category.addCategory.AddCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
