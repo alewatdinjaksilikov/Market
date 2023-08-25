@@ -44,4 +44,6 @@
     <string name="tv_sign_out">Выйти из аккаунта</string>
     <string name="tv_save">Сохранить</string>
     <string name="stock_control">Stock Control</string>
+    <string name="tv_amount">Количество</string>
+    <string name="tv_products">Продукты</string>
 </resources>

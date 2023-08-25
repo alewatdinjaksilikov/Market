@@ -11,6 +11,7 @@ import com.example.market.R
 import com.example.market.data.models.AddCategoryRequestData
 import com.example.market.databinding.DialogAddCategoryBinding
 import com.example.market.presentation.ui.dialogs.addCategory.vm.AddCategoryDialogViewModel
+import com.example.market.utils.AddButtonCategoryClick
 import com.example.market.utils.makeToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,9 @@ class AddCategoryDialog:BottomSheetDialogFragment() {
     private fun initObservables() {
         viewModel.addedCategoryFlow.onEach {
             makeToast(it.message)
+            if (it.statusCode == 201){
+                AddButtonCategoryClick.buttonAddCategoryClick(true)
+            }
             dismiss()
         }.launchIn(lifecycleScope)
 

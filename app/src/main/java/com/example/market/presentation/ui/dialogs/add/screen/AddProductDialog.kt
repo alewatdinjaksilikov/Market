@@ -14,6 +14,7 @@ import com.example.market.R
 import com.example.market.data.models.AddProductRequestData
 import com.example.market.databinding.DialogAddProductBinding
 import com.example.market.presentation.ui.dialogs.add.vm.AddProductDialogViewModel
+import com.example.market.utils.AddButtonClick
 import com.example.market.utils.makeToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +89,9 @@ class AddProductDialog:BottomSheetDialogFragment() {
 
         viewModel.addProductFlow.onEach {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            if (it.statusCode == 201){
+                AddButtonClick.emitButtonClick(true)
+            }
             dismiss()
         }.launchIn(lifecycleScope)
     }

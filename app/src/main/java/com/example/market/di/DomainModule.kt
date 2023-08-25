@@ -44,6 +44,7 @@ import com.example.market.domain.usecase.login.registration.RegistrationUseCase
 import com.example.market.domain.usecase.login.registration.impl.RegistrationUseCaseImpl
 import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import com.example.market.domain.usecase.product.sellProduct.impl.SellProductUseCaseImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

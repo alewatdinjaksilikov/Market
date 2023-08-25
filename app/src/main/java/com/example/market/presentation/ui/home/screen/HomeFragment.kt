@@ -41,56 +41,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val listCategories  = mutableListOf<CategoryResponseData>()
     private val listProducts  = mutableListOf<ProductResponseData>()
 
-
     private var categoryId:Int?=null
     private var pressedProduct = ""
 
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-            viewModel.getAllCategories()
-        }
-        categoryId?.let {
-            lifecycleScope.launch {
-                viewModel2.getAllProductByCategory(id)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.getAllCategoriesFlow.collect{ it ->
-
-                if (it.isEmpty()){
-                    binding.tvNoCategory.visibility = View.VISIBLE
-                }else{
-                    binding.tvNoCategory.visibility = View.GONE
-                }
-                binding.rvHome.adapter = adapter
-                adapter.submitList(it)
-                binding.shimmerHome.stopShimmer()
-                binding.shimmerHome.visibility = View.GONE
-
-                listCategories.clear()
-                listCategories.addAll(it)
-
-            }
-        }
-        val adapterCategory =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listCategories.map { it.name })
-        binding.dropdownCategory.setAdapter(adapterCategory)
-
-        lifecycleScope.launch {
-            viewModel2.getAllProduct.collect {
-                listProducts.clear()
-                listProducts.addAll(it)
-            }
-        }
-
-        val adapterProducts =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listProducts.map { it.name })
-        binding.dropdownProducts.setAdapter(adapterProducts)
-
-
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        lifecycleScope.launch {
+//            viewModel.getAllCategories()
+//        }
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//
+//        lifecycleScope.launch {
+//            viewModel.getAllCategories()
+//        }
+//        categoryId?.let {
+//            lifecycleScope.launch {
+//                viewModel2.getAllProductByCategory(it)
+//            }
+//        }
+//
+//        val adapterCategory =
+//            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listCategories.map { it.name })
+//        binding.dropdownCategory.setAdapter(adapterCategory)
+//
+//        val adapterProducts =
+//            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listProducts.map { it.name })
+//        binding.dropdownProducts.setAdapter(adapterProducts)
+//
+//
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -108,40 +90,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initObservables() {
 
-        lifecycleScope.launch {
-            viewModel.getAllCategoriesFlow.collect{
-
-                if (it.isEmpty()){
-                    binding.tvNoCategory.visibility = View.VISIBLE
-                }else{
-                    binding.tvNoCategory.visibility = View.GONE
-                }
-                binding.rvHome.adapter = adapter
-                adapter.submitList(it)
-                binding.shimmerHome.stopShimmer()
-                binding.shimmerHome.visibility = View.GONE
-
-                listCategories.clear()
-                listCategories.addAll(it)
+        viewModel.getAllCategoriesFlow.onEach {
+            if (it.isEmpty()) {
+                binding.tvNoCategory.visibility = View.VISIBLE
+            } else {
+                binding.tvNoCategory.visibility = View.GONE
             }
-        }
+            binding.rvHome.adapter = adapter
+            adapter.submitList(it)
+            binding.shimmerHome.stopShimmer()
+            binding.shimmerHome.visibility = View.GONE
 
-        val adapterCategory =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listCategories.map { it.name })
-        binding.dropdownCategory.setAdapter(adapterCategory)
+            listCategories.clear()
+            listCategories.addAll(it)
 
+            val adapterCategory =
+                ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listCategories.map { it.name })
+            binding.dropdownCategory.setAdapter(adapterCategory)
+            adapterCategory.notifyDataSetChanged()
+        }.launchIn(lifecycleScope)
 
+        viewModel2.getAllProduct.onEach {
+            listProducts.clear()
+            listProducts.addAll(it)
 
-        lifecycleScope.launch {
-            viewModel2.getAllProduct.collect {
-                listProducts.clear()
-                listProducts.addAll(it)
-            }
-        }
-
-        val adapterProducts =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listProducts.map { it.name })
-        binding.dropdownProducts.setAdapter(adapterProducts)
+            val adapterProducts =
+                ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listProducts.map { it.name })
+            binding.dropdownProducts.setAdapter(adapterProducts)
+            adapterProducts.notifyDataSetChanged()
+        }.launchIn(lifecycleScope)
 
         viewModel2.messageGetAllProduct.onEach {
             makeToast(it)
@@ -185,9 +162,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.btnReset.setOnClickListener {
             binding.apply {
+                dropdownCategory.setText("")
                 dropdownProducts.setText("")
                 etAmount.setText("")
-                dropdownTypeProduct.setText("")
             }
 
         }

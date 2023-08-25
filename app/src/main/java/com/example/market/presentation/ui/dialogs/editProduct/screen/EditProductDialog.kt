@@ -16,6 +16,7 @@ import com.example.market.data.models.EditProductRequestData
 import com.example.market.databinding.DialogEditProductBinding
 import com.example.market.presentation.ui.dialogs.add.vm.AddProductDialogViewModel
 import com.example.market.presentation.ui.dialogs.editProduct.vm.EditProductDialogViewModel
+import com.example.market.utils.EditProductClick
 import com.example.market.utils.makeToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -134,6 +135,9 @@ class EditProductDialog:BottomSheetDialogFragment() {
 
         viewModelEdit.editProductFlow.onEach {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            if (it.statusCode == 200){
+                EditProductClick.buttonAddCategoryClick(true)
+            }
             Log.d("YYY",it.message)
             dismiss()
         }.launchIn(lifecycleScope)

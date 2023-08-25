@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/montserrat"
-                        android:text="+$2000"
+                        android:text="0"
                         android:singleLine="true"
                         android:textStyle="bold"
                         android:textColor="@color/color_custom_green"
@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/montserrat"
-                        android:text="-$550"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textColor="@color/color_custom_red"
                         android:textSize="26sp"/>
@@ -254,7 +254,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:hint="Продукты"
+                    android:hint="@string/tv_products"
                     android:layout_marginTop="10dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
@@ -269,51 +269,21 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+
+                <EditText
+                    android:id="@+id/et_amount"
                     android:layout_width="300dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edittext_amount"
+                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_amount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_edittext_amount"
-                        android:gravity="center"
-                        android:hint="Количество"
-                        android:textColorHint="@color/custom_color_grey"
-                        android:textColor="@color/black"
-                        android:inputType="number"
-                        android:padding="15dp"
-                        android:textSize="16sp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/dropdown_type_product_layout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:hint="Ед.изм"
-                        app:hintTextColor="@color/custom_color_grey"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toEndOf="@id/et_product_amount"
-                        app:layout_constraintEnd_toEndOf="@id/guideline_ver2"
-                        app:layout_constraintTop_toBottomOf="@id/dropdown_category_layout"
-                        app:layout_constraintBottom_toBottomOf="@id/et_product_amount">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:id="@+id/dropdown_type_product"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textColor="@color/black"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:longClickable="false" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                    android:hint="@string/tv_amount"
+                    android:textColorHint="@color/custom_color_grey"
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:padding="15dp"
+                    android:textSize="16sp" />
 
 
                 <LinearLayout
