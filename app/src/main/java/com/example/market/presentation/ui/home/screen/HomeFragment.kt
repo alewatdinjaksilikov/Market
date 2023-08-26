@@ -155,6 +155,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
+        binding.dropdownProducts.setOnItemClickListener { adapterView, view, i, l ->
+            val item = adapterView.getItemAtPosition(i).toString()
+            pressedProduct = listProducts[i].name
+        }
+
         binding.swipeRefreshHome.setOnRefreshListener {
             viewModel.getAllCategories()
             binding.swipeRefreshHome.isRefreshing = false
@@ -274,7 +279,3 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //        val adapterType = ArrayAdapter(requireContext(),R.layout.list_item_dropdown_menu,list)
 //        binding.dropdownProducts.setAdapter(adapterType)
 
-//        binding.dropdownProducts.setOnItemClickListener { adapterView, view, i, l ->
-//            val item = adapterView.getItemAtPosition(i).toString()
-//            pressedProduct = list[i]
-//        }
