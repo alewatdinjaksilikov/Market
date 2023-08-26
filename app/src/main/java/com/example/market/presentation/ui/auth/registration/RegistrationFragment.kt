@@ -49,6 +49,7 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                                 surname = surname
                             )
                         )
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                 }else{
                     makeToast("Заполните все поля!!!")
@@ -76,6 +77,16 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                 Log.d("JJJ", "Regis login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
             }
             findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment())
+        }.launchIn(lifecycleScope)
+
+        viewModel.errorRegistration.onEach {
+            makeToast(it.toString())
+            binding.progressBar.visibility = View.GONE
+        }.launchIn(lifecycleScope)
+
+        viewModel.messageRegistration.onEach {
+            makeToast(it)
+            binding.progressBar.visibility = View.GONE
         }.launchIn(lifecycleScope)
     }
 }

@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 //            }
         }.launchIn(lifecycleScope)
     }
+
     private fun checkInternetConnection() {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

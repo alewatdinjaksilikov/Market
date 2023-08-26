@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.market.R
 import com.example.market.data.models.AddProductRequestData
+import com.example.market.data.models.CategoryResponseData
 import com.example.market.databinding.DialogAddProductBinding
 import com.example.market.presentation.ui.dialogs.add.vm.AddProductDialogViewModel
 import com.example.market.utils.AddButtonClick
@@ -32,7 +33,7 @@ class AddProductDialog:BottomSheetDialogFragment() {
     private var category = ""
 
     private var isListAdded = false
-    val list = mutableListOf<String>()
+    val list = mutableListOf<CategoryResponseData>()
     private val listType = listOf("KG","M","L")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,29 +64,37 @@ class AddProductDialog:BottomSheetDialogFragment() {
             viewModel.getAllCategories()
         }
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("nameCategory")?.observe(viewLifecycleOwner) {result ->
-            makeToast(result)
-            category = result
-            binding.dropdownCategory.setText(result)
-        }
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
-            imageUrl = result
-        }
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("nameCategory")?.observe(viewLifecycleOwner) {result ->
+//            makeToast(result)
+//            category = result
+//            binding.dropdownCategory.setText(result)
+//        }
+//
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
+//            imageUrl = result
+//        }
     }
 
     private fun initObservables() {
         viewModel.getCategoriesFlow.onEach {
-            if (!isListAdded){
-                it.forEach { data ->
-                    list.add(data.name)
-                }
-                isListAdded = true
-            }
+
+            list.clear()
+            list.addAll(it)
+
+            val adapterCategory =
+                ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list.map { it.name })
+            binding.dropdownCategory.setAdapter(adapterCategory)
+            adapterCategory.notifyDataSetChanged()
+
+//            if (!isListAdded){
+//                it.forEach { data ->
+//                    list.add(data)
+//                }
+//                isListAdded = true
+//            }
         }.launchIn(lifecycleScope)
-        val adapterCategory =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list)
-        binding.dropdownCategory.setAdapter(adapterCategory)
+
+
 
         viewModel.addProductFlow.onEach {
             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -106,8 +115,9 @@ class AddProductDialog:BottomSheetDialogFragment() {
             val name = binding.etProductName.text.toString()
             val amount = binding.etProductAmount.text.toString()
             val price = binding.etProductPrice.text.toString()
+            val sizeProduct  = binding.etProductSize.text.toString()
 
-            if (name!=="" && amount!="" && price!="" && type!="" && category!="" && imageUrl!=""){
+            if (name!=="" && amount!="" && price!="" && type!="" && category!="" && imageUrl!="" && sizeProduct!=""){
                 lifecycleScope.launch{
                     viewModel.addProduct(AddProductRequestData(
                         amount = amount.toInt(),
@@ -115,11 +125,19 @@ class AddProductDialog:BottomSheetDialogFragment() {
                         imageUrl = imageUrl,
                         name = name,
                         price = price.toInt(),
-                        unit = type
+                        unit = type,
+                        size = sizeProduct
                     ))
                 }
             }else{
                 makeToast("Заполните все поля!")
+                Log.d("Add","Name - $name")
+                Log.d("Add","amount - $amount")
+                Log.d("Add","Price - $price")
+                Log.d("Add","Type - $type")
+                Log.d("Add","category - $category")
+                Log.d("Add","Image Url - $imageUrl")
+                Log.d("Add","Size - $sizeProduct")
             }
         }
 
@@ -127,13 +145,14 @@ class AddProductDialog:BottomSheetDialogFragment() {
             dialog!!.dismiss()
         }
 
-        binding.btnAddProductImage.setOnClickListener {
-            findNavController().navigate(AddProductDialogDirections.actionAddProductDialog2ToImagesFragment())
-        }
+//        binding.btnAddProductImage.setOnClickListener {
+//            findNavController().navigate(AddProductDialogDirections.actionAddProductDialog2ToImagesFragment())
+//        }
 
         binding.dropdownCategory.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
-            category = list[i]
+            category = list[i].name
+            imageUrl = list[i].imageUrl
             Toast.makeText(requireContext(),"Item $item",Toast.LENGTH_SHORT).show()
         }
 

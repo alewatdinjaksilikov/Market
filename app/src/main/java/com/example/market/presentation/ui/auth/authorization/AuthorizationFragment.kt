@@ -45,6 +45,7 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
                             phoneNumber = phoneNumber
                         )
                     )
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             } else {
                 makeToast("Заполните все поля!!!")
@@ -61,6 +62,7 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
         viewModel.authorizationFlow.onEach {
             if (it!=null){
                 makeToast("Success")
+                binding.progressBar.visibility = View.GONE
                 SharedPref.pref.edit().putString("token", it.token).apply()
                 SharedPref.pref.edit().putString("name",it.name).apply()
                 SharedPref.pref.edit().putString("surname",it.surname).apply()
@@ -77,10 +79,12 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
 
         viewModel.messageAuthorizationFlow.onEach {
             makeToast(it)
+            binding.progressBar.visibility = View.GONE
         }.launchIn(lifecycleScope)
 
         viewModel.errorAuthorizationFlow.onEach {
             makeToast(it.toString())
+            binding.progressBar.visibility = View.GONE
         }.launchIn(lifecycleScope)
     }
 

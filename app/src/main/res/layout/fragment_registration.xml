@@ -136,6 +136,19 @@
             android:background="@drawable/bg_text_field"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="10dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/color_pb"
+        app:layout_constraintTop_toTopOf="@id/btn_registration"
+        app:layout_constraintStart_toStartOf="@id/btn_registration"
+        app:layout_constraintEnd_toEndOf="@id/btn_registration"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_registration"
         android:layout_width="0dp"

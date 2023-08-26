@@ -27,7 +27,7 @@ class StockFragmentProductAdapter:ListAdapter<ProductResponseData,StockFragmentP
             binding.apply {
                 tvProductName.text = product.name
                 tvAmount.text = product.amount.toString()
-                tvSizeProduct.text = 0.toString()
+                tvSizeProduct.text = product.size
             }
 
             binding.btnEdit.setOnClickListener {

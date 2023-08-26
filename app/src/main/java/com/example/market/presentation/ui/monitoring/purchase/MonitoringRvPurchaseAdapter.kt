@@ -2,7 +2,6 @@ package com.example.market.presentation.ui.monitoring.purchase
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.market.data.models.MonitoringResponseData
@@ -13,7 +12,7 @@ import java.text.NumberFormat
 import java.util.*
 
 class MonitoringRvPurchaseAdapter:
-    ListAdapter<MonitoringResponseData, MonitoringRvPurchaseAdapter.MonitoringRvPurchaseVH>(diffUtil) {
+    ListAdapter<MonitoringResponseData, MonitoringRvPurchaseAdapter.MonitoringRvPurchaseVH>(DiffUtil) {
 
     inner class MonitoringRvPurchaseVH(private val binding: RvItemPurchaseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -39,7 +38,7 @@ class MonitoringRvPurchaseAdapter:
         holder.setData(position)
     }
 
-    private object diffUtil : DiffUtil.ItemCallback<MonitoringResponseData>() {
+    private object DiffUtil : androidx.recyclerview.widget.DiffUtil.ItemCallback<MonitoringResponseData>() {
         override fun areItemsTheSame(oldItem: MonitoringResponseData, newItem: MonitoringResponseData): Boolean {
             return oldItem == newItem
         }

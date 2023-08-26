@@ -46,4 +46,5 @@
     <string name="stock_control">Stock Control</string>
     <string name="tv_amount">Количество</string>
     <string name="tv_products">Продукты</string>
+    <string name="tv_size">Размер</string>
 </resources>
