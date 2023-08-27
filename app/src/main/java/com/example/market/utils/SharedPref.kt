@@ -8,5 +8,6 @@ class SharedPref {
     companion object{
         val pref: SharedPreferences =
             App.instance.getSharedPreferences("MySharedPref",Context.MODE_PRIVATE)
+        val prefEditor: SharedPreferences.Editor = pref.edit()
     }
 }

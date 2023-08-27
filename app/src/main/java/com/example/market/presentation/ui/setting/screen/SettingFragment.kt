@@ -1,5 +1,6 @@
 package com.example.market.presentation.ui.setting.screen
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,13 @@ import kotlin.system.exitProcess
 @AndroidEntryPoint
 class SettingFragment:Fragment(R.layout.fragment_setting) {
     private lateinit var binding: FragmentSettingBinding
+    private lateinit var mainActivity: Activity
+
+
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        mainActivity = activity
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,14 +46,16 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
             }
             btnLogout.setOnClickListener {
 
-                requireContext().getSharedPreferences("MySharedPref",0).edit().clear().apply()
-
-                SharedPref.pref.edit().putString("token", ".").apply()
-                SharedPref.pref.edit().putBoolean("isLogin", false).apply()
+                SharedPref.prefEditor.putString("token", ".")
+                SharedPref.prefEditor.putBoolean("isLogin", false)
+                SharedPref.prefEditor.apply()
 
                 Log.d("JJJ", "Setting token ${SharedPref.pref.getString("token","").toString()}")
                 Log.d("JJJ", "Setting log out ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
-                exitProcess(0)
+                with(mainActivity) {
+                    moveTaskToBack(true)
+                    finish()
+                }
             }
             llEditPassword.setOnClickListener {
                 findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditPasswordFragment())

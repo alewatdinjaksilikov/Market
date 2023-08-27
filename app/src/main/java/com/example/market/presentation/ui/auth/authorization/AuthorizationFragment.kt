@@ -63,11 +63,13 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             if (it!=null){
                 makeToast("Success")
                 binding.progressBar.visibility = View.GONE
-                SharedPref.pref.edit().putString("token", it.token).apply()
-                SharedPref.pref.edit().putString("name",it.name).apply()
-                SharedPref.pref.edit().putString("surname",it.surname).apply()
-                SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
-                SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+
+                SharedPref.prefEditor.putString("token", it.token)
+                SharedPref.prefEditor.putString("name",it.name)
+                SharedPref.prefEditor.putString("surname",it.surname)
+                SharedPref.prefEditor.putString("phoneNumber",it.phoneNumber)
+                SharedPref.prefEditor.putBoolean("isLogin",true)
+                SharedPref.prefEditor.apply()
 
                 //Проверка
                 Log.d("JJJ", "Auth token ${SharedPref.pref.getString("token","").toString()}")

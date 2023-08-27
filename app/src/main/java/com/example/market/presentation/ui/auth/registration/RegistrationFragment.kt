@@ -66,11 +66,13 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
         viewModel.registrationFlow.onEach {
             makeToast("Success")
             it?.let {
-                SharedPref.pref.edit().putString("token",it.token).apply()
-                SharedPref.pref.edit().putString("name",it.name).apply()
-                SharedPref.pref.edit().putString("surname",it.surname).apply()
-                SharedPref.pref.edit().putString("phoneNumber",it.phoneNumber).apply()
-                SharedPref.pref.edit().putBoolean("isLogin",true).apply()
+
+                SharedPref.prefEditor.putString("token",it.token)
+                SharedPref.prefEditor.putString("name",it.name)
+                SharedPref.prefEditor.putString("surname",it.surname)
+                SharedPref.prefEditor.putString("phoneNumber",it.phoneNumber)
+                SharedPref.prefEditor.putBoolean("isLogin",true)
+                SharedPref.prefEditor.apply()
 
                 //Проверка
                 Log.d("JJJ", "Regis token ${SharedPref.pref.getString("token","").toString()}")
