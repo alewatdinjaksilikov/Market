@@ -6,5 +6,6 @@ data class EditProductRequestData(
     val imageUrl:String,
     val name:String,
     val price:Int,
+    val size: String,
     val unit:String
 )

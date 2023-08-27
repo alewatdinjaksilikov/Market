@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/addAmount"
+        android:title="@string/tv_added_amount"
+        app:showAsAction="never"/>
 
     <item android:id="@+id/edit"
         android:title="@string/tv_edit_ru"

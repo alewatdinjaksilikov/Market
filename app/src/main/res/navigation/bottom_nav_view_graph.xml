@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_fragment_stock_to_addCategoryDialog"
             app:destination="@id/addCategoryDialog" />
+        <action
+            android:id="@+id/action_fragment_stock_to_addAmountDialog"
+            app:destination="@id/addAmountDialog" />
     </fragment>
     <fragment
         android:id="@+id/fragment_home"
@@ -137,5 +140,14 @@
         android:name="com.example.market.presentation.ui.setting.editPassword.EditPasswordFragment"
         android:label="EditPasswordFragment"
         tools:layout="@layout/fragment_edit_password"/>
+    <dialog
+        android:id="@+id/addAmountDialog"
+        android:name="com.example.market.presentation.ui.dialogs.addAmount.AddAmountDialog"
+        android:label="AddAmountDialog"
+        tools:layout="@layout/dialog_add_amount">
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </dialog>
 
 </navigation>

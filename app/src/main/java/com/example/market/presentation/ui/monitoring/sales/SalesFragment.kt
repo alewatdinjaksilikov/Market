@@ -46,6 +46,9 @@ class SalesFragment : Fragment() {
 
     private fun initObservables() {
         viewModel.getAllSaleFlow.onEach {
+            if (it.isEmpty()){
+                binding.tvNoSales.visibility = View.VISIBLE
+            }
             adapter.submitList(it)
         }.launchIn(lifecycleScope)
     }

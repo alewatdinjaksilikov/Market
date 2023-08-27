@@ -84,4 +84,7 @@ interface ApiService {
 
     @PUT("/api/v1/users/change/profile")
     suspend fun editProfile(@Body body:EditProfileRequestData):Response<LoginResponseData>
+
+    @POST("/api/v1/products/add")
+    suspend fun addAmountProduct(@Body body: AddAmountRequestData):Response<EditProductResponseData>
 }

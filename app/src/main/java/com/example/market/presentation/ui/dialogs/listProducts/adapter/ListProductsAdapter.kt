@@ -16,6 +16,7 @@ class ListProductsAdapter:ListAdapter<ProductResponseData, ListProductsAdapter.L
         fun setData(position:Int){
             val p = getItem(position)
 
+            binding.tvTypeProduct.text = p.unit
             binding.tvNameProduct.text = p.name
             binding.tvAmountProduct.text = p.amount.toString()
         }

@@ -47,4 +47,7 @@
     <string name="tv_amount">Количество</string>
     <string name="tv_products">Продукты</string>
     <string name="tv_size">Размер</string>
+    <string name="tv_added_amount">Добавить количество</string>
+    <string name="tv_no_sales">Нет продажи</string>
+    <string name="tv_no_purchase">Нет покупков</string>
 </resources>

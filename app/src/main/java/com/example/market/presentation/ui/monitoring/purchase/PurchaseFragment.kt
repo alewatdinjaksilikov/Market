@@ -46,6 +46,9 @@ class PurchaseFragment : Fragment() {
 
     private fun initObservables() {
         viewModel.getAllBuyFlow.onEach {
+            if (it.isEmpty()){
+                binding.tvNoPurchase.visibility = View.VISIBLE
+            }
             adapter.submitList(it)
         }.launchIn(lifecycleScope)
     }

@@ -42,6 +42,8 @@ import com.example.market.domain.usecase.login.auth.AuthorizationUseCase
 import com.example.market.domain.usecase.login.auth.impl.AuthorizationUseCaseImpl
 import com.example.market.domain.usecase.login.registration.RegistrationUseCase
 import com.example.market.domain.usecase.login.registration.impl.RegistrationUseCaseImpl
+import com.example.market.domain.usecase.product.addAmount.AddAmountProductUseCase
+import com.example.market.domain.usecase.product.addAmount.impl.AddAmountProductUseCaseImpl
 import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import com.example.market.domain.usecase.product.sellProduct.impl.SellProductUseCaseImpl
 import dagger.Binds
@@ -157,6 +159,11 @@ class DomainModule {
     @Provides
     fun editProfile(mainRepository: MainRepository): EditProfileUseCase {
         return EditProfileUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun addAmountUseCase(mainRepository: MainRepository):AddAmountProductUseCase{
+        return AddAmountProductUseCaseImpl(mainRepository = mainRepository)
     }
 
 }

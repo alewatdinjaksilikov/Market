@@ -179,4 +179,13 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
             emit(ResultData.Message(response.message()))
         }
     }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
+    override fun addAmountProduct(body: AddAmountRequestData) = flow {
+        val response = apiService.addAmountProduct(body = body)
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 }

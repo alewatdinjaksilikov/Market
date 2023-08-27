@@ -16,6 +16,7 @@ import com.example.market.databinding.FragmentStockBinding
 import com.example.market.presentation.ui.stock.adapter.StockFragmentCategoryAdapter
 import com.example.market.presentation.ui.stock.adapter.StockFragmentProductAdapter
 import com.example.market.presentation.ui.stock.vm.StockFragmentViewModel
+import com.example.market.utils.AddAmountClick
 import com.example.market.utils.AddButtonCategoryClick
 import com.example.market.utils.AddButtonClick
 import com.example.market.utils.EditCategoryClick
@@ -147,6 +148,17 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                     binding.swipeRefreshStock.isRefreshing = false
                 }
             }
+
+            AddAmountClick.buttonAddAmountLiveData.observe(viewLifecycleOwner){
+                if (it){
+                    binding.swipeRefreshStock.isRefreshing = true
+                    lifecycleScope.launch {
+                        viewModel.getAllCategories()
+                        viewModel.getAllProductByCategory(clickedCategory)
+                    }
+                    binding.swipeRefreshStock.isRefreshing = false
+                }
+            }
         }
     }
 
@@ -176,6 +188,9 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
             popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    R.id.addAmount->{
+                        findNavController().navigate(StockFragmentDirections.actionFragmentStockToAddAmountDialog(product.name))
+                    }
                     R.id.edit -> findNavController().navigate(StockFragmentDirections.actionFragmentStockToEditProductDialog(product.name,product.id))
                     R.id.delete -> {
                         val dialog = AlertDialog.Builder(requireContext())

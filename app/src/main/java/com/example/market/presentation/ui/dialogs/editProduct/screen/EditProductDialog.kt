@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.market.R
+import com.example.market.data.models.CategoryResponseData
 import com.example.market.data.models.EditProductRequestData
 import com.example.market.databinding.DialogEditProductBinding
 import com.example.market.presentation.ui.dialogs.add.vm.AddProductDialogViewModel
@@ -37,7 +38,7 @@ class EditProductDialog:BottomSheetDialogFragment() {
     private var category = ""
 
     private var isListAdded = false
-    private val list = mutableListOf<String>()
+    private val list = mutableListOf<CategoryResponseData>()
     val listType = listOf("KG","M","L")
 
 
@@ -69,8 +70,9 @@ class EditProductDialog:BottomSheetDialogFragment() {
 
         binding.dropdownCategory.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
-            category = list[i]
-            selectedCategoryId = i
+            category = list[i].name
+            imageUrl = list[i].imageUrl
+//            selectedCategoryId = i
             Toast.makeText(requireContext(),"Item $item",Toast.LENGTH_SHORT).show()
         }
 
@@ -79,7 +81,6 @@ class EditProductDialog:BottomSheetDialogFragment() {
         binding.dropdownTypeProduct.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
             type = listType[i]
-            Log.d("III",type)
             Toast.makeText(requireContext(),"Item $item",Toast.LENGTH_SHORT).show()
         }
 
@@ -88,12 +89,12 @@ class EditProductDialog:BottomSheetDialogFragment() {
     private fun initListeners() {
 
         binding.btnEditProduct.setOnClickListener {
-            Toast.makeText(requireContext(),"Clicked",Toast.LENGTH_SHORT).show()
             val name = binding.etProductName.text.toString()
             val amount = binding.etProductAmount.text.toString()
             val price = binding.etProductPrice.text.toString()
+            val sizeProduct = binding.etProductSize.text.toString()
 
-            if (name!=="" && amount!="" && price!="" && type!="" && category!="" && imageUrl!=""){
+            if (name!=="" && amount!="" && price!="" && type!="" && category!="" && imageUrl!="" && sizeProduct!=""){
                 lifecycleScope.launch{
                     viewModelEdit.editProduct(
                         args.id,
@@ -103,33 +104,34 @@ class EditProductDialog:BottomSheetDialogFragment() {
                             imageUrl = imageUrl,
                             name = name,
                             price = price.toInt(),
-                            unit = type
+                            unit = type,
+                            size = sizeProduct
                         )
                     )
-                    Log.d("YYY","Kirdi")
                 }
             }else{
                 makeToast("Заполните все поля!!!")
             }
         }
 
-        binding.btnAddProductImage.setOnClickListener {
-            findNavController().navigate(EditProductDialogDirections.actionEditProductDialogToImagesFragment2())
-        }
+//        binding.btnAddProductImage.setOnClickListener {
+//            findNavController().navigate(EditProductDialogDirections.actionEditProductDialogToImagesFragment2())
+//        }
     }
 
     private fun initObservables() {
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
-            imageUrl = result
-        }
+//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
+//            imageUrl = result
+//        }
 
         viewModelEdit.getProductFlow.onEach {
             binding.apply {
-                Log.d("YYY","${it.name} ${it.amount} ${it.price}")
                 etProductName.setText(it.name)
                 etProductAmount.setText(it.amount.toString())
                 etProductPrice.setText(it.price.toString())
+                etProductSize.setText(it.size)
+
             }
         }.launchIn(lifecycleScope)
 
@@ -143,16 +145,23 @@ class EditProductDialog:BottomSheetDialogFragment() {
         }.launchIn(lifecycleScope)
 
         viewModel.getCategoriesFlow.onEach {
-            if (!isListAdded){
-                it.forEach { data ->
-                    list.add(data.name)
-                }
-                isListAdded = true
-            }
+
+            list.clear()
+            list.addAll(it)
+
+            val adapterCategory =
+                ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list.map { it.name })
+            binding.dropdownCategory.setAdapter(adapterCategory)
+            adapterCategory.notifyDataSetChanged()
+
+//            if (!isListAdded){
+//                it.forEach { data ->
+//                    list.add(data.name)
+//                }
+//                isListAdded = true
+//            }
         }.launchIn(lifecycleScope)
 
-        val adapterCategory =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list)
-        binding.dropdownCategory.setAdapter(adapterCategory)
+
     }
 }

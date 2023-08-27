@@ -38,3 +38,12 @@ object EditCategoryClick{
         _buttonEditCategoryLiveData.value = boolean
     }
 }
+
+object AddAmountClick{
+    private val _buttonAddAmountLiveData = MutableLiveData<Boolean>()
+    val buttonAddAmountLiveData: LiveData<Boolean> = _buttonAddAmountLiveData
+
+    fun buttonAddAmountClick(boolean: Boolean) {
+        _buttonAddAmountLiveData.value = boolean
+    }
+}
