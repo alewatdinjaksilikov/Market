@@ -43,7 +43,7 @@ class StockFragmentCategoryAdapter :
                 tvProductName.text = product.name
 
                 if (clickedCategory == position)
-                    categoryConatiner.setStrokeColor(ColorStateList.valueOf(R.color.custom_color_grey))
+                    categoryConatiner.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#FFCC00")))
                 else
                     categoryConatiner.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT))
 
