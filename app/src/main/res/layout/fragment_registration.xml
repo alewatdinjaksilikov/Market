@@ -91,7 +91,8 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/tv_998"
+        android:hint="Номер телефона"
+        app:prefixText="+998"
         android:textColorHint="@color/custom_color_grey"
         style="@style/StyleCustomTextInputLayout"
         app:layout_constraintTop_toBottomOf="@id/name"
@@ -106,7 +107,7 @@
             android:textCursorDrawable="@null"
             android:textColor="@color/black"
             android:maxEms="13"
-            android:maxLength="13"
+            android:maxLength="9"
             android:maxLines="1"
             android:background="@drawable/bg_text_field"/>
     </com.google.android.material.textfield.TextInputLayout>

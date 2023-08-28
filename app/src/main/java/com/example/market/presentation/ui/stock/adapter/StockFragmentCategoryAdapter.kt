@@ -5,15 +5,12 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.market.R
 import com.example.market.data.models.CategoryResponseData
 import com.example.market.databinding.RcItemStockCategoryBinding
-import com.example.market.utils.Constants
 
 class StockFragmentCategoryAdapter :
     ListAdapter<CategoryResponseData, StockFragmentCategoryAdapter.StockCategoryViewHolder>(diffUtil) {
@@ -43,7 +40,7 @@ class StockFragmentCategoryAdapter :
                 tvProductName.text = product.name
 
                 if (clickedCategory == position)
-                    categoryConatiner.setStrokeColor(ColorStateList.valueOf(R.color.custom_color_grey))
+                    categoryConatiner.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#FFCC00")))
                 else
                     categoryConatiner.setStrokeColor(ColorStateList.valueOf(Color.TRANSPARENT))
 

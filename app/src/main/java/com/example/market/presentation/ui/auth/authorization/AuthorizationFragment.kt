@@ -36,13 +36,14 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
         binding.btnEnter.setOnClickListener {
             val phoneNumber = binding.etPhoneNumber.text.toString()
             val password = binding.etPassword.text.toString()
+            val prefix = binding.phoneNumber.prefixText
 
             if (phoneNumber != "" && password != "") {
                 lifecycleScope.launch {
                     viewModel.authorization(
                         LoginRequestData(
                             password = password,
-                            phoneNumber = phoneNumber
+                            phoneNumber = "$prefix$phoneNumber"
                         )
                     )
                     binding.progressBar.visibility = View.VISIBLE

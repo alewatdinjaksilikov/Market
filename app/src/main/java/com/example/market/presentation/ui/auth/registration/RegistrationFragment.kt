@@ -38,6 +38,7 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                 val surname = binding.etSurname.text.toString()
                 val phone = binding.etPhone.text.toString()
                 val password = binding.etPassword.text.toString()
+                val prefix = binding.phone.prefixText
 
                 if (surname.isNotEmpty() && name.isNotEmpty() && phone.isNotEmpty() && password.isNotEmpty()){
                     lifecycleScope.launch {
@@ -45,7 +46,7 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                             RegistrationRequestData(
                                 name = name,
                                 password = password,
-                                phoneNumber = phone,
+                                phoneNumber = "$prefix$phone",
                                 surname = surname
                             )
                         )

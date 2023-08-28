@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:startIconDrawable="@drawable/ic_personalcard"
-            android:hint="+998"
+            android:hint="Номер телефона"
+            app:prefixText="+998"
             android:textColorHint="@color/custom_color_grey"
             style="@style/StyleCustomTextInputLayout"
             app:layout_constraintEnd_toEndOf="@id/tv_login_to_your_acc"
@@ -65,7 +66,7 @@
                 android:textCursorDrawable="@null"
                 android:textColor="@color/black"
                 android:maxEms="13"
-                android:maxLength="13"
+                android:maxLength="9"
                 android:maxLines="1"
                 android:background="@drawable/bg_text_field"/>
         </com.google.android.material.textfield.TextInputLayout>

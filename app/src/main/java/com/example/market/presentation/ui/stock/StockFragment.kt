@@ -108,7 +108,6 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         }.launchIn(lifecycleScope)
         viewModel.getAllProduct.onEach {
             if (it.isNotEmpty()) {
-                initProductAdapterList(it)
                 stopAndInvisibleShimmerProduct()
 
                 binding.tvNoProducts.visibility = View.INVISIBLE
@@ -117,6 +116,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
 
                 binding.tvNoProducts.visibility = View.VISIBLE
             }
+            initProductAdapterList(it)
         }.launchIn(lifecycleScope)
 
         lifecycleScope.launch {
@@ -125,7 +125,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategoryId)
+//                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
                 }
@@ -224,6 +224,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                 viewModel.getAllProductByCategory(clickedCategoryId)
             }
         }
+
         adapterProducts.setOnClickPopUpMenu { binding, product ->
             val popupMenu = PopupMenu(requireContext(), binding.btnEdit)
             popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
