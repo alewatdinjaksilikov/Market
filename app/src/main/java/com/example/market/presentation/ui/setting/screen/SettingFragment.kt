@@ -15,15 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint
-class SettingFragment:Fragment(R.layout.fragment_setting) {
+class SettingFragment : Fragment(R.layout.fragment_setting) {
     private lateinit var binding: FragmentSettingBinding
-    private lateinit var mainActivity: Activity
-
-
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
-        mainActivity = activity
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,11 +43,9 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
                 SharedPref.prefEditor.putBoolean("isLogin", false)
                 SharedPref.prefEditor.apply()
 
-                Log.d("JJJ", "Setting token ${SharedPref.pref.getString("token","").toString()}")
-                Log.d("JJJ", "Setting log out ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
-                with(mainActivity) {
-                    moveTaskToBack(true)
-                    finish()
+                with(activity) {
+                    this?.moveTaskToBack(true)
+                    this?.finish()
                 }
             }
             llEditPassword.setOnClickListener {
@@ -78,8 +69,8 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
     }
 
     private fun initVariables() {
-        binding.tvName.text = SharedPref.pref.getString("name","Name")
-        binding.tvSurname.text = SharedPref.pref.getString("surname","Surname")
+        binding.tvName.text = SharedPref.pref.getString("name", "Name")
+        binding.tvSurname.text = SharedPref.pref.getString("surname", "Surname")
     }
 
 }

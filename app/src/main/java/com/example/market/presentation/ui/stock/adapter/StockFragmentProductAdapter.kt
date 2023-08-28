@@ -9,42 +9,20 @@ import com.bumptech.glide.Glide
 import com.example.market.data.models.ProductResponseData
 import com.example.market.databinding.RcItemStockProductsBinding
 
-class StockFragmentProductAdapter:ListAdapter<ProductResponseData,StockFragmentProductAdapter.StockFragmentProductViewHolder>(diffUtil) {
+class StockFragmentProductAdapter :
+    ListAdapter<ProductResponseData, StockFragmentProductAdapter.StockFragmentProductViewHolder>(
+        diffUtil
+    ) {
 
-    private var onPopUpMenuClickListener:((RcItemStockProductsBinding,ProductResponseData)->Unit)? = null
-    fun setOnClickPopUpMenu(block:(RcItemStockProductsBinding,ProductResponseData)->Unit){
-        onPopUpMenuClickListener = block
-    }
-
-    inner class StockFragmentProductViewHolder(private val binding:RcItemStockProductsBinding):RecyclerView.ViewHolder(binding.root){
-        fun setData(position:Int){
-            val product = getItem(position)
-
-            Glide.with(binding.root)
-                .load(product.imageUrl)
-                .into(binding.ivProduct)
-
-            binding.apply {
-                tvProductName.text = product.name
-                tvAmount.text = product.amount.toString()
-                tvSizeProduct.text = product.size
-            }
-
-            binding.btnEdit.setOnClickListener {
-                onPopUpMenuClickListener?.invoke(binding,product)
-            }
-        }
-    }
+    private var onPopUpMenuClickListener: ((RcItemStockProductsBinding, ProductResponseData) -> Unit)? =
+        null
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): StockFragmentProductViewHolder {
         return StockFragmentProductViewHolder(
             RcItemStockProductsBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -53,15 +31,41 @@ class StockFragmentProductAdapter:ListAdapter<ProductResponseData,StockFragmentP
         holder.setData(position)
     }
 
+    inner class StockFragmentProductViewHolder(private val binding: RcItemStockProductsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun setData(position: Int) {
+            val product = getItem(position)
+
+            with(binding) {
+                Glide.with(binding.root).load(product.imageUrl).into(ivProduct)
+
+                tvProductName.text = product.name
+                tvAmount.text = product.amount.toString()
+                tvSizeProduct.text = product.size
+
+                btnEdit.setOnClickListener {
+                    onPopUpMenuClickListener?.invoke(binding, product)
+                }
+            }
+        }
+    }
 
     private object diffUtil : DiffUtil.ItemCallback<ProductResponseData>() {
-        override fun areItemsTheSame(oldItem: ProductResponseData, newItem: ProductResponseData): Boolean {
+        override fun areItemsTheSame(
+            oldItem: ProductResponseData, newItem: ProductResponseData
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: ProductResponseData, newItem: ProductResponseData): Boolean {
+        override fun areContentsTheSame(
+            oldItem: ProductResponseData, newItem: ProductResponseData
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
+    }
+
+    fun setOnClickPopUpMenu(block: (RcItemStockProductsBinding, ProductResponseData) -> Unit) {
+        onPopUpMenuClickListener = block
     }
 }
