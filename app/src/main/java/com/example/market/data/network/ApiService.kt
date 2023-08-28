@@ -76,6 +76,9 @@ interface ApiService {
     @GET("/api/v1/monitoring/sale")
     suspend fun getAllSale():Response<List<MonitoringResponseData>>
 
+    @GET("/api/v1/statistics/main")
+    suspend fun getStatisticsMain():Response<StatisticsMainResponseData>
+
     @GET("/api/v1/statistics")
     suspend fun getStatistics():Response<StatisticsResponseData>
 

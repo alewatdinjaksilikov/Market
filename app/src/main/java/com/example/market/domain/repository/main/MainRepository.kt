@@ -43,6 +43,8 @@ interface MainRepository {
 
     fun getAllSale():Flow<ResultData<List<MonitoringResponseData>>>
 
+    fun getStatisticsMain():Flow<ResultData<StatisticsMainResponseData>>
+
     fun getStatistics():Flow<ResultData<StatisticsResponseData>>
 
     fun addAmountProduct(body : AddAmountRequestData):Flow<ResultData<EditProductResponseData?>>

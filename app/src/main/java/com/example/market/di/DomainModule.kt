@@ -36,8 +36,10 @@ import com.example.market.domain.usecase.category.getCategoryById.GetCategoryByI
 import com.example.market.domain.usecase.category.getCategoryById.impl.GetCategoryByIdUseCaseImpl
 import com.example.market.domain.usecase.product.getProductByName.GetProductByNameUseCase
 import com.example.market.domain.usecase.product.getProductByName.impl.GetProductByNameUseCaseImpl
-import com.example.market.domain.usecase.getStatistics.GetStatisticsUseCase
-import com.example.market.domain.usecase.getStatistics.impl.GetStatisticsUseCaseImpl
+import com.example.market.domain.usecase.getStatistics.main.GetStatisticsMainUseCase
+import com.example.market.domain.usecase.getStatistics.main.impl.GetStatisticsMainUseCaseImpl
+import com.example.market.domain.usecase.getStatistics.statistics.GetStatisticsUseCase
+import com.example.market.domain.usecase.getStatistics.statistics.impl.GetStatisticsUseCaseImpl
 import com.example.market.domain.usecase.login.auth.AuthorizationUseCase
 import com.example.market.domain.usecase.login.auth.impl.AuthorizationUseCaseImpl
 import com.example.market.domain.usecase.login.registration.RegistrationUseCase
@@ -46,7 +48,6 @@ import com.example.market.domain.usecase.product.addAmount.AddAmountProductUseCa
 import com.example.market.domain.usecase.product.addAmount.impl.AddAmountProductUseCaseImpl
 import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import com.example.market.domain.usecase.product.sellProduct.impl.SellProductUseCaseImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -129,6 +130,11 @@ class DomainModule {
     @Provides
     fun getAllSaleUseCase(mainRepository: MainRepository): GetAllSaleUseCase {
         return GetAllSaleUseCaseImpl(mainRepository = mainRepository)
+    }
+
+    @Provides
+    fun getStatisticsMain(mainRepository: MainRepository): GetStatisticsMainUseCase {
+        return GetStatisticsMainUseCaseImpl(mainRepository = mainRepository)
     }
 
     @Provides

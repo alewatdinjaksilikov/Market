@@ -171,6 +171,15 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
         }
     }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 
+    override fun getStatisticsMain() = flow {
+        val response = apiService.getStatisticsMain()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()!!))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
     override fun getStatistics() = flow {
         val response = apiService.getStatistics()
         if (response.isSuccessful){

@@ -30,6 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -89,6 +93,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun initObservables() {
+
+        viewModel.getStatisticsFlow.onEach {
+            binding.tvIncome.text = formatNumberWithThousandsSeparator(it.greenSum)
+            binding.tvExpense.text = formatNumberWithThousandsSeparator(it.redSum)
+        }.launchIn(lifecycleScope)
 
         viewModel.getAllCategoriesFlow.onEach {
             if (it.isEmpty()) {
@@ -162,6 +171,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.swipeRefreshHome.setOnRefreshListener {
             viewModel.getAllCategories()
+            viewModel.getStatistics()
             binding.swipeRefreshHome.isRefreshing = false
         }
 
@@ -208,6 +218,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initVariables() {
         lifecycleScope.launch {
             viewModel.getAllCategories()
+            viewModel.getStatistics()
         }
 
         val textNoCategory = SpannableStringBuilder()
@@ -247,10 +258,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.fragment_monitoring -> {
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToMonitoringFragment())
-                }
+//                R.id.fragment_monitoring -> {
+//                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+//                    findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToMonitoringFragment())
+//                }
                 R.id.fragment_settings ->{
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToSettingFragment())
@@ -258,6 +269,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
             true
         }
+    }
+
+    fun formatNumberWithThousandsSeparator(number: Int): String {
+        val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
+        return numberFormat.format(number)
     }
 }
 

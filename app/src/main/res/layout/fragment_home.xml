@@ -92,11 +92,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_income"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="0"
+                        tools:text="0"
+                        android:gravity="center_horizontal"
                         android:singleLine="true"
                         android:textStyle="bold"
                         android:textColor="@color/color_custom_green"
@@ -105,7 +108,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ежемесячный доход"
+                        android:text="Доход"
+                        android:fontFamily="@font/rubik_bold"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:layout_gravity="center"/>
@@ -119,11 +123,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_expense"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center_horizontal"
                         android:fontFamily="@font/montserrat"
-                        android:text="0"
+                        tools:text="0"
+                        android:singleLine="true"
                         android:textStyle="bold"
                         android:textColor="@color/color_custom_red"
                         android:textSize="26sp"/>
@@ -131,7 +138,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ежемесячные расходы"
+                        android:text="Расходы"
+                        android:fontFamily="@font/rubik_bold"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         android:layout_gravity="center"/>

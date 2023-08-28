@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.market.data.models.*
 import com.example.market.domain.usecase.category.getAllCategorires.GetAllCategoriesUseCase
+import com.example.market.domain.usecase.getStatistics.main.GetStatisticsMainUseCase
 import com.example.market.domain.usecase.product.getAllProducts.GetAllProductsUseCase
 import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class HomeFragmentViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
-    private val sellProductUseCase: SellProductUseCase
+    private val sellProductUseCase: SellProductUseCase,
+    private val getStatisticsMainUseCase: GetStatisticsMainUseCase
     ):ViewModel() {
 
     //GetAllCategories
@@ -50,6 +52,17 @@ class HomeFragmentViewModel @Inject constructor(
 
     private val _errorSellProductFlow = MutableSharedFlow<Throwable>()
     val errorSellProductFlow : SharedFlow<Throwable> get() = _errorSellProductFlow
+
+    //Statistika
+
+    private val _getStatisticsFlow = MutableSharedFlow<StatisticsMainResponseData>()
+    val getStatisticsFlow : SharedFlow<StatisticsMainResponseData> get() = _getStatisticsFlow
+
+    private val _messageGetStatisticsFlow = MutableSharedFlow<String>()
+    val messageGetStatisticsFlow : SharedFlow<String> get() = _messageGetStatisticsFlow
+
+    private val _errorGetStatisticsFlow = MutableSharedFlow<Throwable>()
+    val errorGetStatisticsFlow : SharedFlow<Throwable> get() = _errorGetStatisticsFlow
 
     fun getAllCategories(){
         getAllCategoriesUseCase.execute().onEach {
@@ -94,6 +107,22 @@ class HomeFragmentViewModel @Inject constructor(
                 }
                 is ResultData.Error ->{
                     _errorSellProductFlow.emit(it.error)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getStatistics(){
+        getStatisticsMainUseCase.execute().onEach {
+            when(it){
+                is ResultData.Success->{
+                    _getStatisticsFlow.emit(it.data)
+                }
+                is ResultData.Message->{
+                    _messageGetStatisticsFlow.emit(it.message)
+                }
+                is ResultData.Error->{
+                    _errorGetStatisticsFlow.emit(it.error)
                 }
             }
         }.launchIn(viewModelScope)
