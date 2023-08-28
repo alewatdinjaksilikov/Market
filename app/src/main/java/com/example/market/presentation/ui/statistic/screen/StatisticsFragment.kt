@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.market.R
 import com.example.market.databinding.FragmentStatisticsBinding
 import com.example.market.presentation.ui.statistic.vm.StatisticsFragmentViewModel
+import com.example.market.utils.makeToast
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -48,14 +49,14 @@ class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
 
     private fun initObservables() {
         viewModel.getStatisticsFlow.onEach {
-
-
             binding.tvSalary.text = formatNumberWithThousandsSeparator(it.sum)
             if (it.products.isNotEmpty()) {
+                makeToast("If: ${it.products}")
                 it.products.forEach { p ->
                     list.add(PieEntry(p.count.toFloat(), p.name))
                 }
             } else {
+                makeToast("Else: ${it.products}")
                 list.add(PieEntry(1f, "0"))
                 list.add(PieEntry(2f, "0"))
                 list.add(PieEntry(3f, "0"))
@@ -90,7 +91,7 @@ class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
         list.clear()
     }
 
-    fun formatNumberWithThousandsSeparator(number: Int): String {
+    private fun formatNumberWithThousandsSeparator(number: Int): String {
         val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
         return numberFormat.format(number)
     }

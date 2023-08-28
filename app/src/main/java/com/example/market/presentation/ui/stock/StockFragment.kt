@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.core.text.bold
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.market.R
+import com.example.market.data.models.CategoryResponseData
+import com.example.market.data.models.DeleteProductResponseData
+import com.example.market.data.models.EditProductResponseData
+import com.example.market.data.models.ProductResponseData
 import com.example.market.databinding.FragmentStockBinding
 import com.example.market.presentation.ui.stock.adapter.StockFragmentCategoryAdapter
 import com.example.market.presentation.ui.stock.adapter.StockFragmentProductAdapter
@@ -19,10 +22,10 @@ import com.example.market.presentation.ui.stock.vm.StockFragmentViewModel
 import com.example.market.utils.AddAmountClick
 import com.example.market.utils.AddButtonCategoryClick
 import com.example.market.utils.AddButtonClick
+import com.example.market.utils.Constants
 import com.example.market.utils.EditCategoryClick
 import com.example.market.utils.EditProductClick
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,14 +33,13 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class StockFragment : Fragment(R.layout.fragment_stock) {
 
-
     private lateinit var binding: FragmentStockBinding
+
+    private val viewModel: StockFragmentViewModel by viewModels()
+
     private var adapterCategory = StockFragmentCategoryAdapter()
     private var adapterProducts = StockFragmentProductAdapter()
-    private val viewModel : StockFragmentViewModel by viewModels()
-    private var clickedCategory = 0
-
-
+    private var clickedCategoryId = Constants.UNDEFINED_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,119 +57,127 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         initListeners()
     }
 
+    private fun initVariables() {
+        initCategoryAndProductRecyclerViewAdapter()
+
+        val textNoCategory =
+            SpannableStringBuilder().append("У вас нет категориев \nКатегорию можно добавить при нажатий\n")
+                .bold { append("Троеточие") }
+
+        binding.tvNoCategory.text = textNoCategory
+    }
+
     private fun initObservables() {
-
         viewModel.deleteCategoryFlow.onEach {
-            binding.swipeRefreshStock.isRefreshing = true
-            if (it.statusCode == 202){
+            setSwipeRefreshStockTrue()
+
+            if (isDeleteCategoryStatus202(it)) {
                 lifecycleScope.launch {
                     viewModel.getAllCategories()
-                    viewModel.getAllProductByCategory(clickedCategory)
+                    viewModel.getAllProductByCategory(clickedCategoryId)
                 }
-                binding.swipeRefreshStock.isRefreshing = false
+                setSwipeRefreshStockFalse()
             }
         }.launchIn(lifecycleScope)
-
-
-        viewModel.getAllCategoriesFlow.onEach {
-            if (it.isEmpty()){
-                binding.tvNoCategory.visibility = View.VISIBLE
-            }else{
-                binding.tvNoCategory.visibility = View.GONE
-            }
-            adapterCategory.submitList(it)
-            binding.shimmerStockCategory.stopShimmer()
-            binding.shimmerStockCategory.visibility = View.GONE
-            viewModel.getAllProductByCategory(clickedCategory)
-        }.launchIn(lifecycleScope)
-
-        viewModel.getAllProduct.onEach {
-            if (it.isEmpty()){
-                binding.tvNoProducts.visibility = View.VISIBLE
-            }else{
-                binding.tvNoProducts.visibility = View.GONE
-            }
-            adapterProducts.submitList(it)
-            binding.shimmerStockProducts.stopShimmer()
-            binding.shimmerStockProducts.visibility = View.GONE
-        }.launchIn(lifecycleScope)
-
         viewModel.deleteProductFlow.onEach {
-            Toast.makeText(requireContext(),it.message,Toast.LENGTH_SHORT).show()
-            binding.swipeRefreshStock.isRefreshing = true
-            if (it.statusCode == 202){
+            setSwipeRefreshStockTrue()
+
+            if (isDeleteProductStatus202(it)) {
                 lifecycleScope.launch {
                     viewModel.getAllCategories()
-                    viewModel.getAllProductByCategory(clickedCategory)
+                    viewModel.getAllProductByCategory(clickedCategoryId)
                 }
-                binding.swipeRefreshStock.isRefreshing = false
+                setSwipeRefreshStockFalse()
+            }
+        }.launchIn(lifecycleScope)
+        viewModel.getAllCategoriesFlow.onEach {
+            if (it.isNotEmpty()) {
+                initCategoryAdapterList(it)
+                stopAndInvisibleShimmerCategory()
+
+                binding.tvNoCategory.visibility = View.INVISIBLE
+
+                clickedCategoryId = it.first().id
+                viewModel.getAllProductByCategory(clickedCategoryId)
+            } else {
+                stopAndInvisibleShimmerCategory()
+                stopAndInvisibleShimmerProduct()
+
+                binding.tvNoCategory.visibility = View.VISIBLE
+            }
+        }.launchIn(lifecycleScope)
+        viewModel.getAllProduct.onEach {
+            if (it.isNotEmpty()) {
+                initProductAdapterList(it)
+                stopAndInvisibleShimmerProduct()
+
+                binding.tvNoProducts.visibility = View.INVISIBLE
+            } else {
+                stopAndInvisibleShimmerProduct()
+
+                binding.tvNoProducts.visibility = View.VISIBLE
             }
         }.launchIn(lifecycleScope)
 
         lifecycleScope.launch {
-            AddButtonClick.buttonClickLiveData.observe(viewLifecycleOwner){
-                if (it){
-                    binding.swipeRefreshStock.isRefreshing = true
-                        lifecycleScope.launch {
-                            viewModel.getAllCategories()
-                            viewModel.getAllProductByCategory(clickedCategory)
-                        }
-                        binding.swipeRefreshStock.isRefreshing = false
-                }
-            }
-
-            AddButtonCategoryClick.buttonAddCategoryLiveData.observe(viewLifecycleOwner){
-                if (it){
-                    binding.swipeRefreshStock.isRefreshing = true
+            AddButtonClick.buttonClickLiveData.observe(viewLifecycleOwner) {
+                if (it) {
+                    setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategory)
+                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
-                    binding.swipeRefreshStock.isRefreshing = false
+                    setSwipeRefreshStockFalse()
                 }
             }
-
-            EditProductClick.buttonEditProductLiveData.observe(viewLifecycleOwner){
-                if (it){
-                    binding.swipeRefreshStock.isRefreshing = true
+            AddButtonCategoryClick.buttonAddCategoryLiveData.observe(viewLifecycleOwner) {
+                if (it) {
+                    setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategory)
+                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
-                    binding.swipeRefreshStock.isRefreshing = false
+                    setSwipeRefreshStockFalse()
                 }
             }
-
-            EditCategoryClick.buttonEditCategoryLiveData.observe(viewLifecycleOwner){
-                if (it){
-                    binding.swipeRefreshStock.isRefreshing = true
+            EditProductClick.buttonEditProductLiveData.observe(viewLifecycleOwner) {
+                if (it) {
+                    setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategory)
+                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
-                    binding.swipeRefreshStock.isRefreshing = false
+                    setSwipeRefreshStockFalse()
                 }
             }
-
-            AddAmountClick.buttonAddAmountLiveData.observe(viewLifecycleOwner){
-                if (it){
-                    binding.swipeRefreshStock.isRefreshing = true
+            EditCategoryClick.buttonEditCategoryLiveData.observe(viewLifecycleOwner) {
+                if (it) {
+                    setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategory)
+                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
-                    binding.swipeRefreshStock.isRefreshing = false
+                    setSwipeRefreshStockFalse()
+                }
+            }
+            AddAmountClick.buttonAddAmountLiveData.observe(viewLifecycleOwner) {
+                if (it) {
+                    setSwipeRefreshStockTrue()
+                    lifecycleScope.launch {
+                        viewModel.getAllCategories()
+                        viewModel.getAllProductByCategory(clickedCategoryId)
+                    }
+                    setSwipeRefreshStockFalse()
                 }
             }
         }
     }
 
     private fun initListeners() {
-
         binding.swipeRefreshStock.setOnRefreshListener {
             lifecycleScope.launch {
                 viewModel.getAllCategories()
-                viewModel.getAllProductByCategory(clickedCategory)
+                viewModel.getAllProductByCategory(clickedCategoryId)
             }
             binding.swipeRefreshStock.isRefreshing = false
         }
@@ -175,34 +185,29 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-
-        adapterCategory.setOnItemClick {
-            clickedCategory = it.id
-            lifecycleScope.launch{
-                viewModel.getAllProductByCategory(clickedCategory)
-            }
-        }
-
-        adapterProducts.setOnClickPopUpMenu { binding,product->
-            val popupMenu = PopupMenu(requireContext(), binding.btnEdit)
-            popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
+        binding.btnMenuCategory.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), binding.btnMenuCategory)
+            popupMenu.menuInflater.inflate(R.menu.pop_up_menu_category, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.addAmount->{
-                        findNavController().navigate(StockFragmentDirections.actionFragmentStockToAddAmountDialog(product.name))
+                    R.id.addCategory -> {
+                        findNavController().navigate(StockFragmentDirections.actionFragmentStockToAddCategoryDialog())
                     }
-                    R.id.edit -> findNavController().navigate(StockFragmentDirections.actionFragmentStockToEditProductDialog(product.name,product.id))
-                    R.id.delete -> {
-                        val dialog = AlertDialog.Builder(requireContext())
-                            .setTitle("Удаление")
-                            .setMessage("Вы действительно хотите удалить продукт ${product.name} ?")
+
+                    R.id.editCategory -> findNavController().navigate(
+                        StockFragmentDirections.actionFragmentStockToEditCategoryDialog(
+                            clickedCategoryId
+                        )
+                    )
+
+                    R.id.deleteCategory -> {
+                        val dialog = AlertDialog.Builder(requireContext()).setTitle("Удаление")
+                            .setMessage("Вы действительно хотите удалить категорию ?\n При удалений категорий все данный в категорий будут удалены")
                             .setPositiveButton("Да") { _, _ ->
                                 lifecycleScope.launch {
-                                    viewModel.deleteProduct(product.id)
-                                    viewModel.getAllProductByCategory(clickedCategory)
+                                    viewModel.deleteCategory(clickedCategoryId)
                                 }
-                            }
-                            .setNegativeButton("Нет"){ p0, _ ->
+                            }.setNegativeButton("Нет") { p0, _ ->
                                 p0.dismiss()
                             }
                         dialog.show()
@@ -213,25 +218,40 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
             popupMenu.show()
         }
 
-        binding.btnMenuCategory.setOnClickListener {
-            val popupMenu = PopupMenu(requireContext(), binding.btnMenuCategory)
-            popupMenu.menuInflater.inflate(R.menu.pop_up_menu_category, popupMenu.menu)
+        adapterCategory.setOnItemClick {
+            clickedCategoryId = it.id
+            lifecycleScope.launch {
+                viewModel.getAllProductByCategory(clickedCategoryId)
+            }
+        }
+        adapterProducts.setOnClickPopUpMenu { binding, product ->
+            val popupMenu = PopupMenu(requireContext(), binding.btnEdit)
+            popupMenu.menuInflater.inflate(R.menu.pop_up_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.addCategory ->{
-                        findNavController().navigate(StockFragmentDirections.actionFragmentStockToAddCategoryDialog())
+                    R.id.addAmount -> {
+                        findNavController().navigate(
+                            StockFragmentDirections.actionFragmentStockToAddAmountDialog(
+                                product.name
+                            )
+                        )
                     }
-                    R.id.editCategory -> findNavController().navigate(StockFragmentDirections.actionFragmentStockToEditCategoryDialog(clickedCategory))
-                    R.id.deleteCategory -> {
-                        val dialog = AlertDialog.Builder(requireContext())
-                            .setTitle("Удаление")
-                            .setMessage("Вы действительно хотите удалить категорию ?\n При удалений категорий все данный в категорий будут удалены")
+
+                    R.id.edit -> findNavController().navigate(
+                        StockFragmentDirections.actionFragmentStockToEditProductDialog(
+                            product.name, product.id
+                        )
+                    )
+
+                    R.id.delete -> {
+                        val dialog = AlertDialog.Builder(requireContext()).setTitle("Удаление")
+                            .setMessage("Вы действительно хотите удалить продукт ${product.name} ?")
                             .setPositiveButton("Да") { _, _ ->
                                 lifecycleScope.launch {
-                                    viewModel.deleteCategory(clickedCategory)
+                                    viewModel.deleteProduct(product.id)
+                                    viewModel.getAllProductByCategory(clickedCategoryId)
                                 }
-                            }
-                            .setNegativeButton("Нет"){ p0, _ ->
+                            }.setNegativeButton("Нет") { p0, _ ->
                                 p0.dismiss()
                             }
                         dialog.show()
@@ -243,14 +263,50 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         }
     }
 
-    private fun initVariables() {
-        binding.rvStockCategory.adapter = adapterCategory
-        binding.rvStockProducts.adapter = adapterProducts
+    private fun setSwipeRefreshStockTrue() {
+        binding.swipeRefreshStock.isRefreshing = true
+    }
 
+    private fun setSwipeRefreshStockFalse() {
+        binding.swipeRefreshStock.isRefreshing = false
+    }
 
-        val textNoCategory = SpannableStringBuilder()
-            .append("У вас нет категориев \nКатегорию можно добавить при нажатий\n")
-            .bold { append("Троеточие") }
-        binding.tvNoCategory.text = textNoCategory
+    private fun initCategoryAndProductRecyclerViewAdapter() {
+        with(binding) {
+            rvStockCategory.adapter = adapterCategory
+            rvStockProducts.adapter = adapterProducts
+        }
+    }
+
+    private fun isDeleteProductStatus202(it: DeleteProductResponseData): Boolean {
+        return it.statusCode == 202
+    }
+
+    private fun isDeleteCategoryStatus202(it: EditProductResponseData): Boolean {
+        return it.statusCode == 202
+    }
+
+    private fun initProductAdapterList(it: List<ProductResponseData>) {
+        adapterProducts.submitList(it)
+    }
+
+    private fun initCategoryAdapterList(it: List<CategoryResponseData>) {
+        adapterCategory.submitList(it)
+    }
+
+    private fun stopAndInvisibleShimmerCategory() {
+            with(binding) {
+                shimmerStockCategory.stopShimmer()
+                shimmerStockCategory.visibility = View.INVISIBLE
+            }
+
+    }
+
+    private fun stopAndInvisibleShimmerProduct() {
+            with(binding) {
+                shimmerStockProducts.stopShimmer()
+                shimmerStockProducts.visibility = View.INVISIBLE
+            }
+
     }
 }
