@@ -1,7 +1,10 @@
 package com.example.market.presentation.ui.home.screen
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -11,7 +14,6 @@ import androidx.core.text.bold
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -30,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.io.InputStream
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -47,6 +50,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var categoryId:Int?=null
     private var pressedProduct = ""
+    private var maxAmount = 0
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -138,7 +142,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }.launchIn(lifecycleScope)
 
         viewModel.sellProductFlow.onEach {
-            makeToast(it.message)
+            if (it.statusCode == 202 && it.httpStatus == "ACCEPTED"){
+                makeToast(it.message)
+                binding.apply {
+                    dropdownCategory.setText("")
+                    dropdownProducts.setText("")
+                    etAmount.setText("")
+                }
+            }
         }.launchIn(lifecycleScope)
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("nameProduct")?.observe(viewLifecycleOwner) {result ->
@@ -167,6 +178,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.dropdownProducts.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
             pressedProduct = listProducts[i].name
+            maxAmount = listProducts[i].amount
+
         }
 
         binding.swipeRefreshHome.setOnRefreshListener {
@@ -180,6 +193,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 dropdownCategory.setText("")
                 dropdownProducts.setText("")
                 etAmount.setText("")
+                amount.clearFocus()
             }
 
         }
@@ -194,7 +208,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.btnSales.setOnClickListener {
             val amount = binding.etAmount.text.toString()
-            if (pressedProduct!="" && amount!=""){
+            if (pressedProduct!="" && amount!="" && binding.amount.error == null){
                 lifecycleScope.launch{
                     viewModel.sellProduct(
                         SellProductRequestData(
@@ -203,8 +217,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         )
                     )
                 }
+            }else if(binding.amount.error!=null){
+                makeToast("Превышение количества!")
+            }else if(pressedProduct==""){
+                makeToast("Не выбрана продукт!")
+            }else if (amount==""){
+                makeToast("Не введена количество!")
             }else{
-                Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_SHORT).show()
+                makeToast("Заполните все поля!!!")
             }
         }
 
@@ -269,12 +289,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
             true
         }
+
+        binding.etAmount.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                val inputText = p0.toString()
+                if (inputText.isNotEmpty()){
+                    val amount = inputText.toInt()
+                    if (amount>maxAmount){
+                        binding.amount.error = "Количество товаров не может превышать $maxAmount"
+//                        binding.etAmount.setText(maxAmount.toString())
+//                        binding.etAmount.setSelection(binding.etAmount.text?.length ?: 0)
+                    }else{
+                        binding.amount.error = null
+                    }
+                }else{
+                    binding.amount.error = null
+                }
+            }
+
+        })
     }
 
     fun formatNumberWithThousandsSeparator(number: Int): String {
         val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
         return numberFormat.format(number)
     }
+
 }
 
 
