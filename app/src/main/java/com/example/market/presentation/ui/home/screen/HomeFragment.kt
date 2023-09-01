@@ -148,6 +148,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     dropdownCategory.setText("")
                     dropdownProducts.setText("")
                     etAmount.setText("")
+                    pressedProduct = ""
+                    categoryId = null
+                    viewModel.getStatistics()
                 }
             }
         }.launchIn(lifecycleScope)
@@ -217,11 +220,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         )
                     )
                 }
-            }else if(binding.amount.error!=null){
+            }else if(binding.amount.error!=null && pressedProduct!="" && amount!=""){
                 makeToast("Превышение количества!")
-            }else if(pressedProduct==""){
+            }else if(pressedProduct=="" && amount!="" && binding.amount.error == null){
                 makeToast("Не выбрана продукт!")
-            }else if (amount==""){
+            }else if (amount=="" && binding.amount.error == null && pressedProduct!=""){
                 makeToast("Не введена количество!")
             }else{
                 makeToast("Заполните все поля!!!")
