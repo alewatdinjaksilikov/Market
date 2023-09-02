@@ -74,12 +74,10 @@ class RegistrationFragment:Fragment(R.layout.fragment_registration) {
                 SharedPref.prefEditor.putString("phoneNumber",it.phoneNumber)
                 SharedPref.prefEditor.putBoolean("isLogin",true)
                 SharedPref.prefEditor.apply()
-
-                //Проверка
-                Log.d("JJJ", "Regis token ${SharedPref.pref.getString("token","").toString()}")
-                Log.d("JJJ", "Regis login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
             }
             findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment())
+
+
         }.launchIn(lifecycleScope)
 
         viewModel.errorRegistration.onEach {

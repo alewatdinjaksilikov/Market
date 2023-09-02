@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class GetStatisticsUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     GetStatisticsUseCase {
-    override fun execute(): Flow<ResultData<StatisticsResponseData>> {
-        return mainRepository.getStatistics()
-    }
+    override fun execute(): Flow<ResultData<StatisticsResponseData>>
+        = mainRepository.getStatistics()
 }

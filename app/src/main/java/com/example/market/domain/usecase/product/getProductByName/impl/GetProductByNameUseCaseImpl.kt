@@ -10,7 +10,6 @@ import javax.inject.Inject
 class GetProductByNameUseCaseImpl @Inject constructor(
     private val mainRepository: MainRepository
 ): GetProductByNameUseCase {
-    override fun execute(name: String): Flow<ResultData<ProductResponseData>> {
-        return mainRepository.getProductByName(name = name)
-    }
+    override fun execute(name: String): Flow<ResultData<ProductResponseData>>
+        = mainRepository.getProductByName(name = name)
 }

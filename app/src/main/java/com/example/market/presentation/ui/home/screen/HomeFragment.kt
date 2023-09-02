@@ -52,43 +52,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var pressedProduct = ""
     private var maxAmount = 0
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        lifecycleScope.launch {
-//            viewModel.getAllCategories()
-//        }
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//
-//        lifecycleScope.launch {
-//            viewModel.getAllCategories()
-//        }
-//        categoryId?.let {
-//            lifecycleScope.launch {
-//                viewModel2.getAllProductByCategory(it)
-//            }
-//        }
-//
-//        val adapterCategory =
-//            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listCategories.map { it.name })
-//        binding.dropdownCategory.setAdapter(adapterCategory)
-//
-//        val adapterProducts =
-//            ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, listProducts.map { it.name })
-//        binding.dropdownProducts.setAdapter(adapterProducts)
-//
-//
-//    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-
-        //Проверка
-        Log.d("JJJ", "Home token ${SharedPref.pref.getString("token","").toString()}")
-        Log.d("JJJ", "Home login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
 
         initVariables()
         initObservables()
@@ -201,10 +167,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         }
 
-//        binding.dropdownProducts.setOnClickListener {
-//            findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToProductsDialog())
-//        }
-
         adapter.setOnItemClick {
             findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToListProductsDialog(it.id,it.name))
         }
@@ -261,8 +223,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.drawerLayout.addDrawerListener(object :DrawerListener{
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.GONE)
-                MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.GONE)
+
+                if (slideOffset == 1f) {
+                    // Боковое меню полностью открыто
+                    MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.GONE)
+                    MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.GONE)
+                } else if (slideOffset == 0f) {
+                    // Боковое меню полностью закрыто
+                    MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.VISIBLE)
+                    MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.VISIBLE)
+                } else {
+                    // Боковое меню находится в процессе открытия или закрытия
+                    MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.GONE)
+                    MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.GONE)
+                }
+
             }
 
             override fun onDrawerOpened(drawerView: View) {
@@ -281,10 +256,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-//                R.id.fragment_monitoring -> {
-//                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-//                    findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToMonitoringFragment())
-//                }
                 R.id.fragment_settings ->{
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     findNavController().navigate(HomeFragmentDirections.actionFragmentHomeToSettingFragment())
@@ -304,8 +275,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     val amount = inputText.toInt()
                     if (amount>maxAmount){
                         binding.amount.error = "Количество товаров не может превышать $maxAmount"
-//                        binding.etAmount.setText(maxAmount.toString())
-//                        binding.etAmount.setSelection(binding.etAmount.text?.length ?: 0)
                     }else{
                         binding.amount.error = null
                     }
@@ -321,24 +290,4 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
         return numberFormat.format(number)
     }
-
 }
-
-
-
-//    private var isListAdded = false
-//
-//    val list = mutableListOf<String>()
-
-//        viewModel.getAllProductsFlow.onEach {
-//            if (!isListAdded){
-//                it.forEach { data ->
-//                    list.add(data.name)
-//                }
-//                isListAdded = true
-//            }
-//
-//        }.launchIn(lifecycleScope)
-//        val adapterType = ArrayAdapter(requireContext(),R.layout.list_item_dropdown_menu,list)
-//        binding.dropdownProducts.setAdapter(adapterType)
-

@@ -27,9 +27,6 @@ class SplashScreen:Fragment(R.layout.fragment_splash) {
             val token = SharedPref.pref.getString("token","")
             val isLogin = SharedPref.pref.getBoolean("isLogin",false)
 
-            Log.d("JJJ", "Splash token $token")
-            Log.d("JJJ", "Splash login $isLogin")
-
             if (token!="." && isLogin){
                 findNavController().navigate(SplashScreenDirections.actionSplashScreenToMainFragment())
             }else{

@@ -11,7 +11,6 @@ class GetAllImagesUseCaseImpl @Inject constructor(
     private val mainRepository: MainRepository
 ): GetAllImagesUseCase {
 
-    override fun execute(): Flow<ResultData<List<ImageResponseData>>> {
-        return mainRepository.getAllImages()
-    }
+    override fun execute(): Flow<ResultData<List<ImageResponseData>>>
+        = mainRepository.getAllImages()
 }

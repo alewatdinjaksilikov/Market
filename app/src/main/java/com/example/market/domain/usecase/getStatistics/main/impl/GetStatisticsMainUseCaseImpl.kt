@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class GetStatisticsMainUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     GetStatisticsMainUseCase {
-    override fun execute(): Flow<ResultData<StatisticsMainResponseData>> {
-        return mainRepository.getStatisticsMain()
-    }
+    override fun execute(): Flow<ResultData<StatisticsMainResponseData>>
+        = mainRepository.getStatisticsMain()
 }

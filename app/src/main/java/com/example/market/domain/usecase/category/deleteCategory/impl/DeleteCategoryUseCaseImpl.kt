@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class DeleteCategoryUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     DeleteCategoryUseCase {
-    override fun execute(id: Int): Flow<ResultData<EditProductResponseData>> {
-        return mainRepository.deleteCategory(id = id)
-    }
+    override fun execute(id: Int): Flow<ResultData<EditProductResponseData>>
+        = mainRepository.deleteCategory(id = id)
 }

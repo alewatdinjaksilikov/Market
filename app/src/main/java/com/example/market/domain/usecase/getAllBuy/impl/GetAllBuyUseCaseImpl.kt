@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class GetAllBuyUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     GetAllBuyUseCase {
-    override fun execute(): Flow<ResultData<List<MonitoringResponseData>>> {
-        return mainRepository.getAllBuy()
-    }
+    override fun execute(): Flow<ResultData<List<MonitoringResponseData>>>
+        = mainRepository.getAllBuy()
 }

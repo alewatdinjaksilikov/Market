@@ -132,9 +132,5 @@ class EditCategoryDialog:BottomSheetDialogFragment() {
         binding.btnEditProductImage.setOnClickListener {
             findNavController().navigate(EditCategoryDialogDirections.actionEditCategoryDialogToImagesFragment2())
         }
-
-//        binding.dropdownCategory.setOnClickListener {
-//            findNavController().navigate(EditCategoryDialogDirections.actionEditCategoryDialogToCategoryDialog2())
-//        }
     }
 }

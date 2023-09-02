@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.market.R
+import com.example.market.databinding.FragmentMainBinding
 import com.example.market.databinding.FragmentSettingBinding
 import com.example.market.presentation.ui.main.MainFragment
 import com.example.market.utils.SharedPref
@@ -43,7 +44,11 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 SharedPref.prefEditor.putBoolean("isLogin", false)
                 SharedPref.prefEditor.apply()
 
+
+
                 with(activity) {
+                    MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.VISIBLE)
+                    MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.VISIBLE)
                     this?.moveTaskToBack(true)
                     this?.finish()
                 }

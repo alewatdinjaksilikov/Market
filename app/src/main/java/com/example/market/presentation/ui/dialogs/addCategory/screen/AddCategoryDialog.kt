@@ -57,6 +57,10 @@ class AddCategoryDialog:BottomSheetDialogFragment() {
             dismiss()
         }.launchIn(lifecycleScope)
 
+
+        viewModel.messageCategoryFlow.onEach {
+            makeToast(it)
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {

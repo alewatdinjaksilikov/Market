@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class AuthorizationUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     AuthorizationUseCase {
-    override fun execute(body: LoginRequestData): Flow<ResultData<LoginResponseData?>> {
-        return loginRepository.login(body = body)
-    }
+    override fun execute(body: LoginRequestData): Flow<ResultData<LoginResponseData?>>
+        = loginRepository.login(body = body)
 }

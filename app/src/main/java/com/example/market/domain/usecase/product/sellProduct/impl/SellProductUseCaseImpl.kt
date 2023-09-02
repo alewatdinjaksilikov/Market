@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class SellProductUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     SellProductUseCase {
-    override fun execute(body: SellProductRequestData): Flow<ResultData<EditProductResponseData>> {
-        return mainRepository.sellProduct(body = body)
-    }
+    override fun execute(body: SellProductRequestData): Flow<ResultData<EditProductResponseData>>
+        = mainRepository.sellProduct(body = body)
 }

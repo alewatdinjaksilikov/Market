@@ -11,7 +11,6 @@ import javax.inject.Inject
 class AddProductUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     AddProductUseCase {
 
-    override fun execute(body: AddProductRequestData): Flow<ResultData<AddProductResponseData>> {
-        return mainRepository.addProduct(body = body)
-    }
+    override fun execute(body: AddProductRequestData): Flow<ResultData<AddProductResponseData>>
+        = mainRepository.addProduct(body = body)
 }

@@ -72,10 +72,6 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
                 SharedPref.prefEditor.putBoolean("isLogin",true)
                 SharedPref.prefEditor.apply()
 
-                //Проверка
-                Log.d("JJJ", "Auth token ${SharedPref.pref.getString("token","").toString()}")
-                Log.d("JJJ", "Auth login ${SharedPref.pref.getBoolean("isLogin",false).toString()}")
-
                 findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragment2ToMainFragment())
             }
         }.launchIn(lifecycleScope)
@@ -90,5 +86,4 @@ class AuthorizationFragment : Fragment(R.layout.fragment_authorization) {
             binding.progressBar.visibility = View.GONE
         }.launchIn(lifecycleScope)
     }
-
 }

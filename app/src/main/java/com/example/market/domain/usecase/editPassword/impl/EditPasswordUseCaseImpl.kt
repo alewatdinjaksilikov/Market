@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class EditPasswordUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     EditPasswordUseCase {
-    override fun execute(body: EditPasswordRequestData): Flow<ResultData<EditProductResponseData>> {
-        return mainRepository.editPassword(body = body)
-    }
+    override fun execute(body: EditPasswordRequestData): Flow<ResultData<EditProductResponseData>>
+        = mainRepository.editPassword(body = body)
 }

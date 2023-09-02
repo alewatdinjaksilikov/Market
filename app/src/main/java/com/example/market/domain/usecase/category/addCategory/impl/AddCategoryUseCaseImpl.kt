@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class AddCategoryUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     AddCategoryUseCase {
-    override fun execute(body: AddCategoryRequestData): Flow<ResultData<AddCategoryResponseData>>{
-        return mainRepository.addCategory(body = body)
-    }
+    override fun execute(body: AddCategoryRequestData): Flow<ResultData<AddCategoryResponseData>>
+        = mainRepository.addCategory(body = body)
 }

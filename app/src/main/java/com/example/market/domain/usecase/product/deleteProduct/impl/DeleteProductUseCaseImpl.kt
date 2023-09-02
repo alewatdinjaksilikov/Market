@@ -9,8 +9,7 @@ import javax.inject.Inject
 
 class DeleteProductUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     DeleteProductUseCase {
-    override fun execute(id: Int): Flow<ResultData<DeleteProductResponseData>> {
-        return mainRepository.deleteProduct(productId = id)
-    }
+    override fun execute(id: Int): Flow<ResultData<DeleteProductResponseData>>
+        = mainRepository.deleteProduct(productId = id)
 
 }

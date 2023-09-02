@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class AddImageUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     AddImageUseCase {
-    override fun execute(body: MultipartBody.Part): Flow<ResultData<EditProductResponseData>> {
-        return mainRepository.addImage(body = body)
-    }
+    override fun execute(body: MultipartBody.Part): Flow<ResultData<EditProductResponseData>>
+        = mainRepository.addImage(body = body)
 }

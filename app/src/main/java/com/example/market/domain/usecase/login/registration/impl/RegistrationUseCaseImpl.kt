@@ -11,7 +11,6 @@ import javax.inject.Inject
 class RegistrationUseCaseImpl @Inject constructor(private val loginRepository: LoginRepository) :
     RegistrationUseCase {
 
-    override fun execute(body: RegistrationRequestData): Flow<ResultData<LoginResponseData?>> {
-        return loginRepository.registration(body = body)
-    }
+    override fun execute(body: RegistrationRequestData): Flow<ResultData<LoginResponseData?>>
+        = loginRepository.registration(body = body)
 }

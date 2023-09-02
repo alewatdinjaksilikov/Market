@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class GetAllProductsUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     GetAllProductsUseCase {
-    override fun execute(): Flow<ResultData<List<ProductResponseData>>> {
-        return mainRepository.getAllProducts()
-    }
+    override fun execute(): Flow<ResultData<List<ProductResponseData>>>
+        = mainRepository.getAllProducts()
 }

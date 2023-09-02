@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EditProfileUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):EditProfileUseCase {
-    override fun execute(body: EditProfileRequestData): Flow<ResultData<LoginResponseData>> {
-        return mainRepository.editProfile(body = body)
-    }
+    override fun execute(body: EditProfileRequestData): Flow<ResultData<LoginResponseData>>
+        = mainRepository.editProfile(body = body)
 }

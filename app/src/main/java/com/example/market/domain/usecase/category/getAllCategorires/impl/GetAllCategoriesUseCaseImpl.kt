@@ -9,8 +9,7 @@ import javax.inject.Inject
 
 class GetAllCategoriesUseCaseImpl @Inject constructor(private val mainRepository: MainRepository):
     GetAllCategoriesUseCase {
-    override fun execute(): Flow<ResultData<List<CategoryResponseData>>> {
-        return mainRepository.getAllCategories()
-    }
+    override fun execute(): Flow<ResultData<List<CategoryResponseData>>>
+        = mainRepository.getAllCategories()
 
 }

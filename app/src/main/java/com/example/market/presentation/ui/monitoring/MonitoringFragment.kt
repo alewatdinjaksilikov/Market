@@ -23,9 +23,6 @@ class MonitoringFragment:Fragment(R.layout.fragment_monitoring) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMonitoringBinding.bind(view)
 
-//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Покупка"))
-//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Продажа"))
-
         val fragmentManager = requireActivity().supportFragmentManager
         adapter = MonitoringAdapter(fragmentManager,lifecycle)
         binding.viewPager.adapter = adapter
@@ -64,20 +61,15 @@ class MonitoringFragment:Fragment(R.layout.fragment_monitoring) {
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     Log.d("TAG", "Fragment back pressed invoked")
-                    // Do custom work here
 
-                    // if you want onBackPressed() to be called as normal afterwards
                     if (isEnabled) {
                         isEnabled = false
                         requireActivity().onBackPressed()
                         MainFragment.BottomNavigationViewVisibilityLiveData.setVisibility(View.VISIBLE)
                         MainFragment.FloatActionButtonVisibilityLiveData.setVisibility(View.VISIBLE)
                     }
-
-
                 }
             }
             )
-
     }
 }

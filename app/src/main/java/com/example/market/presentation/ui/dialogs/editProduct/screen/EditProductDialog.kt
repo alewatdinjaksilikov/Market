@@ -113,17 +113,9 @@ class EditProductDialog:BottomSheetDialogFragment() {
                 makeToast("Заполните все поля!!!")
             }
         }
-
-//        binding.btnAddProductImage.setOnClickListener {
-//            findNavController().navigate(EditProductDialogDirections.actionEditProductDialogToImagesFragment2())
-//        }
     }
 
     private fun initObservables() {
-
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
-//            imageUrl = result
-//        }
 
         viewModelEdit.getProductFlow.onEach {
             binding.apply {
@@ -153,13 +145,6 @@ class EditProductDialog:BottomSheetDialogFragment() {
                 ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list.map { it.name })
             binding.dropdownCategory.setAdapter(adapterCategory)
             adapterCategory.notifyDataSetChanged()
-
-//            if (!isListAdded){
-//                it.forEach { data ->
-//                    list.add(data.name)
-//                }
-//                isListAdded = true
-//            }
         }.launchIn(lifecycleScope)
 
 

@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class GetCategoryByIdUseCaseImpl @Inject constructor (private val mainRepository: MainRepository):
     GetCategoryByIdUseCase {
-    override fun execute(id: Int): Flow<ResultData<GetCategory>> {
-        return mainRepository.getCategoryById(id = id)
-    }
+    override fun execute(id: Int): Flow<ResultData<GetCategory>>
+        = mainRepository.getCategoryById(id = id)
 }

@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class GetAllProductsByCategoryUseCaseImpl @Inject constructor(private val mainRepository: MainRepository) :
     GetAllProductsByCategoryUseCase {
-    override fun execute(id: Int): Flow<ResultData<List<ProductResponseData>>> {
-        return mainRepository.getAllProductByCategory(id = id)
-    }
+    override fun execute(id: Int): Flow<ResultData<List<ProductResponseData>>>
+        = mainRepository.getAllProductByCategory(id = id)
 }

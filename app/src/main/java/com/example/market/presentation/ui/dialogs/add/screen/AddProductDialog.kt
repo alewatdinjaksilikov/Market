@@ -63,16 +63,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
         lifecycleScope.launch {
             viewModel.getAllCategories()
         }
-
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("nameCategory")?.observe(viewLifecycleOwner) {result ->
-//            makeToast(result)
-//            category = result
-//            binding.dropdownCategory.setText(result)
-//        }
-//
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("imageUrl")?.observe(viewLifecycleOwner) {result ->
-//            imageUrl = result
-//        }
     }
 
     private fun initObservables() {
@@ -85,13 +75,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
                 ArrayAdapter(requireContext(), R.layout.list_item_dropdown_menu, list.map { it.name })
             binding.dropdownCategory.setAdapter(adapterCategory)
             adapterCategory.notifyDataSetChanged()
-
-//            if (!isListAdded){
-//                it.forEach { data ->
-//                    list.add(data)
-//                }
-//                isListAdded = true
-//            }
         }.launchIn(lifecycleScope)
 
 
@@ -106,10 +89,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
     }
 
     private fun initListeners() {
-
-//        binding.dropdownCategory.setOnClickListener {
-//            findNavController().navigate(AddProductDialogDirections.actionAddProductDialog2ToCategoryDialog())
-//        }
 
         binding.btnAddProduct.setOnClickListener {
             val name = binding.etProductName.text.toString()
@@ -144,10 +123,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
         binding.btnCancel.setOnClickListener {
             dialog!!.dismiss()
         }
-
-//        binding.btnAddProductImage.setOnClickListener {
-//            findNavController().navigate(AddProductDialogDirections.actionAddProductDialog2ToImagesFragment())
-//        }
 
         binding.dropdownCategory.setOnItemClickListener { adapterView, view, i, l ->
             val item = adapterView.getItemAtPosition(i).toString()
