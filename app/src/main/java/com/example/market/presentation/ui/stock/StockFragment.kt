@@ -1,8 +1,10 @@
 package com.example.market.presentation.ui.stock
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import androidx.core.text.bold
@@ -25,6 +27,7 @@ import com.example.market.utils.AddButtonClick
 import com.example.market.utils.Constants
 import com.example.market.utils.EditCategoryClick
 import com.example.market.utils.EditProductClick
+import com.example.market.utils.makeToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -40,6 +43,12 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
     private var adapterCategory = StockFragmentCategoryAdapter()
     private var adapterProducts = StockFragmentProductAdapter()
     private var clickedCategoryId = Constants.UNDEFINED_ID
+    private var isItemFromDeleteCategory = false
+    private var deletedItemPosition = Constants.UNDEFINED_ID
+
+    companion object {
+        private const val TAG = "StockFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,14 +76,17 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         binding.tvNoCategory.text = textNoCategory
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initObservables() {
         viewModel.deleteCategoryFlow.onEach {
             setSwipeRefreshStockTrue()
 
             if (isDeleteCategoryStatus202(it)) {
                 lifecycleScope.launch {
+                    isItemFromDeleteCategory = true
+                    deletedItemPosition = clickedCategoryId
+
                     viewModel.getAllCategories()
-                    viewModel.getAllProductByCategory(clickedCategoryId)
                 }
                 setSwipeRefreshStockFalse()
             }
@@ -84,7 +96,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
 
             if (isDeleteProductStatus202(it)) {
                 lifecycleScope.launch {
-                    viewModel.getAllCategories()
+//                    viewModel.getAllCategories()
                     viewModel.getAllProductByCategory(clickedCategoryId)
                 }
                 setSwipeRefreshStockFalse()
@@ -92,28 +104,38 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
         }.launchIn(lifecycleScope)
         viewModel.getAllCategoriesFlow.onEach {
             if (it.isNotEmpty()) {
-                initCategoryAdapterList(it)
+                if (!isItemFromDeleteCategory) {
+                    clickedCategoryId = it.first().id
+                    viewModel.getAllProductByCategory(clickedCategoryId)
+                } else {
+                    isItemFromDeleteCategory = false
+                    clickedCategoryId = it.first().id
+                    viewModel.getAllProductByCategory(clickedCategoryId)
+
+//                    val previousDeletedItemPosition = deletedItemPosition - 1
+//                    val previousDeletedItem = it.firstOrNull { item ->
+//                        item.id == previousDeletedItemPosition
+//                    }
+//
+//                    if (previousDeletedItem?.name?.isNotEmpty()!!) {
+//                        viewModel.getAllProductByCategory(previousDeletedItem.id)
+//                    }
+                }
                 stopAndInvisibleShimmerCategory()
-
                 binding.tvNoCategory.visibility = View.INVISIBLE
-
-                clickedCategoryId = it.first().id
-                viewModel.getAllProductByCategory(clickedCategoryId)
             } else {
                 stopAndInvisibleShimmerCategory()
                 stopAndInvisibleShimmerProduct()
-
                 binding.tvNoCategory.visibility = View.VISIBLE
             }
+            initCategoryAdapterList(it)
         }.launchIn(lifecycleScope)
         viewModel.getAllProduct.onEach {
             if (it.isNotEmpty()) {
                 stopAndInvisibleShimmerProduct()
-
                 binding.tvNoProducts.visibility = View.INVISIBLE
             } else {
                 stopAndInvisibleShimmerProduct()
-
                 binding.tvNoProducts.visibility = View.VISIBLE
             }
             initProductAdapterList(it)
@@ -124,8 +146,8 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                 if (it) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
-                        viewModel.getAllCategories()
-//                        viewModel.getAllProductByCategory(clickedCategoryId)
+//                        viewModel.getAllCategories()
+                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
                 }
@@ -135,7 +157,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategoryId)
+//                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
                 }
@@ -144,7 +166,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                 if (it) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
-                        viewModel.getAllCategories()
+//                        viewModel.getAllCategories()
                         viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
@@ -155,7 +177,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
                         viewModel.getAllCategories()
-                        viewModel.getAllProductByCategory(clickedCategoryId)
+//                        viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
                 }
@@ -164,7 +186,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                 if (it) {
                     setSwipeRefreshStockTrue()
                     lifecycleScope.launch {
-                        viewModel.getAllCategories()
+//                        viewModel.getAllCategories()
                         viewModel.getAllProductByCategory(clickedCategoryId)
                     }
                     setSwipeRefreshStockFalse()
@@ -176,7 +198,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
     private fun initListeners() {
         binding.swipeRefreshStock.setOnRefreshListener {
             lifecycleScope.launch {
-                viewModel.getAllCategories()
+//                viewModel.getAllCategories()
                 viewModel.getAllProductByCategory(clickedCategoryId)
             }
             binding.swipeRefreshStock.isRefreshing = false
@@ -205,6 +227,7 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
                             .setMessage("Вы действительно хотите удалить категорию ?\n При удалений категорий все данный в категорий будут удалены")
                             .setPositiveButton("Да") { _, _ ->
                                 lifecycleScope.launch {
+
                                     viewModel.deleteCategory(clickedCategoryId)
                                 }
                             }.setNegativeButton("Нет") { p0, _ ->
@@ -218,8 +241,9 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
             popupMenu.show()
         }
 
-        adapterCategory.setOnItemClick {
-            clickedCategoryId = it.id
+        adapterCategory.setOnItemClick {item, view ->
+            clickedCategoryId = item.id
+            Log.d(TAG, "setOnItemClick: ${item.id}")
             lifecycleScope.launch {
                 viewModel.getAllProductByCategory(clickedCategoryId)
             }
@@ -296,18 +320,18 @@ class StockFragment : Fragment(R.layout.fragment_stock) {
     }
 
     private fun stopAndInvisibleShimmerCategory() {
-            with(binding) {
-                shimmerStockCategory.stopShimmer()
-                shimmerStockCategory.visibility = View.INVISIBLE
-            }
+        with(binding) {
+            shimmerStockCategory.stopShimmer()
+            shimmerStockCategory.visibility = View.INVISIBLE
+        }
 
     }
 
     private fun stopAndInvisibleShimmerProduct() {
-            with(binding) {
-                shimmerStockProducts.stopShimmer()
-                shimmerStockProducts.visibility = View.INVISIBLE
-            }
+        with(binding) {
+            shimmerStockProducts.stopShimmer()
+            shimmerStockProducts.visibility = View.INVISIBLE
+        }
 
     }
 }
