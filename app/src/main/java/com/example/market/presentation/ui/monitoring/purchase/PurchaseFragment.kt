@@ -49,7 +49,7 @@ class PurchaseFragment : Fragment() {
             if (it.isEmpty()){
                 binding.tvNoPurchase.visibility = View.VISIBLE
             }
-            adapter.submitList(it)
+            adapter.submitList(it.asReversed())
         }.launchIn(lifecycleScope)
     }
 
@@ -59,5 +59,4 @@ class PurchaseFragment : Fragment() {
             viewModel.getAllBuy()
         }
     }
-
 }

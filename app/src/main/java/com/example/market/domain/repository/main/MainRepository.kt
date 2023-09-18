@@ -9,6 +9,8 @@ interface MainRepository {
 
     fun addImage(body: MultipartBody.Part):Flow<ResultData<EditProductResponseData>>
 
+    fun uploadStatistics():Flow<ResultData<List<Byte>?>>
+
     fun editPassword(body:EditPasswordRequestData):Flow<ResultData<EditProductResponseData>>
 
     fun editProfile(body:EditProfileRequestData):Flow<ResultData<LoginResponseData>>

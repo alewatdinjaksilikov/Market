@@ -48,6 +48,8 @@ import com.example.market.domain.usecase.product.addAmount.AddAmountProductUseCa
 import com.example.market.domain.usecase.product.addAmount.impl.AddAmountProductUseCaseImpl
 import com.example.market.domain.usecase.product.sellProduct.SellProductUseCase
 import com.example.market.domain.usecase.product.sellProduct.impl.SellProductUseCaseImpl
+import com.example.market.domain.usecase.uploadStatistics.UploadStatisticsUseCase
+import com.example.market.domain.usecase.uploadStatistics.impl.UploadStatisticsUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -172,4 +174,8 @@ class DomainModule {
         return AddAmountProductUseCaseImpl(mainRepository = mainRepository)
     }
 
+    @Provides
+    fun uploadStatistics(mainRepository: MainRepository):UploadStatisticsUseCase{
+        return UploadStatisticsUseCaseImpl(mainRepository = mainRepository)
+    }
 }

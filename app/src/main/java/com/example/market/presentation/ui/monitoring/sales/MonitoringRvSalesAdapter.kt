@@ -1,6 +1,7 @@
 package com.example.market.presentation.ui.monitoring.sales
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,6 +20,11 @@ class MonitoringRvSalesAdapter:ListAdapter<MonitoringResponseData,MonitoringRvSa
         RecyclerView.ViewHolder(binding.root) {
         fun setData(position: Int) {
             val p = getItem(position)
+
+            if (p.changed){
+                binding.tvChanged.visibility = View.VISIBLE
+                binding.tvDate.text = p.changedDate
+            }
 
             binding.apply {
                 tvNameProduct.text = p.name

@@ -49,7 +49,7 @@ class SalesFragment : Fragment() {
             if (it.isEmpty()){
                 binding.tvNoSales.visibility = View.VISIBLE
             }
-            adapter.submitList(it)
+            adapter.submitList(it.asReversed())
         }.launchIn(lifecycleScope)
     }
 

@@ -12,6 +12,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Streaming
 
 interface ApiService {
     //GET
@@ -48,6 +49,10 @@ interface ApiService {
 
     @GET("/api/v1/categories")
     suspend fun getAllCategories(): Response<List<CategoryResponseData>>
+
+    @GET("/api/v1/upload/excel")
+    @Streaming
+    suspend fun uploadStatistics():Response<List<Byte>>
 
 
     //POST

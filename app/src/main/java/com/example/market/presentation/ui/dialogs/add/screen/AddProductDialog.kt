@@ -96,12 +96,11 @@ class AddProductDialog:BottomSheetDialogFragment() {
             val price = binding.etProductPrice.text.toString()
             val sizeProduct  = binding.etProductSize.text.toString()
 
-            if (name!=="" && amount!="" && price!="" && type!="" && category!="" && imageUrl!="" && sizeProduct!=""){
+            if (name!=="" && amount!="" && price!="" && type!="" && category!="" &&  sizeProduct!=""){
                 lifecycleScope.launch{
                     viewModel.addProduct(AddProductRequestData(
                         amount = amount.toInt(),
                         category = category,
-                        imageUrl = imageUrl,
                         name = name,
                         price = price.toInt(),
                         unit = type,
@@ -110,13 +109,6 @@ class AddProductDialog:BottomSheetDialogFragment() {
                 }
             }else{
                 makeToast("Заполните все поля!")
-                Log.d("Add","Name - $name")
-                Log.d("Add","amount - $amount")
-                Log.d("Add","Price - $price")
-                Log.d("Add","Type - $type")
-                Log.d("Add","category - $category")
-                Log.d("Add","Image Url - $imageUrl")
-                Log.d("Add","Size - $sizeProduct")
             }
         }
 

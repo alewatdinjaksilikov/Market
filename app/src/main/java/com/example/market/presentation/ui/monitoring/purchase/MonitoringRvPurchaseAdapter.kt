@@ -1,6 +1,7 @@
 package com.example.market.presentation.ui.monitoring.purchase
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +20,16 @@ class MonitoringRvPurchaseAdapter:
         fun setData(position: Int) {
             val p = getItem(position)
 
+            if (p.changed){
+                binding.tvChanged.visibility = View.VISIBLE
+                binding.tvDate.text = p.changedDate
+            }
+
             binding.apply {
                 tvNameProduct.text = p.name
                 tvCountProduct.text = p.count.toString()
                 tvProductType.text = p.unit
+                tvDate.text = p.createdDate
                 tvSalaryProduct.text = formatNumberWithThousandsSeparator(p.price)
             }
         }

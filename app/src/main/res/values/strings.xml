@@ -50,4 +50,5 @@
     <string name="tv_added_amount">Добавить количество</string>
     <string name="tv_no_sales">Нет продажи</string>
     <string name="tv_no_purchase">Нет покупков</string>
+    <string name="tv_changed">Изменено</string>
 </resources>

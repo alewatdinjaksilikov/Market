@@ -1,7 +1,8 @@
 package com.example.market.presentation.ui.statistic.screen
 
-import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,10 +13,16 @@ import com.example.market.R
 import com.example.market.databinding.FragmentStatisticsBinding
 import com.example.market.presentation.ui.monitoring.adapter.MonitoringAdapter
 import com.example.market.presentation.ui.statistic.vm.StatisticsFragmentViewModel
+import com.example.market.utils.AndroidDownloader
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -52,11 +59,24 @@ class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
             binding.tvPrice.text = formatNumberWithThousandsSeparator(it.price)
             binding.tvPriceMonitoring.text = formatNumberWithThousandsSeparator(it.price)
         }.launchIn(lifecycleScope)
+
+        viewModel.uploadStatistics.onEach {
+            if (it != null)
+            {
+            }
+
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.downloadStatistic.setOnClickListener {
+//            viewModel.uploadStatistics()
+            val url = "http://stockcontrol.uz/api/v1/upload/excel"
+            AndroidDownloader(requireContext()).downloadFile(url)
         }
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{

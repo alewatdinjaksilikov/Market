@@ -24,6 +24,15 @@ class MainRepositoryImpl @Inject constructor(private val apiService: ApiService)
         }
     }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
 
+    override fun uploadStatistics() = flow {
+        val response = apiService.uploadStatistics()
+        if (response.isSuccessful){
+            emit(ResultData.Success(response.body()))
+        }else{
+            emit(ResultData.Message(response.message()))
+        }
+    }.catch { emit(ResultData.Error(it)) }.flowOn(Dispatchers.IO)
+
     override fun editPassword(body: EditPasswordRequestData)= flow {
         val response = apiService.editPassword(body = body)
         if (response.isSuccessful) {
