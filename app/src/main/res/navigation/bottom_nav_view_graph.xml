@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/fragment_statistics"
-        android:name="com.example.market.presentation.ui.statistic.screen.StatisticsFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.statistic.screen.StatisticsFragment"
         android:label="StatisticsFragment"
         tools:layout="@layout/fragment_statistics"/>
     <fragment
         android:id="@+id/fragment_stock"
-        android:name="com.example.market.presentation.ui.stock.StockFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.stock.StockFragment"
         android:label="StockFragment"
         tools:layout="@layout/fragment_stock">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.example.market.presentation.ui.home.screen.HomeFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.home.screen.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <dialog
         android:id="@+id/editCategoryDialog"
-        android:name="com.example.market.presentation.ui.dialogs.editCategory.screen.EditCategoryDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.editCategory.screen.EditCategoryDialog"
         android:label="EditCategoryDialog"
         tools:layout="@layout/dialog_edit_category">
         <action
@@ -63,7 +63,7 @@
     </dialog>
     <dialog
         android:id="@+id/editProductDialog"
-        android:name="com.example.market.presentation.ui.dialogs.editProduct.screen.EditProductDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.editProduct.screen.EditProductDialog"
         android:label="EditProductDialog"
         tools:layout="@layout/dialog_edit_product">
         <argument
@@ -78,7 +78,7 @@
     </dialog>
     <dialog
         android:id="@+id/listProductsDialog"
-        android:name="com.example.market.presentation.ui.dialogs.listProducts.screen.ListProductsDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.listProducts.screen.ListProductsDialog"
         android:label="ListProductsDialog"
         tools:layout="@layout/rc_item_list_products">
         <argument
@@ -90,17 +90,17 @@
     </dialog>
     <fragment
         android:id="@+id/fragment_monitoring"
-        android:name="com.example.market.presentation.ui.monitoring.MonitoringFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.monitoring.MonitoringFragment"
         android:label="MonitoringFragment"
         tools:layout="@layout/fragment_monitoring"/>
     <dialog
         android:id="@+id/productsDialog"
-        android:name="com.example.market.presentation.ui.home.dialog.product.ProductsDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.home.dialog.product.ProductsDialog"
         android:label="ProductsDialog"
         tools:layout="@layout/dialog_products"/>
     <dialog
         android:id="@+id/addCategoryDialog"
-        android:name="com.example.market.presentation.ui.dialogs.addCategory.screen.AddCategoryDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.addCategory.screen.AddCategoryDialog"
         android:label="AddCategoryDialog"
         tools:layout="@layout/dialog_add_category">
         <action
@@ -109,17 +109,17 @@
     </dialog>
     <dialog
         android:id="@+id/imagesFragment2"
-        android:name="com.example.market.presentation.ui.image.ImagesFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.image.ImagesFragment"
         android:label="ImagesFragment"
         tools:layout="@layout/fragment_images"/>
     <dialog
         android:id="@+id/categoryDialog2"
-        android:name="com.example.market.presentation.ui.dialogs.add.dialog.CategoryDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.add.dialog.CategoryDialog"
         android:label="CategoryDialog"
         tools:layout="@layout/dialog_category"/>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.example.market.presentation.ui.setting.screen.SettingFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.setting.screen.SettingFragment"
         android:label="SettingFragment"
         tools:layout="@layout/fragment_setting">
 
@@ -132,17 +132,17 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.market.presentation.ui.setting.editProfile.EditProfileFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.setting.editProfile.EditProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile"/>
     <fragment
         android:id="@+id/editPasswordFragment"
-        android:name="com.example.market.presentation.ui.setting.editPassword.EditPasswordFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.setting.editPassword.EditPasswordFragment"
         android:label="EditPasswordFragment"
         tools:layout="@layout/fragment_edit_password"/>
     <dialog
         android:id="@+id/addAmountDialog"
-        android:name="com.example.market.presentation.ui.dialogs.addAmount.AddAmountDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.addAmount.AddAmountDialog"
         android:label="AddAmountDialog"
         tools:layout="@layout/dialog_add_amount">
         <argument

@@ -1,0 +1,103 @@
+package com.bizlergroup.stockcontrol.presentation.ui.statistic.screen
+
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.bizlergroup.stockcontrol.R
+import com.bizlergroup.stockcontrol.databinding.FragmentStatisticsBinding
+import com.bizlergroup.stockcontrol.presentation.ui.monitoring.adapter.MonitoringAdapter
+import com.bizlergroup.stockcontrol.presentation.ui.statistic.vm.StatisticsFragmentViewModel
+import com.bizlergroup.stockcontrol.utils.AndroidDownloader
+import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+import java.util.Locale
+
+@AndroidEntryPoint
+class StatisticsFragment:Fragment(R.layout.fragment_statistics) {
+    private lateinit var binding: FragmentStatisticsBinding
+    private val viewModel : StatisticsFragmentViewModel by viewModels()
+
+    private lateinit var adapter : MonitoringAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentStatisticsBinding.bind(view)
+
+        initVariables()
+        initListeners()
+        initObservables()
+
+    }
+
+    private fun initVariables() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        adapter = MonitoringAdapter(fragmentManager,lifecycle)
+        binding.viewPager.adapter = adapter
+
+        viewModel.getStatistics()
+    }
+
+    private fun initObservables() {
+        viewModel.getStatisticsFlow.onEach {
+            binding.tvRemainder.text = formatNumberWithThousandsSeparator(it.amount)
+            binding.tvPrice.text = formatNumberWithThousandsSeparator(it.price)
+            binding.tvPriceMonitoring.text = formatNumberWithThousandsSeparator(it.price)
+        }.launchIn(lifecycleScope)
+
+        viewModel.uploadStatistics.onEach {
+            if (it != null)
+            {
+            }
+
+        }.launchIn(lifecycleScope)
+    }
+
+    private fun initListeners() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.downloadStatistic.setOnClickListener {
+//            viewModel.uploadStatistics()
+            val url = "http://stockcontrol.uz/api/v1/upload/excel"
+            AndroidDownloader(requireContext()).downloadFile(url)
+        }
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    binding.viewPager.currentItem = tab.position
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+        })
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
+            }
+        })
+    }
+
+    fun formatNumberWithThousandsSeparator(number: Int): String {
+        val numberFormat: NumberFormat = DecimalFormat("#,###", DecimalFormatSymbols(Locale.getDefault()))
+        return numberFormat.format(number)
+    }
+}
+

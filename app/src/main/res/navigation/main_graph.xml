@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.market.presentation.ui.main.MainFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <dialog
         android:id="@+id/addProductDialog2"
-        android:name="com.example.market.presentation.ui.dialogs.add.screen.AddProductDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.add.screen.AddProductDialog"
         android:label="AddProductDialog"
         tools:layout="@layout/dialog_add_product">
         <action
@@ -28,18 +28,18 @@
     </dialog>
     <dialog
         android:id="@+id/imagesFragment"
-        android:name="com.example.market.presentation.ui.image.ImagesFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.image.ImagesFragment"
         android:label="ImagesFragment"
         tools:layout="@layout/fragment_images">
     </dialog>
     <dialog
         android:id="@+id/categoryDialog"
-        android:name="com.example.market.presentation.ui.dialogs.add.dialog.CategoryDialog"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.dialogs.add.dialog.CategoryDialog"
         android:label="CategoryDialog"
         tools:layout="@layout/dialog_category"/>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.market.presentation.ui.auth.login.LoginFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.auth.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/authorizationFragment"
-        android:name="com.example.market.presentation.ui.auth.authorization.AuthorizationFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.auth.authorization.AuthorizationFragment"
         android:label="AuthorizationFragment"
         tools:layout="@layout/fragment_authorization">
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.market.presentation.ui.auth.registration.RegistrationFragment"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.auth.registration.RegistrationFragment"
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.example.market.presentation.ui.splash.SplashScreen"
+        android:name="com.bizlergroup.stockcontrol.presentation.ui.splash.SplashScreen"
         android:label="SplashScreen"
         tools:layout="@layout/fragment_splash">
         <action
