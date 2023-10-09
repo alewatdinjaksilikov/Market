@@ -18,6 +18,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
+const val BASE_URL = "https://stockcontrol-v1.onrender.com/"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
@@ -25,13 +27,13 @@ class DataModule {
     @Provides
     @Singleton
     fun provideLoginApi(client: OkHttpClient):LoginApiService{
-       return retrofitBuilder("http://stockcontrol.uz",client).create(LoginApiService::class.java)
+       return retrofitBuilder(BASE_URL,client).create(LoginApiService::class.java)
     }
 
     @Provides
     @Singleton
     fun provideApi(client:OkHttpClient):ApiService{
-        return retrofitBuilder("http://stockcontrol.uz",client).create(ApiService::class.java)
+        return retrofitBuilder(BASE_URL,client).create(ApiService::class.java)
     }
 
     @Provides
